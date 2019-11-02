@@ -1,0 +1,18 @@
+{
+  "attribute.name.generic.reachDistance": "Reach Distance",
+  "itemGroup.cannibalism": "Cannibalism",
+  "cannibalism.tether": "Your hunger seems to have settled for now",
+  "cannibalism.tethered": "You are already tethered",
+  "entity.cannibalism.wendigo": "Wendigo",
+  "item.cannibalism.wooden_knife": "Wooden Knife",
+  "item.cannibalism.stone_knife": "Stone Knife",
+  "item.cannibalism.iron_knife": "Iron Knife",
+  "item.cannibalism.golden_knife": "Golden Knife",
+  "item.cannibalism.diamond_knife": "Diamond Knife",
+  "item.cannibalism.flesh": "%s's Flesh",
+  "item.cannibalism.cooked_flesh": "%s's Cooked Flesh",
+  "item.cannibalism.corrupt_flesh": "%s's Corrupt Flesh",
+  "item.cannibalism.wendigo_heart": "Wendigo Heart",
+  "item.cannibalism.tethered_heart": "Tethered Heart",
+  "item.cannibalism.wendigo_spawn_egg": "Wendigo Spawn Egg"
+}

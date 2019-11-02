@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+	"item": "cannibalism:flesh"
+  },
+  "result": "cannibalism:cooked_flesh",
+  "experience": 0.35,
+  "cookingtime": 200
+}

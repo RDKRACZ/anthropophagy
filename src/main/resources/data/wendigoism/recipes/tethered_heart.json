@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"EIE",
+	"IHI",
+	"EIE"
+  ],
+  "key": {
+	"E": {
+	  "tag": "forge:ender_pearls"
+	},
+	"I": {
+	  "tag": "forge:ingots/iron"
+	},
+	"H": {
+	  "item": "wendigoism:wendigo_heart"
+	}
+  },
+  "result": {
+	"item": "wendigoism:tethered_heart"
+  }
+}

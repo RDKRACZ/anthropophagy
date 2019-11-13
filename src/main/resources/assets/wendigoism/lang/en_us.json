@@ -1,0 +1,21 @@
+{
+  "attribute.name.generic.reachDistance": "Reach Distance",
+  "itemGroup.wendigoism": "Wendigoism",
+  "wendigoism.tether": "Your hunger seems to have settled for now",
+  "wendigoism.tethered": "You are already tethered",
+  "entity.wendigoism.wendigo": "Wendigo",
+  "item.wendigoism.wooden_knife": "Wooden Knife",
+  "item.wendigoism.stone_knife": "Stone Knife",
+  "item.wendigoism.iron_knife": "Iron Knife",
+  "item.wendigoism.golden_knife": "Golden Knife",
+  "item.wendigoism.diamond_knife": "Diamond Knife",
+  "item.wendigoism.flesh": "Human Flesh",
+  "item.wendigoism.cooked_flesh": "Cooked Human Flesh",
+  "item.wendigoism.corrupt_flesh": "Corrupt Human Flesh",
+  "item.wendigoism.flesh_owned": "%s's Flesh",
+  "item.wendigoism.cooked_flesh_owned": "%s's Cooked Flesh",
+  "item.wendigoism.corrupt_flesh_owned": "%s's Corrupt Flesh",
+  "item.wendigoism.wendigo_heart": "Wendigo Heart",
+  "item.wendigoism.tethered_heart": "Tethered Heart",
+  "item.wendigoism.wendigo_spawn_egg": "Wendigo Spawn Egg"
+}

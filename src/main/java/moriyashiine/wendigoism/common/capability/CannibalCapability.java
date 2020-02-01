@@ -27,8 +27,8 @@ public class CannibalCapability implements ICapabilitySerializable<CompoundNBT> 
 	public int level = 0, hungerTimer = 0;
 	public boolean tethered = false;
 	
-	@Nonnull
 	@Override
+	@Nonnull
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
 		return CAP.orEmpty(cap, LazyOptional.of(() -> this));
 	}
@@ -49,8 +49,8 @@ public class CannibalCapability implements ICapabilitySerializable<CompoundNBT> 
 	}
 	
 	private static class Storage implements Capability.IStorage<CannibalCapability> {
-		@Nullable
 		@Override
+		@Nullable
 		public INBT writeNBT(Capability<CannibalCapability> capability, CannibalCapability instance, Direction side) {
 			CompoundNBT tag = new CompoundNBT();
 			tag.putInt("level", instance.level);

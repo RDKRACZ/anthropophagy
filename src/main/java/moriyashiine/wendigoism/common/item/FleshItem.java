@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -72,8 +73,9 @@ public class FleshItem extends Item {
 			WendigoEntity wendigo = Wendigoism.RegistryEvents.wendigo.create(world);
 			if (wendigo != null) {
 				boolean valid = false;
+				BlockPos pos = target.getPosition();
 				for (int i = 0; i < 8; i++) {
-					if (wendigo.attemptTeleport(target.posX + MathHelper.nextInt(rand, -16, 16), target.posY + MathHelper.nextInt(rand, -6, 6), target.posZ + MathHelper.nextInt(rand, -16, 16), false)) {
+					if (wendigo.attemptTeleport(pos.getX() + MathHelper.nextInt(rand, -16, 16), pos.getY() + MathHelper.nextInt(rand, -6, 6), pos.getZ() + MathHelper.nextInt(rand, -16, 16), false)) {
 						valid = true;
 						break;
 					}

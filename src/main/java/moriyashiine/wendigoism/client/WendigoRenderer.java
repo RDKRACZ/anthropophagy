@@ -14,12 +14,13 @@ import javax.annotation.Nonnull;
 public class WendigoRenderer extends MobRenderer<WendigoEntity, WendigoModel<WendigoEntity>> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Wendigoism.MODID, "textures/entity/wendigo.png");
 	
-	WendigoRenderer(EntityRendererManager manager) {
+	public WendigoRenderer(EntityRendererManager manager) {
 		super(manager, new WendigoModel<>(), 0.3f);
 	}
 	
 	@Override
-	protected ResourceLocation getEntityTexture(@Nonnull WendigoEntity entity) {
+	@Nonnull
+	public ResourceLocation getEntityTexture(@Nonnull WendigoEntity entity) {
 		return TEXTURE;
 	}
 }

@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.FoodStats;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,7 +34,8 @@ public class Handler {
 					if (world.rand.nextFloat() * Config.COMMON.damagedNeeded.get() < event.getAmount()) {
 						ItemStack drop = new ItemStack(entity.getFireTimer() > 0 ? c.fireDrop : c.normalDrop);
 						if (drop.getItem() instanceof FleshItem) drop.getOrCreateTag().putString("name", entity.getDisplayName().getString());
-						world.addEntity(new ItemEntity(world, entity.posX, entity.posY, entity.posZ, drop));
+						BlockPos pos = entity.getPosition();
+						world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
 					}
 				});
 			}

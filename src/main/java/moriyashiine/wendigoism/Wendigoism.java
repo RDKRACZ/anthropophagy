@@ -1,5 +1,6 @@
 package moriyashiine.wendigoism;
 
+import moriyashiine.wendigoism.client.WendigoRenderer;
 import moriyashiine.wendigoism.common.Handler;
 import moriyashiine.wendigoism.common.capability.CannibalCapability;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
@@ -16,8 +17,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -35,6 +38,7 @@ public class Wendigoism {
 	
 	public Wendigoism() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
 	}
 	
@@ -44,7 +48,7 @@ public class Wendigoism {
 		for (String string : Config.COMMON.dropMap.get()) {
 			String[] parts = string.split("/");
 			if (parts.length != 3) throw new IllegalArgumentException("Failed to parse " + string + ", there must be 2 '/' characters.");
-			EntityType type = null;
+			EntityType<?> type = null;
 			Item normal = null, fire = null;
 			for (int i = 0; i < parts.length; i++) {
 				String part = parts[i];
@@ -57,12 +61,16 @@ public class Wendigoism {
 		for (Biome biome : ForgeRegistries.BIOMES) if (BiomeDictionary.getTypes(biome).contains(BiomeDictionary.Type.COLD)) biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(RegistryEvents.wendigo, 1, 1, 1));
 	}
 	
+	private void setupClient(final FMLClientSetupEvent event) {
+		RenderingRegistry.registerEntityRenderingHandler(RegistryEvents.wendigo, WendigoRenderer::new);
+	}
+	
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class RegistryEvents {
 		static final Item iron_knife = new KnifeItem(ItemTier.IRON).setRegistryName("iron_knife");
 		public static final Item corrupt_flesh = new FleshItem(3).setRegistryName("corrupt_flesh");
 		public static final Item wendigo_heart = new Item(new Item.Properties().group(group).food(new Food.Builder().hunger(6).saturation(0.5f).build())).setRegistryName("wendigo_heart");
-		public static final EntityType<WendigoEntity> wendigo = EntityType.Builder.create(WendigoEntity::new, EntityClassification.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).size(1, 3).build(MODID + ":wendigo");
+		public static final EntityType<WendigoEntity> wendigo = EntityType.Builder.create(WendigoEntity::new, EntityClassification.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).size(1, 2.8f).build(MODID + ":wendigo");
 		
 		@SubscribeEvent
 		public static void registerItems(final RegistryEvent.Register<Item> event) {

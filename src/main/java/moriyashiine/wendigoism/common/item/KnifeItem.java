@@ -32,7 +32,7 @@ public class KnifeItem extends SwordItem {
 	@Override
 	@Nonnull
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
-		if (player.isSneaking()) {
+		if (player.isCrouching()) {
 			player.attackTargetEntityWithCurrentItem(player);
 			return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
 		}
@@ -48,10 +48,10 @@ public class KnifeItem extends SwordItem {
 	}
 	
 	public static class DropEntry {
-		public final EntityType type;
+		public final EntityType<?> type;
 		public final Item normalDrop, fireDrop;
 		
-		public DropEntry(EntityType type, Item normalDrop, Item fireDrop) {
+		public DropEntry(EntityType<?> type, Item normalDrop, Item fireDrop) {
 			this.type = type;
 			this.normalDrop = normalDrop;
 			this.fireDrop = fireDrop;

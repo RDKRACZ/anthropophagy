@@ -1,6 +1,6 @@
 package moriyashiine.wendigoism.common;
 
-import moriyashiine.wendigoism.Config;
+import moriyashiine.wendigoism.WDConfig;
 import moriyashiine.wendigoism.Wendigoism;
 import moriyashiine.wendigoism.common.capability.CannibalCapability;
 import moriyashiine.wendigoism.common.item.FleshItem;
@@ -31,7 +31,7 @@ public class Handler {
 		if (!world.isRemote) {
 			if (event.getSource().getImmediateSource() instanceof LivingEntity && ((LivingEntity) event.getSource().getImmediateSource()).getHeldItemMainhand().getItem() instanceof KnifeItem) {
 				KnifeItem.DROPS.stream().filter(e -> e.type == entity.getType()).findFirst().ifPresent(c -> {
-					if (world.rand.nextFloat() * Config.COMMON.damagedNeeded.get() < event.getAmount()) {
+					if (world.rand.nextFloat() * WDConfig.INSTANCE.damagedNeeded.get() < event.getAmount()) {
 						ItemStack drop = new ItemStack(entity.getFireTimer() > 0 ? c.fireDrop : c.normalDrop);
 						if (drop.getItem() instanceof FleshItem) drop.getOrCreateTag().putString("name", entity.getDisplayName().getString());
 						BlockPos pos = entity.getPosition();
@@ -44,15 +44,17 @@ public class Handler {
 	
 	@SubscribeEvent
 	public void livingDeath(LivingDeathEvent event) {
-		LivingEntity entity = event.getEntityLiving();
-		World world = entity.world;
-		if (!world.isRemote) {
-			entity.getCapability(CannibalCapability.CAP).ifPresent(c -> {
-				c.level = 0;
-				c.hungerTimer = 0;
-				if (c.tethered) entity.entityDropItem(Wendigoism.RegistryEvents.wendigo_heart);
-				c.tethered = false;
-			});
+		if (WDConfig.INSTANCE.isWendigoEnabled) {
+			LivingEntity entity = event.getEntityLiving();
+			World world = entity.world;
+			if (!world.isRemote) {
+				entity.getCapability(CannibalCapability.CAP).ifPresent(c -> {
+					c.level = 0;
+					c.hungerTimer = 0;
+					if (c.tethered) entity.entityDropItem(Wendigoism.RegistryEvents.wendigo_heart);
+					c.tethered = false;
+				});
+			}
 		}
 	}
 	

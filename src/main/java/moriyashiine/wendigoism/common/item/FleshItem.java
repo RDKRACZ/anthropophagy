@@ -1,5 +1,6 @@
 package moriyashiine.wendigoism.common.item;
 
+import moriyashiine.wendigoism.WDConfig;
 import moriyashiine.wendigoism.Wendigoism;
 import moriyashiine.wendigoism.common.Handler;
 import moriyashiine.wendigoism.common.capability.CannibalCapability;
@@ -52,7 +53,7 @@ public class FleshItem extends Item {
 				if (c.level == 150) Handler.dropSlot(entity, EquipmentSlotType.HEAD);
 				if (c.level == 170) Handler.dropSlot(entity, EquipmentSlotType.FEET);
 				if (c.level == 240) Handler.dropSlot(entity, EquipmentSlotType.CHEST);
-				attemptSpawnWendigo(world, entity, c.level);
+				if (WDConfig.INSTANCE.isWendigoEnabled) attemptSpawnWendigo(world, entity, c.level);
 			});
 		}
 		return super.onItemUseFinish(stack, world, entity);

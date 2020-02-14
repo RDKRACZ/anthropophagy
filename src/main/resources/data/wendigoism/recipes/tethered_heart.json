@@ -1,4 +1,10 @@
 {
+  "conditions": [
+	{
+	  "type": "wendigoism:enable_wendigo",
+	  "value": true
+	}
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
 	"EIE",

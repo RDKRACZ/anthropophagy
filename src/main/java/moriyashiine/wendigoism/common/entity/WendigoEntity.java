@@ -1,6 +1,6 @@
 package moriyashiine.wendigoism.common.entity;
 
-import moriyashiine.wendigoism.Wendigoism;
+import moriyashiine.wendigoism.common.registry.WDItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -25,6 +25,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/** File created by mason on 4/18/20 **/
 public class WendigoEntity extends MonsterEntity {
 	public static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(WendigoEntity.class, DataSerializers.BOOLEAN);
 	
@@ -59,14 +60,14 @@ public class WendigoEntity extends MonsterEntity {
 	}
 	
 	@Override
-	public boolean canSpawn(@Nonnull IWorld world, SpawnReason reason) {
+	public boolean canSpawn(@Nonnull IWorld world, @Nonnull SpawnReason reason) {
 		return super.canSpawn(world, reason) && world.getRandom().nextFloat() < 1 / 3f;
 	}
 	
 	@Override
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHit) {
+	protected void dropSpecialItems(@Nonnull DamageSource source, int looting, boolean recentlyHit) {
 		super.dropSpecialItems(source, looting, recentlyHit);
-		entityDropItem(Wendigoism.RegistryEvents.wendigo_heart);
+		entityDropItem(WDItems.wendigo_heart);
 	}
 	
 	@Override
@@ -80,8 +81,11 @@ public class WendigoEntity extends MonsterEntity {
 		super.tick();
 		if (collidedHorizontally && ForgeEventFactory.getMobGriefingEvent(world, this)) {
 			AxisAlignedBB box = getBoundingBox().grow(0.2);
-			for (BlockPos pos : BlockPos.getAllInBoxMutable(MathHelper.floor(box.minX), MathHelper.floor(box.minY), MathHelper.floor(box.minZ), MathHelper.floor(box.maxX), MathHelper.floor(box.maxY), MathHelper.floor(box.maxZ)))
-				if (world.getBlockState(pos).getBlockHardness(world, pos) < 0.5f) world.destroyBlock(pos, true);
+			for (BlockPos pos : BlockPos.getAllInBoxMutable(MathHelper.floor(box.minX), MathHelper.floor(box.minY), MathHelper.floor(box.minZ), MathHelper.floor(box.maxX), MathHelper.floor(box.maxY), MathHelper.floor(box.maxZ))) {
+				if (world.getBlockState(pos).getBlockHardness(world, pos) < 0.5f) {
+					world.destroyBlock(pos, true);
+				}
+			}
 		}
 	}
 }

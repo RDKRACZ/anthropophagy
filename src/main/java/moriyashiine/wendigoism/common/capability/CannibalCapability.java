@@ -20,6 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/** File created by mason on 4/18/20 **/
 public class CannibalCapability implements ICapabilitySerializable<CompoundNBT> {
 	@CapabilityInject(CannibalCapability.class)
 	public static Capability<CannibalCapability> CAP = null;
@@ -72,12 +73,12 @@ public class CannibalCapability implements ICapabilitySerializable<CompoundNBT> 
 		private static final ResourceLocation KEY = new ResourceLocation(Wendigoism.MODID, "cannibal_data");
 		
 		@SubscribeEvent
-		public void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
+		public void attachCapabilities(final AttachCapabilitiesEvent<Entity> event) {
 			if (event.getObject() instanceof PlayerEntity) event.addCapability(KEY, new CannibalCapability());
 		}
 		
 		@SubscribeEvent
-		public void clonePlayer(PlayerEvent.Clone event) {
+		public void clonePlayer(final PlayerEvent.Clone event) {
 			event.getPlayer().getCapability(CAP).ifPresent(c -> event.getOriginal().getCapability(CAP).ifPresent(e -> c.deserializeNBT(e.serializeNBT())));
 		}
 	}

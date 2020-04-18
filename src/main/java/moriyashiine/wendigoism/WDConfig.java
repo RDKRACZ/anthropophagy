@@ -6,20 +6,21 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Arrays;
 import java.util.List;
 
+/** File created by mason on 4/18/20 **/
 public class WDConfig {
 	public static final WDConfig INSTANCE;
 	static final ForgeConfigSpec SPEC;
 	
 	static {
 		final Pair<WDConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(WDConfig::new);
-		SPEC = specPair.getRight();
 		INSTANCE = specPair.getLeft();
+		SPEC = specPair.getRight();
 	}
 	
 	public final ForgeConfigSpec.ConfigValue<Boolean> enableWendigo;
 	public boolean isWendigoEnabled = true;
 	public final ForgeConfigSpec.ConfigValue<Integer> damagedNeeded;
-	final ForgeConfigSpec.ConfigValue<List<String>> dropMap;
+	public final ForgeConfigSpec.ConfigValue<List<String>> dropMap;
 	
 	private WDConfig(ForgeConfigSpec.Builder builder) {
 		enableWendigo = builder.comment("Whether or not anything related to the Wendigo should be included in the mod.").define("enableWendigo", true);

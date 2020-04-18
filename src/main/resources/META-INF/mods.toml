@@ -1,19 +1,18 @@
-modLoader="javafml" #mandatory
-loaderVersion="[31,)" #mandatory
-issueTrackerURL="https://github.com/MoriyaShiine/wendigoism/issues" #optional
-[[mods]] #mandatory
-modId="wendigoism" #mandatory
-version="${file.jarVersion}" #mandatory
-displayName="Wendigoism" #mandatory
-displayURL="https://www.curseforge.com/minecraft/mc-mods/wendigoism" #optional
-logoFile="icon.png" #optional
-authors="MoriyaShiine, cybercat5555" #optional
-description='''
-A remake of the original Cannibalism mod '''
-[[dependencies.wendigoism]] #optional
-    modId="forge" #mandatory
-    mandatory=true #mandatory
-    versionRange="[31,)" #mandatory
+modLoader="javafml"
+loaderVersion="[31,)"
+issueTrackerURL="https://github.com/MoriyaShiine/wendigoism/issues"
+[[mods]]
+modId="wendigoism"
+version="${file.jarVersion}"
+displayName="Wendigoism"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/wendigoism"
+logoFile="icon.png"
+authors="MoriyaShiine, cybercat5555"
+description='''A remake of the original Cannibalism mod'''
+[[dependencies.wendigoism]]
+    modId="forge"
+    mandatory=true
+    versionRange="[31,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.wendigoism]]

@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
+/** File created by mason on 4/18/20 **/
 public class EnableTetheredHeartRecipe implements ICondition {
 	private static final ResourceLocation ID = new ResourceLocation(Wendigoism.MODID, "enable_wendigo");
 	

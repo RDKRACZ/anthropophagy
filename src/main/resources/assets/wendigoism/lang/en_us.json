@@ -1,8 +1,5 @@
 {
   "itemGroup.wendigoism": "Wendigoism",
-  "wendigoism.tether": "Your hunger seems to have settled for now",
-  "wendigoism.tethered": "You are already tethered",
-  "entity.wendigoism.wendigo": "Wendigo",
   "item.wendigoism.wooden_knife": "Wooden Knife",
   "item.wendigoism.stone_knife": "Stone Knife",
   "item.wendigoism.iron_knife": "Iron Knife",
@@ -16,5 +13,8 @@
   "item.wendigoism.corrupt_flesh_owned": "%s's Corrupt Flesh",
   "item.wendigoism.wendigo_heart": "Wendigo Heart",
   "item.wendigoism.tethered_heart": "Tethered Heart",
-  "item.wendigoism.wendigo_spawn_egg": "Wendigo Spawn Egg"
+  "item.wendigoism.wendigo_spawn_egg": "Wendigo Spawn Egg",
+  "entity.wendigoism.wendigo": "Wendigo",
+  "message.wendigoism.tether": "Your hunger seems to have settled for now",
+  "message.wendigoism.tethered": "You are already tethered"
 }

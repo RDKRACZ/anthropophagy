@@ -1,8 +1,5 @@
 {
   "itemGroup.wendigoism": "Wendigoísmo",
-  "wendigoism.tether": "A sua fome foi saciada por enquanto",
-  "wendigoism.tethered": "Você já está amarrado(a)",
-  "entity.wendigoism.wendigo": "Wendigo",
   "item.wendigoism.wooden_knife": "Faca de madeira",
   "item.wendigoism.stone_knife": "Faca de pedra",
   "item.wendigoism.iron_knife": "Faca de ferro",
@@ -16,5 +13,8 @@
   "item.wendigoism.corrupt_flesh_owned": "Carne de %s corrupta",
   "item.wendigoism.wendigo_heart": "Coração de wendigo",
   "item.wendigoism.tethered_heart": "Coração amarrado",
-  "item.wendigoism.wendigo_spawn_egg": "Gerar Wendigo"
+  "item.wendigoism.wendigo_spawn_egg": "Gerar Wendigo",
+  "entity.wendigoism.wendigo": "Wendigo",
+  "message.wendigoism.tether": "A sua fome foi saciada por enquanto",
+  "message.wendigoism.tethered": "Você já está amarrado(a)"
 }

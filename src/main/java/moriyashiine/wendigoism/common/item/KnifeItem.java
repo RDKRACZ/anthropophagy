@@ -1,7 +1,6 @@
 package moriyashiine.wendigoism.common.item;
 
 import com.google.common.collect.Multimap;
-import moriyashiine.wendigoism.Wendigoism;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,18 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/** File created by mason on 4/18/20 **/
 public class KnifeItem extends SwordItem {
 	private static final UUID REACH_MOD = UUID.fromString("b2a5437c-84df-4a4c-9bae-0bfaa5b6a8c1");
 	
 	public static final List<DropEntry> DROPS = new ArrayList<>();
 	
-	public KnifeItem(IItemTier tier) {
-		super(tier, 0, -2, new Item.Properties().group(Wendigoism.group));
+	public KnifeItem(IItemTier tier, Item.Properties properties) {
+		super(tier, 0, -2, properties);
 	}
 	
 	@Override
 	@Nonnull
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
+	public ActionResult<ItemStack> onItemRightClick(@Nonnull World world, PlayerEntity player, @Nonnull Hand hand) {
 		if (player.isCrouching()) {
 			player.attackTargetEntityWithCurrentItem(player);
 			return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
@@ -43,7 +43,9 @@ public class KnifeItem extends SwordItem {
 	@Nonnull
 	public Multimap<String, AttributeModifier> getAttributeModifiers(@Nonnull EquipmentSlotType slot) {
 		Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot);
-		if (slot == EquipmentSlotType.MAINHAND) map.put(PlayerEntity.REACH_DISTANCE.getName(), new AttributeModifier(REACH_MOD, "Weapon modifier", -1, AttributeModifier.Operation.ADDITION));
+		if (slot == EquipmentSlotType.MAINHAND) {
+			map.put(PlayerEntity.REACH_DISTANCE.getName(), new AttributeModifier(REACH_MOD, "Weapon modifier", -1, AttributeModifier.Operation.ADDITION));
+		}
 		return map;
 	}
 	

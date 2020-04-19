@@ -16,7 +16,7 @@ import java.nio.file.Files;
 public class Wendigoism {
 	public static final String MODID = "wendigoism";
 	
-	public static ServerProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
+	public static final ServerProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 	
 	public Wendigoism() {
 		proxy.registerListeners(FMLJavaModLoadingContext.get().getModEventBus());

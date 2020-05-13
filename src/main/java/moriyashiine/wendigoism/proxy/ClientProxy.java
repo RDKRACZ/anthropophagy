@@ -1,7 +1,6 @@
 package moriyashiine.wendigoism.proxy;
 
-import moriyashiine.wendigoism.WDConfig;
-import moriyashiine.wendigoism.client.renderer.entity.WendigoRenderer;
+import moriyashiine.wendigoism.client.renderer.entity.living.WendigoRenderer;
 import moriyashiine.wendigoism.common.registry.WDEntityTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -19,8 +18,6 @@ public class ClientProxy extends ServerProxy {
 	}
 	
 	private void clientSetup(FMLClientSetupEvent event) {
-		if (WDConfig.INSTANCE.isWendigoEnabled) {
-			RenderingRegistry.registerEntityRenderingHandler(WDEntityTypes.wendigo, WendigoRenderer::new);
-		}
+		RenderingRegistry.registerEntityRenderingHandler(WDEntityTypes.wendigo, WendigoRenderer::new);
 	}
 }

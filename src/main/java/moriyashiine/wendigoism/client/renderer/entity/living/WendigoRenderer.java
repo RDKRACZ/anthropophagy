@@ -1,7 +1,7 @@
-package moriyashiine.wendigoism.client.renderer.entity;
+package moriyashiine.wendigoism.client.renderer.entity.living;
 
 import moriyashiine.wendigoism.Wendigoism;
-import moriyashiine.wendigoism.client.model.entity.WendigoModel;
+import moriyashiine.wendigoism.client.model.entity.living.WendigoModel;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

@@ -47,19 +47,17 @@ public class WDHandler {
 	
 	@SubscribeEvent
 	public void dropHeart(LivingDeathEvent event) {
-		if (WDConfig.INSTANCE.isWendigoEnabled) {
-			LivingEntity entity = event.getEntityLiving();
-			World world = entity.world;
-			if (!world.isRemote) {
-				entity.getCapability(CannibalCapability.CAP).ifPresent(c -> {
-					c.level = 0;
-					c.hungerTimer = 0;
-					if (c.tethered) {
-						entity.entityDropItem(WDItems.wendigo_heart);
-					}
-					c.tethered = false;
-				});
-			}
+		LivingEntity entity = event.getEntityLiving();
+		World world = entity.world;
+		if (!world.isRemote) {
+			entity.getCapability(CannibalCapability.CAP).ifPresent(c -> {
+				c.level = 0;
+				c.hungerTimer = 0;
+				if (c.tethered) {
+					entity.entityDropItem(WDItems.wendigo_heart);
+				}
+				c.tethered = false;
+			});
 		}
 	}
 	

@@ -66,7 +66,7 @@ public class FleshItem extends Item {
 				if (c.level == 240) {
 					WDHandler.dropSlot(entity, EquipmentSlotType.CHEST);
 				}
-				if (WDConfig.INSTANCE.isWendigoEnabled) {
+				if (WDConfig.INSTANCE.enableWendigo.get()) {
 					attemptSpawnWendigo(world, entity, c.level);
 				}
 			});

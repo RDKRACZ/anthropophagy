@@ -1,6 +1,5 @@
 package moriyashiine.wendigoism.common.registry;
 
-import moriyashiine.wendigoism.WDConfig;
 import moriyashiine.wendigoism.Wendigoism;
 import moriyashiine.wendigoism.common.item.FleshItem;
 import moriyashiine.wendigoism.common.item.KnifeItem;
@@ -49,8 +48,6 @@ public class WDItems {
 		//flesh
 		registry.registerAll(flesh, cooked_flesh, corrupt_flesh);
 		//wendigo
-		if (WDConfig.INSTANCE.isWendigoEnabled) {
-			registry.registerAll(wendigo_heart, tethered_heart, wendigo_spawn_egg);
-		}
+		registry.registerAll(wendigo_heart, tethered_heart, wendigo_spawn_egg);
 	}
 }

@@ -74,7 +74,7 @@ public class CannibalCapability implements ICapabilitySerializable<CompoundNBT> 
 		
 		@SubscribeEvent
 		public void attachCapabilities(final AttachCapabilitiesEvent<Entity> event) {
-			if (event.getObject() instanceof PlayerEntity) event.addCapability(KEY, new CannibalCapability());
+			if (event.getObject() instanceof PlayerEntity) { event.addCapability(KEY, new CannibalCapability()); }
 		}
 		
 		@SubscribeEvent

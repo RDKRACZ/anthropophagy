@@ -1,6 +1,5 @@
 package moriyashiine.wendigoism.common.registry;
 
-import moriyashiine.wendigoism.WDConfig;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -26,8 +25,6 @@ public class WDEntityTypes {
 	
 	@SubscribeEvent
 	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event) {
-		if (WDConfig.INSTANCE.isWendigoEnabled) {
-			event.getRegistry().register(wendigo);
-		}
+		event.getRegistry().register(wendigo);
 	}
 }

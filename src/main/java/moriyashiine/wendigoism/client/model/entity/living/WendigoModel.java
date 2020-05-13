@@ -1,4 +1,4 @@
-package moriyashiine.wendigoism.client.model.entity;
+package moriyashiine.wendigoism.client.model.entity.living;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

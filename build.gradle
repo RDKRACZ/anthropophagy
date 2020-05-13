@@ -11,14 +11,14 @@ buildscript {
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "eclipse"
 
-version = "1.1"
+version = "1.1.1"
 group = "moriyashiine.wendigoism"
 archivesBaseName = "wendigoism"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 
 minecraft {
-    mappings channel: "snapshot", version: "20200418-1.15.1"
+    mappings channel: "snapshot", version: "20200501-1.15.1"
     runs {
         client {
             workingDirectory project.file("run")

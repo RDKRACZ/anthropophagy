@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-/** File created by mason on 4/18/20 **/
 @Mod(Wendigoism.MODID)
 public class Wendigoism {
 	public static final String MODID = "wendigoism";

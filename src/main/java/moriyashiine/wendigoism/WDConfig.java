@@ -6,7 +6,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Arrays;
 import java.util.List;
 
-/** File created by mason on 4/18/20 **/
 public class WDConfig {
 	public static final WDConfig INSTANCE;
 	static final ForgeConfigSpec SPEC;

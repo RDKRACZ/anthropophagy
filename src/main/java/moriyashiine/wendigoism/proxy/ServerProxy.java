@@ -23,7 +23,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
-/** File created by mason on 4/18/20 **/
 public class ServerProxy {
 	public ItemGroup group = new ItemGroup(Wendigoism.MODID) {
 		@Override

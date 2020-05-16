@@ -23,7 +23,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-/** File created by mason on 4/18/20 **/
 public class WDHandler {
 	@SubscribeEvent
 	public void dropFlesh(LivingDamageEvent event) {

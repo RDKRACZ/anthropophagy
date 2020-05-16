@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/** File created by mason on 4/18/20 **/
 public class KnifeItem extends SwordItem {
 	private static final UUID REACH_MOD = UUID.fromString("b2a5437c-84df-4a4c-9bae-0bfaa5b6a8c1");
 	

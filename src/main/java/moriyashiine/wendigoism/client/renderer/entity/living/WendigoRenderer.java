@@ -11,7 +11,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
-/** File created by mason on 4/18/20 **/
 @OnlyIn(Dist.CLIENT)
 public class WendigoRenderer extends MobRenderer<WendigoEntity, WendigoModel<WendigoEntity>> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Wendigoism.MODID, "textures/entity/living/wendigo.png");

@@ -11,7 +11,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import javax.annotation.Nonnull;
 import java.util.concurrent.atomic.AtomicReference;
 
-/** File created by mason on 4/18/20 **/
 public class TetheredHeartItem extends Item {
 	public TetheredHeartItem(Item.Properties properties) {
 		super(properties);

@@ -25,7 +25,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/** File created by mason on 4/18/20 **/
 public class WendigoEntity extends MonsterEntity {
 	public static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(WendigoEntity.class, DataSerializers.BOOLEAN);
 	

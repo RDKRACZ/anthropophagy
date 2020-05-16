@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.Random;
 
-/** File created by mason on 4/18/20 **/
 public class FleshItem extends Item {
 	public FleshItem(Item.Properties properties) {
 		super(properties);

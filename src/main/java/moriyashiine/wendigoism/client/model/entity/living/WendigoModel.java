@@ -10,7 +10,6 @@ import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nonnull;
 
-/** File created by mason on 4/18/20 **/
 public class WendigoModel<T extends Entity> extends EntityModel<T> {
 	private final ModelRenderer chest;
 	private final ModelRenderer lArm00;

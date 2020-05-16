@@ -20,7 +20,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/** File created by mason on 4/18/20 **/
 public class CannibalCapability implements ICapabilitySerializable<CompoundNBT> {
 	@CapabilityInject(CannibalCapability.class)
 	public static Capability<CannibalCapability> CAP = null;

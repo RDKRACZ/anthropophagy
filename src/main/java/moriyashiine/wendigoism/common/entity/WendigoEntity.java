@@ -1,5 +1,6 @@
 package moriyashiine.wendigoism.common.entity;
 
+import moriyashiine.wendigoism.WDConfig;
 import moriyashiine.wendigoism.common.registry.WDItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -41,10 +42,11 @@ public class WendigoEntity extends MonsterEntity {
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
-		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
-		getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.66);
+		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(WDConfig.INSTANCE.strongerWendigo.get() ? 120 : 60);
+		getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(WDConfig.INSTANCE.strongerWendigo.get() ? 6 : 12);
 		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.45);
 		getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5);
+		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(48);
 	}
 	
 	@Override

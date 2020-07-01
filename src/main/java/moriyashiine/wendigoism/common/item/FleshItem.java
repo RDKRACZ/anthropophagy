@@ -1,76 +1,61 @@
 package moriyashiine.wendigoism.common.item;
 
 import moriyashiine.wendigoism.WDConfig;
-import moriyashiine.wendigoism.common.capability.CannibalCapability;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
-import moriyashiine.wendigoism.common.handler.WDHandler;
+import moriyashiine.wendigoism.common.misc.WDDataTrackers;
 import moriyashiine.wendigoism.common.registry.WDEntityTypes;
 import moriyashiine.wendigoism.common.registry.WDItems;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.Random;
 
 public class FleshItem extends Item {
-	public FleshItem(Item.Properties properties) {
-		super(properties);
+	public FleshItem(Settings settings) {
+		super(settings);
 	}
 	
 	@Override
-	@Nonnull
-	public ITextComponent getDisplayName(@Nonnull ItemStack stack) {
-		ITextComponent fin = super.getDisplayName(stack);
+	public Text getName(ItemStack stack) {
+		Text fin = super.getName(stack);
 		if (stack.hasTag()) {
 			String name = Objects.requireNonNull(stack.getTag()).getString("name");
 			if (!name.isEmpty()) {
-				fin = new TranslationTextComponent(getTranslationKey(stack) + "_owned", name);
+				fin = new TranslatableText(getTranslationKey(stack) + "_owned", name);
 			}
 		}
 		return fin;
 	}
 	
 	@Override
-	@Nonnull
-	public ItemStack onItemUseFinish(@Nonnull ItemStack stack, @Nonnull World world, @Nonnull LivingEntity entity) {
-		if (!world.isRemote) {
+	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+		if (!world.isClient && user instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) user;
 			if (stack.getItem() == WDItems.corrupt_flesh) {
-				entity.addPotionEffect(new EffectInstance(Effects.INSTANT_DAMAGE, 1, 1));
+				user.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE, 1, 1));
 			}
-			entity.getCapability(CannibalCapability.CAP).ifPresent(c -> {
-				if (!c.tethered) {
-					c.level = Math.min(c.level + 10, 300);
-				}
-				if (c.level == 100) {
-					entity.addPotionEffect(new EffectInstance(Effects.NAUSEA, 200));
-					entity.addPotionEffect(new EffectInstance(Effects.BLINDNESS, 200));
-					WDHandler.dropSlot(entity, EquipmentSlotType.LEGS);
-				}
-				if (c.level == 150) {
-					WDHandler.dropSlot(entity, EquipmentSlotType.HEAD);
-				}
-				if (c.level == 170) {
-					WDHandler.dropSlot(entity, EquipmentSlotType.FEET);
-				}
-				if (c.level == 240) {
-					WDHandler.dropSlot(entity, EquipmentSlotType.CHEST);
-				}
-				if (WDConfig.INSTANCE.enableWendigo.get()) {
-					attemptSpawnWendigo(world, entity, c.level);
-				}
-			});
+			if (!WDDataTrackers.getTethered(player)) {
+				WDDataTrackers.setWendigoLevel(player, Math.min(WDDataTrackers.getWendigoLevel(player) + 10, 300));
+			}
+			if (WDDataTrackers.getWendigoLevel(player) == 100) {
+				player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
+				player.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
+			}
+			if (WDConfig.INSTANCE.enableWendigo) {
+				attemptSpawnWendigo(world, user, WDDataTrackers.getWendigoLevel(player));
+			}
 		}
-		return super.onItemUseFinish(stack, world, entity);
+		return super.finishUsing(stack, world, user);
 	}
 	
 	private void attemptSpawnWendigo(World world, LivingEntity target, int level) {
@@ -95,21 +80,21 @@ public class FleshItem extends Item {
 				chance = 0.1f;
 			}
 		}
-		Random rand = world.rand;
-		if (rand.nextFloat() < chance) {
+		Random random = world.random;
+		if (random.nextFloat() < chance) {
 			WendigoEntity wendigo = WDEntityTypes.wendigo.create(world);
 			if (wendigo != null) {
 				boolean valid = false;
-				BlockPos pos = target.getPosition();
+				BlockPos pos = target.getBlockPos();
 				for (int i = 0; i < 8; i++) {
-					if (wendigo.attemptTeleport(pos.getX() + MathHelper.nextInt(rand, -16, 16), pos.getY() + MathHelper.nextInt(rand, -6, 6), pos.getZ() + MathHelper.nextInt(rand, -16, 16), false)) {
+					if (wendigo.teleport(pos.getX() + MathHelper.nextInt(random, -16, 16), pos.getY() + MathHelper.nextInt(random, -6, 6), pos.getZ() + MathHelper.nextInt(random, -16, 16), false)) {
 						valid = true;
 						break;
 					}
 				}
 				if (valid) {
-					world.addEntity(wendigo);
-					wendigo.setAttackTarget(target);
+					world.spawnEntity(wendigo);
+					wendigo.setTarget(target);
 				}
 			}
 		}

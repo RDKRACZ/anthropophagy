@@ -6,10 +6,10 @@
   ],
   "key": {
 	"M": {
-	  "tag": "forge:ingots/gold"
+	  "item": "minecraft:gold_ingot"
 	},
 	"S": {
-	  "tag": "forge:rods/wooden"
+	  "item": "minecraft:stick"
 	}
   },
   "result": {

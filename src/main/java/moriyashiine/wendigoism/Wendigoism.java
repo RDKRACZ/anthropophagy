@@ -1,21 +1,17 @@
 package moriyashiine.wendigoism;
 
-import moriyashiine.wendigoism.proxy.ClientProxy;
-import moriyashiine.wendigoism.proxy.ServerProxy;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import io.github.cottonmc.cotton.config.ConfigManager;
+import moriyashiine.wendigoism.common.registry.WDEntityTypes;
+import moriyashiine.wendigoism.common.registry.WDItems;
+import net.fabricmc.api.ModInitializer;
 
-@Mod(Wendigoism.MODID)
-public class Wendigoism {
+public class Wendigoism implements ModInitializer {
 	public static final String MODID = "wendigoism";
 	
-	public static final ServerProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
-	
-	public Wendigoism() {
-		proxy.registerListeners(FMLJavaModLoadingContext.get().getModEventBus());
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WDConfig.SPEC);
+	@Override
+	public void onInitialize() {
+		ConfigManager.loadConfig(WDConfig.class);
+		WDItems.init();
+		WDEntityTypes.init();
 	}
 }

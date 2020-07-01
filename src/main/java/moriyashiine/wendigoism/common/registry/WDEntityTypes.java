@@ -1,29 +1,41 @@
 package moriyashiine.wendigoism.common.registry;
 
+import moriyashiine.wendigoism.WDConfig;
+import moriyashiine.wendigoism.Wendigoism;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+import java.util.HashMap;
+import java.util.Map;
+
 public class WDEntityTypes {
-	public static final EntityType<WendigoEntity> wendigo = create("wendigo", WendigoEntity::new, EntityClassification.MONSTER, 1, 2.8f, false);
+	public static final Map<EntityType<? extends LivingEntity>, DefaultAttributeContainer> ATTRIBUTES = new HashMap<>();
 	
-	private static <T extends Entity> EntityType<T> create(String name, EntityType.IFactory<T> factory, EntityClassification classification, float width, float height, boolean immuneToFire) {
-		EntityType.Builder<T> builder = EntityType.Builder.create(factory, classification).setTrackingRange(64).setUpdateInterval(1).size(width, height);
-		if (immuneToFire) {
-			builder.immuneToFire();
-		}
-		EntityType<T> type = builder.build(name);
-		type.setRegistryName(name);
+	public static final EntityType<WendigoEntity> wendigo = create(WendigoEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, WendigoEntity::new).dimensions(EntityDimensions.fixed(1, 2.8f)).trackable(10, 1).build());
+	
+	private static <T extends LivingEntity> EntityType<T> create(DefaultAttributeContainer attributes, EntityType<T> type)
+	{
+		ATTRIBUTES.put(type, attributes);
 		return type;
 	}
 	
-	@SubscribeEvent
-	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event) {
-		event.getRegistry().register(wendigo);
+	public static void init() {
+		Registry.register(Registry.ENTITY_TYPE, new Identifier(Wendigoism.MODID, "wendigo"), wendigo);
+		if (WDConfig.INSTANCE.enableWendigo) {
+			for (String biomeName : WDConfig.INSTANCE.wendigoBiomes) {
+				Biome biome = Registry.BIOME.get(new Identifier(biomeName));
+				if (biome != null) {
+					biome.getEntitySpawnList(SpawnGroup.MONSTER).add(new Biome.SpawnEntry(wendigo, 1, 1, 1));
+				}
+			}
+		}
 	}
 }

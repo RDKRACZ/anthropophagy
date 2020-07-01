@@ -1,10 +1,11 @@
 {
-  "itemGroup.wendigoism": "Wendigoism",
+  "itemGroup.wendigoism.wendigoism": "Wendigoism",
   "item.wendigoism.wooden_knife": "Wooden Knife",
   "item.wendigoism.stone_knife": "Stone Knife",
   "item.wendigoism.iron_knife": "Iron Knife",
   "item.wendigoism.golden_knife": "Golden Knife",
   "item.wendigoism.diamond_knife": "Diamond Knife",
+  "item.wendigoism.netherite_knife": "Netherite Knife",
   "item.wendigoism.flesh": "Human Flesh",
   "item.wendigoism.cooked_flesh": "Cooked Human Flesh",
   "item.wendigoism.corrupt_flesh": "Corrupt Human Flesh",

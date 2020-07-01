@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "moriyashiine.wendigoism.common.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+	"WDEntityAttributes",
+	"WendigoTracker",
+	"WendigoTracker$Server",
+	"WendigoHandler"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
+}

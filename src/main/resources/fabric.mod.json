@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "wendigoism",
+  "version": "${version}",
+  "name": "Wendigoism",
+  "description": "A remake of the original Cannibalism mod",
+  "authors": [
+	"MoriyaShiine",
+	"cybercat5555",
+	"sorazodia"
+  ],
+  "contact": {
+	"homepage": "https://www.curseforge.com/minecraft/mc-mods/wendigoism",
+	"sources": "https://github.com/MoriyaShiine/wendigoism"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/wendigoism/icon.png",
+  "environment": "*",
+  "entrypoints": {
+	"main": [
+	  "moriyashiine.wendigoism.Wendigoism"
+	],
+	"client": [
+	  "moriyashiine.wendigoism.client.WendigoismClient"
+	]
+  },
+  "mixins": [
+	"wendigoism.mixins.json"
+  ],
+  "depends": {
+	"fabricloader": ">=0.7.4",
+	"fabric": "*",
+	"minecraft": "1.16.x",
+	"cotton-config": ">=1.0.0-rc.1"
+  },
+  "suggests": {
+	"flamingo": "*"
+  }
+}

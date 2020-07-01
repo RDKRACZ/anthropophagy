@@ -6,13 +6,13 @@
   ],
   "key": {
 	"M": {
-	  "item": "minecraft:diamond"
+	  "item": "minecraft:netherite_ingot"
 	},
 	"S": {
 	  "item": "minecraft:stick"
 	}
   },
   "result": {
-	"item": "wendigoism:diamond_knife"
+	"item": "wendigoism:netherite_knife"
   }
 }

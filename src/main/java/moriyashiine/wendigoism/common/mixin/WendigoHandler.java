@@ -110,22 +110,18 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 	
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void handleHunger(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
-		Object obj = this;
-		if (obj instanceof PlayerEntity) {
-			PlayerEntity thisObj = (PlayerEntity) obj;
-			if (!world.isClient) {
-				if (stack.isFood()) {
-					if (!(stack.getItem() instanceof FleshItem) && stack.getItem() != WDItems.WENDIGO_HEART) {
-						int wendigoLevel = getWendigoLevel();
-						if (!getTethered()) {
-							setWendigoLevel(Math.max(wendigoLevel - 10, 0));
-						}
-						if (wendigoLevel >= 40) {
-							FoodComponent food = stack.getItem().getFoodComponent();
-							if (food != null) {
-								int hungerTimer = getHungerTimer();
-								setHungerTimer((int) (hungerTimer + (food.getHunger() * getFoodModifier(wendigoLevel))));
-							}
+		if (!world.isClient) {
+			if (stack.isFood()) {
+				if (!(stack.getItem() instanceof FleshItem) && stack.getItem() != WDItems.WENDIGO_HEART) {
+					int wendigoLevel = getWendigoLevel();
+					if (!getTethered()) {
+						setWendigoLevel(Math.max(wendigoLevel - 10, 0));
+					}
+					if (wendigoLevel >= 40) {
+						FoodComponent food = stack.getItem().getFoodComponent();
+						if (food != null) {
+							int hungerTimer = getHungerTimer();
+							setHungerTimer((int) (hungerTimer + (food.getHunger() * getFoodModifier(wendigoLevel))));
 						}
 					}
 				}

@@ -1,7 +1,7 @@
 package moriyashiine.wendigoism.common.item;
 
 import moriyashiine.wendigoism.Wendigoism;
-import moriyashiine.wendigoism.common.misc.WDDataTrackers;
+import moriyashiine.wendigoism.common.misc.WendigoAccessor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,9 +20,9 @@ public class TetheredHeartItem extends Item {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		TypedActionResult<ItemStack> result;
 		ItemStack stack = user.getStackInHand(hand);
-		boolean tethered = WDDataTrackers.getTethered(user);
-		if (!tethered) {
-			WDDataTrackers.setTethered(user, true);
+		WendigoAccessor wendigoAccessor = (WendigoAccessor) user;
+		if (!wendigoAccessor.getTethered()) {
+			wendigoAccessor.setTethered(true);
 			if (!world.isClient) {
 				user.sendMessage(new TranslatableText("message." + Wendigoism.MODID + ".tether"), false);
 			}

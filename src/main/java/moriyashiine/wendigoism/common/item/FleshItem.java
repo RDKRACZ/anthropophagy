@@ -2,13 +2,12 @@ package moriyashiine.wendigoism.common.item;
 
 import moriyashiine.wendigoism.WDConfig;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
-import moriyashiine.wendigoism.common.misc.WDDataTrackers;
+import moriyashiine.wendigoism.common.misc.WendigoAccessor;
 import moriyashiine.wendigoism.common.registry.WDEntityTypes;
 import moriyashiine.wendigoism.common.registry.WDItems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -39,20 +38,21 @@ public class FleshItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isClient && user instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) user;
-			if (stack.getItem() == WDItems.corrupt_flesh) {
+		if (!world.isClient) {
+			WendigoAccessor wendigoAccessor = (WendigoAccessor) user;
+			int wendigoLevel = wendigoAccessor.getWendigoLevel();
+			if (stack.getItem() == WDItems.CORRUPT_FLESH) {
 				user.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE, 1, 1));
 			}
-			if (!WDDataTrackers.getTethered(player)) {
-				WDDataTrackers.setWendigoLevel(player, Math.min(WDDataTrackers.getWendigoLevel(player) + 10, 300));
+			if (!wendigoAccessor.getTethered()) {
+				wendigoAccessor.setWendigoLevel(Math.min(wendigoLevel + 10, 300));
 			}
-			if (WDDataTrackers.getWendigoLevel(player) == 100) {
-				player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
-				player.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
+			if (wendigoLevel == 100) {
+				user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
+				user.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
 			}
 			if (WDConfig.INSTANCE.enableWendigo) {
-				attemptSpawnWendigo(world, user, WDDataTrackers.getWendigoLevel(player));
+				attemptSpawnWendigo(world, user, wendigoLevel);
 			}
 		}
 		return super.finishUsing(stack, world, user);
@@ -82,7 +82,7 @@ public class FleshItem extends Item {
 		}
 		Random random = world.random;
 		if (random.nextFloat() < chance) {
-			WendigoEntity wendigo = WDEntityTypes.wendigo.create(world);
+			WendigoEntity wendigo = WDEntityTypes.WENDIGO.create(world);
 			if (wendigo != null) {
 				boolean valid = false;
 				BlockPos pos = target.getBlockPos();

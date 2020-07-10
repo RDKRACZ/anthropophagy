@@ -34,9 +34,8 @@ public class WendigoEntity extends HostileEntity {
 		super(entityType, world);
 	}
 	
-	public static DefaultAttributeContainer createAttributes()
-	{
-		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, WDConfig.INSTANCE.strongerWendigo ? 120 : 60).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, WDConfig.INSTANCE.strongerWendigo ? 12 : 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48).build();
+	public static DefaultAttributeContainer.Builder createAttributes() {
+		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, WDConfig.INSTANCE.strongerWendigo ? 120 : 60).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, WDConfig.INSTANCE.strongerWendigo ? 12 : 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
 	}
 	
 	@Override
@@ -53,7 +52,7 @@ public class WendigoEntity extends HostileEntity {
 	@Override
 	protected void dropEquipment(DamageSource source, int lootingMultiplier, boolean allowDrops) {
 		super.dropEquipment(source, lootingMultiplier, allowDrops);
-		ItemEntity itemEntity = dropItem(WDItems.wendigo_heart);
+		ItemEntity itemEntity = dropItem(WDItems.WENDIGO_HEART);
 		if (itemEntity != null) {
 			itemEntity.setCovetedItem();
 		}

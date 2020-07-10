@@ -11,6 +11,6 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 public class WendigoismClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		EntityRendererRegistry.INSTANCE.register(WDEntityTypes.wendigo, ((entityRenderDispatcher, context) -> new WendigoEntityRenderer(entityRenderDispatcher)));
+		EntityRendererRegistry.INSTANCE.register(WDEntityTypes.WENDIGO, ((entityRenderDispatcher, context) -> new WendigoEntityRenderer(entityRenderDispatcher)));
 	}
 }

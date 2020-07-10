@@ -3,6 +3,7 @@ package moriyashiine.wendigoism.common.registry;
 import moriyashiine.wendigoism.WDConfig;
 import moriyashiine.wendigoism.Wendigoism;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -19,21 +20,20 @@ import java.util.Map;
 public class WDEntityTypes {
 	public static final Map<EntityType<? extends LivingEntity>, DefaultAttributeContainer> ATTRIBUTES = new HashMap<>();
 	
-	public static final EntityType<WendigoEntity> wendigo = create(WendigoEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, WendigoEntity::new).dimensions(EntityDimensions.fixed(1, 2.8f)).trackable(10, 1).build());
+	public static final EntityType<WendigoEntity> WENDIGO = create(WendigoEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, WendigoEntity::new).dimensions(EntityDimensions.fixed(1, 2.8f)).trackable(10, 1).build());
 	
-	private static <T extends LivingEntity> EntityType<T> create(DefaultAttributeContainer attributes, EntityType<T> type)
-	{
-		ATTRIBUTES.put(type, attributes);
+	private static <T extends LivingEntity> EntityType<T> create(DefaultAttributeContainer.Builder attributes, EntityType<T> type) {
+		FabricDefaultAttributeRegistry.register(type, attributes);
 		return type;
 	}
 	
 	public static void init() {
-		Registry.register(Registry.ENTITY_TYPE, new Identifier(Wendigoism.MODID, "wendigo"), wendigo);
+		Registry.register(Registry.ENTITY_TYPE, new Identifier(Wendigoism.MODID, "wendigo"), WENDIGO);
 		if (WDConfig.INSTANCE.enableWendigo) {
 			for (String biomeName : WDConfig.INSTANCE.wendigoBiomes) {
 				Biome biome = Registry.BIOME.get(new Identifier(biomeName));
 				if (biome != null) {
-					biome.getEntitySpawnList(SpawnGroup.MONSTER).add(new Biome.SpawnEntry(wendigo, 1, 1, 1));
+					biome.getEntitySpawnList(SpawnGroup.MONSTER).add(new Biome.SpawnEntry(WENDIGO, 1, 1, 1));
 				}
 			}
 		}

@@ -4,10 +4,8 @@
   "package": "moriyashiine.wendigoism.common.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-	"WDEntityAttributes",
-	"WendigoTracker",
-	"WendigoTracker$Server",
-	"WendigoHandler"
+	"WendigoHandler",
+	"WendigoHandler$Server"
   ],
   "injectors": {
 	"defaultRequire": 1

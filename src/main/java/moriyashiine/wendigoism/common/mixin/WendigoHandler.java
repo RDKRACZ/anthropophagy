@@ -1,13 +1,12 @@
 package moriyashiine.wendigoism.common.mixin;
 
+import com.mojang.authlib.GameProfile;
 import moriyashiine.wendigoism.WDConfig;
 import moriyashiine.wendigoism.common.item.FleshItem;
 import moriyashiine.wendigoism.common.item.KnifeItem;
-import moriyashiine.wendigoism.common.misc.WDDataTrackers;
+import moriyashiine.wendigoism.common.misc.WendigoAccessor;
 import moriyashiine.wendigoism.common.registry.WDItems;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -15,9 +14,12 @@ import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,36 +28,79 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public class WendigoHandler {
+public abstract class WendigoHandler extends Entity implements WendigoAccessor {
+	private boolean tethered = false;
+	
+	private int wendigoLevel = 0, hungerTimer = 0;
+	
+	public WendigoHandler(EntityType<?> type, World world) {
+		super(type, world);
+	}
+	
+	@Override
+	public boolean getTethered() {
+		return tethered;
+	}
+	
+	@Override
+	public void setTethered(boolean tethered) {
+		this.tethered = tethered;
+	}
+	
+	@Override
+	public int getWendigoLevel() {
+		return wendigoLevel;
+	}
+	
+	@Override
+	public void setWendigoLevel(int wendigoLevel) {
+		this.wendigoLevel = wendigoLevel;
+	}
+	
+	@Override
+	public int getHungerTimer() {
+		return hungerTimer;
+	}
+	
+	@Override
+	public void setHungerTimer(int hungerTimer) {
+		this.hungerTimer = hungerTimer;
+	}
+	
+	@Shadow
+	public abstract ItemStack getEquippedStack(EquipmentSlot slot);
+	
+	@SuppressWarnings("UnusedReturnValue")
+	@Shadow
+	public abstract boolean addStatusEffect(StatusEffectInstance effect);
+	
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
-		Object obj = this;
-		if (obj instanceof PlayerEntity) {
-			PlayerEntity thisObj = (PlayerEntity) obj;
-			if (!thisObj.world.isClient) {
-				int wendigoLevel = WDDataTrackers.getWendigoLevel(thisObj);
-				if (wendigoLevel >= 100) {
-					thisObj.dropStack(thisObj.getEquippedStack(EquipmentSlot.LEGS));
-				}
-				if (wendigoLevel >= 150) {
-					thisObj.dropStack(thisObj.getEquippedStack(EquipmentSlot.HEAD));
-				}
-				if (wendigoLevel >= 170) {
-					thisObj.dropStack(thisObj.getEquippedStack(EquipmentSlot.FEET));
-				}
-				if (wendigoLevel >= 240) {
-					thisObj.dropStack(thisObj.getEquippedStack(EquipmentSlot.CHEST));
-				}
-				if (thisObj.age % 200 == 0) {
-					for (StatusEffectInstance effect : getValidEffects(wendigoLevel)) {
-						thisObj.addStatusEffect(effect);
-					}
-				}
-				int hungerTimer = WDDataTrackers.getHungerTimer(thisObj);
+		if (!world.isClient) {
+			int wendigoLevel = getWendigoLevel();
+			if (wendigoLevel >= 100) {
+				dropStack(getEquippedStack(EquipmentSlot.LEGS));
+			}
+			if (wendigoLevel >= 150) {
+				dropStack(getEquippedStack(EquipmentSlot.HEAD));
+			}
+			if (wendigoLevel >= 170) {
+				dropStack(getEquippedStack(EquipmentSlot.FEET));
+			}
+			if (wendigoLevel >= 240) {
+				dropStack(getEquippedStack(EquipmentSlot.CHEST));
+			}
+			if (age % 200 == 0) {
+				getValidEffects(wendigoLevel).forEach(this::addStatusEffect);
+			}
+			Object obj = this;
+			if (obj instanceof PlayerEntity) {
+				PlayerEntity thisObj = (PlayerEntity) obj;
+				int hungerTimer = getHungerTimer();
 				if (hungerTimer > 0) {
-					WDDataTrackers.setHungerTimer(thisObj, --hungerTimer);
+					setHungerTimer(--hungerTimer);
 					HungerManager hungerManager = thisObj.getHungerManager();
 					hungerManager.setFoodLevel(Math.max(hungerManager.getFoodLevel() - 1, 0));
 				}
@@ -70,16 +115,16 @@ public class WendigoHandler {
 			PlayerEntity thisObj = (PlayerEntity) obj;
 			if (!world.isClient) {
 				if (stack.isFood()) {
-					if (!(stack.getItem() instanceof FleshItem) && stack.getItem() != WDItems.wendigo_heart) {
-						int wendigoLevel = WDDataTrackers.getWendigoLevel(thisObj);
-						if (!WDDataTrackers.getTethered(thisObj)) {
-							WDDataTrackers.setWendigoLevel(thisObj, Math.max(wendigoLevel - 10, 0));
+					if (!(stack.getItem() instanceof FleshItem) && stack.getItem() != WDItems.WENDIGO_HEART) {
+						int wendigoLevel = getWendigoLevel();
+						if (!getTethered()) {
+							setWendigoLevel(Math.max(wendigoLevel - 10, 0));
 						}
 						if (wendigoLevel >= 40) {
 							FoodComponent food = stack.getItem().getFoodComponent();
 							if (food != null) {
-								int hungerTimer = WDDataTrackers.getHungerTimer(thisObj);
-								WDDataTrackers.setHungerTimer(thisObj, (int) (hungerTimer + (food.getHunger() * getFoodModifier(wendigoLevel))));
+								int hungerTimer = getHungerTimer();
+								setHungerTimer((int) (hungerTimer + (food.getHunger() * getFoodModifier(wendigoLevel))));
 							}
 						}
 					}
@@ -90,43 +135,46 @@ public class WendigoHandler {
 	
 	@Inject(method = "damage", at = @At("HEAD"))
 	private void dropFlesh(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		Object obj = this;
-		if (obj instanceof LivingEntity) {
-			LivingEntity thisObj = (LivingEntity) obj;
-			World world = thisObj.world;
-			if (!world.isClient) {
-				if (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem) {
-					KnifeItem.DROPS.stream().filter(e -> e.type == thisObj.getType()).findFirst().ifPresent(c -> {
-						if (world.random.nextFloat() * WDConfig.INSTANCE.damageNeeded < amount) {
-							ItemStack drop = new ItemStack(thisObj.getFireTicks() > 0 ? c.fireDrop : c.normalDrop);
-							if (drop.getItem() instanceof FleshItem) {
-								drop.getOrCreateTag().putString("name", thisObj.getDisplayName().getString());
-							}
-							BlockPos pos = thisObj.getBlockPos();
-							world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
+		if (!world.isClient) {
+			if (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem) {
+				KnifeItem.DROPS.stream().filter(e -> e.type == getType()).findFirst().ifPresent(c -> {
+					if (world.random.nextFloat() * WDConfig.INSTANCE.damageNeeded < amount) {
+						ItemStack drop = new ItemStack(getFireTicks() > 0 ? c.fireDrop : c.normalDrop);
+						if (drop.getItem() instanceof FleshItem) {
+							drop.getOrCreateTag().putString("name", getDisplayName().getString());
 						}
-					});
-				}
+						BlockPos pos = getBlockPos();
+						world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
+					}
+				});
 			}
 		}
 	}
 	
 	@Inject(method = "onDeath", at = @At("HEAD"))
 	private void dropHeart(DamageSource source, CallbackInfo callbackInfo) {
-		Object obj = this;
-		if (obj instanceof PlayerEntity) {
-			PlayerEntity thisObj = (PlayerEntity) obj;
-			World world = thisObj.world;
-			if (!world.isClient) {
-				if (WDDataTrackers.getTethered(thisObj)) {
-					thisObj.dropStack(new ItemStack(WDItems.wendigo_heart));
-					
-				}
+		if (!world.isClient) {
+			if (getTethered()) {
+				dropStack(new ItemStack(WDItems.WENDIGO_HEART));
 			}
 		}
 	}
 	
-	private List<StatusEffectInstance> getValidEffects(int level) {
+	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
+	public void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
+		setTethered(tag.getBoolean("Tethered"));
+		setWendigoLevel(tag.getInt("WendigoLevel"));
+		setHungerTimer(tag.getInt("HungerTimer"));
+	}
+	
+	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
+	public void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
+		tag.putBoolean("Tethered", getTethered());
+		tag.putInt("WendigoLevel", getWendigoLevel());
+		tag.putInt("HungerTimer", getHungerTimer());
+	}
+	
+	private static List<StatusEffectInstance> getValidEffects(int level) {
 		List<StatusEffectInstance> fin = new ArrayList<>();
 		if (level >= 30) {
 			fin.add(new StatusEffectInstance(StatusEffects.SPEED, 600));
@@ -151,7 +199,7 @@ public class WendigoHandler {
 		return fin;
 	}
 	
-	private float getFoodModifier(int level) {
+	private static float getFoodModifier(int level) {
 		if (level >= 300) {
 			return 1.6f;
 		}
@@ -171,5 +219,22 @@ public class WendigoHandler {
 			return 1.1f;
 		}
 		return 1;
+	}
+	
+	@Mixin(ServerPlayerEntity.class)
+	private static abstract class Server extends PlayerEntity implements WendigoAccessor {
+		public Server(World world, BlockPos blockPos, GameProfile gameProfile) {
+			super(world, blockPos, gameProfile);
+		}
+		
+		@Inject(method = "copyFrom", at = @At("TAIL"))
+		public void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
+			if (alive) {
+				WendigoAccessor oldWendigo = (WendigoAccessor) oldPlayer;
+				setTethered(oldWendigo.getTethered());
+				setWendigoLevel(oldWendigo.getWendigoLevel());
+				setHungerTimer(oldWendigo.getHungerTimer());
+			}
+		}
 	}
 }

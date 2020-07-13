@@ -1,4 +1,4 @@
-package moriyashiine.wendigoism;
+package moriyashiine.wendigoism.common;
 
 import blue.endless.jankson.Comment;
 import io.github.cottonmc.cotton.config.annotations.ConfigFile;

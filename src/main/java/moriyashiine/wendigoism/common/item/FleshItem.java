@@ -1,8 +1,8 @@
 package moriyashiine.wendigoism.common.item;
 
-import moriyashiine.wendigoism.WDConfig;
+import moriyashiine.wendigoism.api.accessor.WendigoAccessor;
+import moriyashiine.wendigoism.common.WDConfig;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
-import moriyashiine.wendigoism.common.misc.WendigoAccessor;
 import moriyashiine.wendigoism.common.registry.WDEntityTypes;
 import moriyashiine.wendigoism.common.registry.WDItems;
 import net.minecraft.entity.LivingEntity;

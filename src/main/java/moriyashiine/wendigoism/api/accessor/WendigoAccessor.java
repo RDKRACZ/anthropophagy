@@ -1,4 +1,4 @@
-package moriyashiine.wendigoism.common.misc;
+package moriyashiine.wendigoism.api.accessor;
 
 public interface WendigoAccessor {
 	boolean getTethered();

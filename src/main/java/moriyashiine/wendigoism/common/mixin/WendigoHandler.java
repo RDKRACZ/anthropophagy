@@ -1,13 +1,16 @@
 package moriyashiine.wendigoism.common.mixin;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.wendigoism.WDConfig;
+import moriyashiine.wendigoism.api.accessor.WendigoAccessor;
+import moriyashiine.wendigoism.common.WDConfig;
 import moriyashiine.wendigoism.common.item.FleshItem;
 import moriyashiine.wendigoism.common.item.KnifeItem;
-import moriyashiine.wendigoism.common.misc.WendigoAccessor;
 import moriyashiine.wendigoism.common.registry.WDItems;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.HungerManager;
@@ -31,9 +34,10 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class WendigoHandler extends Entity implements WendigoAccessor {
-	private boolean tethered = false;
+	private static final TrackedData<Boolean> TETHERED = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
-	private int wendigoLevel = 0, hungerTimer = 0;
+	private static final TrackedData<Integer> WENDIGO_LEVEL = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+	private static final TrackedData<Integer> HUNGER_TIMER = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
 	public WendigoHandler(EntityType<?> type, World world) {
 		super(type, world);
@@ -41,32 +45,32 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 	
 	@Override
 	public boolean getTethered() {
-		return tethered;
+		return dataTracker.get(TETHERED);
 	}
 	
 	@Override
 	public void setTethered(boolean tethered) {
-		this.tethered = tethered;
+		dataTracker.set(TETHERED, tethered);
 	}
 	
 	@Override
 	public int getWendigoLevel() {
-		return wendigoLevel;
+		return dataTracker.get(WENDIGO_LEVEL);
 	}
 	
 	@Override
 	public void setWendigoLevel(int wendigoLevel) {
-		this.wendigoLevel = wendigoLevel;
+		dataTracker.set(WENDIGO_LEVEL, wendigoLevel);
 	}
 	
 	@Override
 	public int getHungerTimer() {
-		return hungerTimer;
+		return dataTracker.get(HUNGER_TIMER);
 	}
 	
 	@Override
 	public void setHungerTimer(int hungerTimer) {
-		this.hungerTimer = hungerTimer;
+		dataTracker.set(HUNGER_TIMER, hungerTimer);
 	}
 	
 	@Shadow
@@ -157,17 +161,24 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 	}
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	public void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
+	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		setTethered(tag.getBoolean("Tethered"));
 		setWendigoLevel(tag.getInt("WendigoLevel"));
 		setHungerTimer(tag.getInt("HungerTimer"));
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	public void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
+	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		tag.putBoolean("Tethered", getTethered());
 		tag.putInt("WendigoLevel", getWendigoLevel());
 		tag.putInt("HungerTimer", getHungerTimer());
+	}
+	
+	@Inject(method = "initDataTracker", at = @At("TAIL"))
+	private void initDataTracker(CallbackInfo callbackInfo) {
+		dataTracker.startTracking(TETHERED, false);
+		dataTracker.startTracking(WENDIGO_LEVEL, 0);
+		dataTracker.startTracking(HUNGER_TIMER, 0);
 	}
 	
 	private static List<StatusEffectInstance> getValidEffects(int level) {

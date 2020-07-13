@@ -1,6 +1,6 @@
 package moriyashiine.wendigoism.common.entity;
 
-import moriyashiine.wendigoism.WDConfig;
+import moriyashiine.wendigoism.common.WDConfig;
 import moriyashiine.wendigoism.common.registry.WDItems;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;

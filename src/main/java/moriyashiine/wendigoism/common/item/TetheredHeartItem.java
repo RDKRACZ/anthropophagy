@@ -1,7 +1,7 @@
 package moriyashiine.wendigoism.common.item;
 
-import moriyashiine.wendigoism.Wendigoism;
-import moriyashiine.wendigoism.common.misc.WendigoAccessor;
+import moriyashiine.wendigoism.api.accessor.WendigoAccessor;
+import moriyashiine.wendigoism.common.Wendigoism;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

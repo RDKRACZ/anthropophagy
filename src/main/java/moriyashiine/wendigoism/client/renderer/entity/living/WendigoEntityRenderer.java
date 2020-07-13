@@ -1,7 +1,7 @@
 package moriyashiine.wendigoism.client.renderer.entity.living;
 
-import moriyashiine.wendigoism.Wendigoism;
 import moriyashiine.wendigoism.client.model.entity.living.WendigoEntityModel;
+import moriyashiine.wendigoism.common.Wendigoism;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

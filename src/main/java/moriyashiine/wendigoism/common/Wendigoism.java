@@ -1,4 +1,4 @@
-package moriyashiine.wendigoism;
+package moriyashiine.wendigoism.common;
 
 import io.github.cottonmc.cotton.config.ConfigManager;
 import moriyashiine.wendigoism.common.registry.WDEntityTypes;

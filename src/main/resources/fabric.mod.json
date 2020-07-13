@@ -18,7 +18,7 @@
   "environment": "*",
   "entrypoints": {
 	"main": [
-	  "moriyashiine.wendigoism.Wendigoism"
+	  "moriyashiine.wendigoism.common.Wendigoism"
 	],
 	"client": [
 	  "moriyashiine.wendigoism.client.WendigoismClient"

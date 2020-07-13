@@ -1,7 +1,7 @@
 package moriyashiine.wendigoism.common.registry;
 
-import moriyashiine.wendigoism.WDConfig;
-import moriyashiine.wendigoism.Wendigoism;
+import moriyashiine.wendigoism.common.WDConfig;
+import moriyashiine.wendigoism.common.Wendigoism;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;

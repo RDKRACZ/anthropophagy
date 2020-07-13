@@ -24,14 +24,14 @@ public class TetheredHeartItem extends Item {
 		if (!wendigoAccessor.getTethered()) {
 			wendigoAccessor.setTethered(true);
 			if (!world.isClient) {
-				user.sendMessage(new TranslatableText("message." + Wendigoism.MODID + ".tether"), false);
+				user.sendMessage(new TranslatableText("message." + Wendigoism.MODID + ".tether"), true);
 			}
 			stack.decrement(1);
 			result = new TypedActionResult<>(ActionResult.SUCCESS, stack);
 		}
 		else {
 			if (!world.isClient) {
-				user.sendMessage(new TranslatableText("message." + Wendigoism.MODID + ".tethered"), false);
+				user.sendMessage(new TranslatableText("message." + Wendigoism.MODID + ".tethered"), true);
 			}
 			result = new TypedActionResult<>(ActionResult.FAIL, stack);
 		}

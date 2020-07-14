@@ -85,16 +85,16 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 		if (!world.isClient) {
 			int wendigoLevel = getWendigoLevel();
 			if (wendigoLevel >= 100) {
-				dropStack(getEquippedStack(EquipmentSlot.LEGS));
+				dropStack(getEquippedStack(EquipmentSlot.LEGS).split(1));
 			}
 			if (wendigoLevel >= 150) {
-				dropStack(getEquippedStack(EquipmentSlot.HEAD));
+				dropStack(getEquippedStack(EquipmentSlot.HEAD).split(1));
 			}
 			if (wendigoLevel >= 170) {
-				dropStack(getEquippedStack(EquipmentSlot.FEET));
+				dropStack(getEquippedStack(EquipmentSlot.FEET).split(1));
 			}
 			if (wendigoLevel >= 240) {
-				dropStack(getEquippedStack(EquipmentSlot.CHEST));
+				dropStack(getEquippedStack(EquipmentSlot.CHEST).split(1));
 			}
 			if (age % 200 == 0) {
 				getValidEffects(wendigoLevel).forEach(this::addStatusEffect);

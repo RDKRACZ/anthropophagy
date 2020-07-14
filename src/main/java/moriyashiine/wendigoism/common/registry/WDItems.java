@@ -11,11 +11,11 @@ import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class WDItems {
-	private static final Map<Item, Identifier> ITEMS = new HashMap<>();
+	private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
 	
 	public static final ItemGroup group = FabricItemGroupBuilder.build(new Identifier(Wendigoism.MODID, Wendigoism.MODID), () -> new ItemStack(WDItems.IRON_KNIFE));
 	

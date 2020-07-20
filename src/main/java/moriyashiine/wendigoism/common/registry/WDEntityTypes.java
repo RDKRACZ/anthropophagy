@@ -30,9 +30,8 @@ public class WDEntityTypes {
 	public static void init() {
 		Registry.register(Registry.ENTITY_TYPE, new Identifier(Wendigoism.MODID, "wendigo"), WENDIGO);
 		if (WDConfig.INSTANCE.enableWendigo) {
-			for (String biomeName : WDConfig.INSTANCE.wendigoBiomes) {
-				Biome biome = Registry.BIOME.get(new Identifier(biomeName));
-				if (biome != null) {
+			for (Biome biome : Registry.BIOME) {
+				if (biome.getCategory() == Biome.Category.TAIGA) {
 					biome.getEntitySpawnList(SpawnGroup.MONSTER).add(new Biome.SpawnEntry(WENDIGO, 1, 1, 1));
 				}
 			}

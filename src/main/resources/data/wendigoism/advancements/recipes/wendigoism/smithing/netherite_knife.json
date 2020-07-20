@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "wendigoism:smithing/netherite_knife_smithing"
+      "wendigoism:smithing/netherite_knife"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "wendigoism:smithing/netherite_knife_smithing"
+        "recipe": "wendigoism:smithing/netherite_knife"
       }
     }
   },

@@ -1,0 +1,6 @@
+{
+  "type": "wendigoism:flesh_drop",
+  "entity_type": "minecraft:illusioner",
+  "raw_drop": "wendigoism:corrupt_flesh",
+  "cooked_drop": "wendigoism:corrupt_flesh"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "wendigoism:flesh_drop",
+  "entity_type": "minecraft:hoglin",
+  "raw_drop": "minecraft:porkchop",
+  "cooked_drop": "minecraft:cooked_porkchop"
+}

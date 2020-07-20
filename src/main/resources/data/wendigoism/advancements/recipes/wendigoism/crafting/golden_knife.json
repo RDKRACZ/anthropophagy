@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": [
-      "wendigoism:crafting/golden_knife"
-    ]
+	"recipes": [
+	  "wendigoism:crafting/golden_knife"
+	]
   },
   "criteria": {
-    "has_gold_ingot": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "minecraft:gold_ingot"
-          }
-        ]
-      }
-    },
-    "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "wendigoism:golden_knife"
-      }
-    }
+	"has_gold_ingot": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "minecraft:gold_ingot"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "wendigoism:golden_knife"
+	  }
+	}
   },
   "requirements": [
-    [
-      "has_gold_ingot",
-      "has_the_recipe"
-    ]
+	[
+	  "has_gold_ingot",
+	  "has_the_recipe"
+	]
   ]
 }

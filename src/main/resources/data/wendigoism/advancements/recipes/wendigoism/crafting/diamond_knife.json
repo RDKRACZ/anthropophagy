@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": [
-      "wendigoism:crafting/diamond_knife"
-    ]
+	"recipes": [
+	  "wendigoism:crafting/diamond_knife"
+	]
   },
   "criteria": {
-    "has_diamond": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "minecraft:diamond"
-          }
-        ]
-      }
-    },
-    "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "wendigoism:diamond_knife"
-      }
-    }
+	"has_diamond": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "minecraft:diamond"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "wendigoism:diamond_knife"
+	  }
+	}
   },
   "requirements": [
-    [
-      "has_diamond",
-      "has_the_recipe"
-    ]
+	[
+	  "has_diamond",
+	  "has_the_recipe"
+	]
   ]
 }

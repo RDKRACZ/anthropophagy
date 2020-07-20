@@ -19,9 +19,6 @@ public class WDConfig {
 	@Comment("The amount of damage needed to get a guaranteed flesh drop")
 	public int damageNeeded = 8;
 	
-	@Comment("The map for Entities -> Items when right clicked with a knife. Format: EntityType/RegularDrop/FireDrop")
-	public List<String> dropMap = Arrays.asList("minecraft:player/wendigoism:flesh/wendigoism:cooked_flesh", "minecraft:villager/wendigoism:flesh/wendigoism:cooked_flesh", "minecraft:wandering_trader/wendigoism:flesh/wendigoism:cooked_flesh", "minecraft:witch/wendigoism:corrupt_flesh/wendigoism:corrupt_flesh", "minecraft:pillager/wendigoism:flesh/wendigoism:cooked_flesh", "minecraft:vindicator/wendigoism:flesh/wendigoism:cooked_flesh", "minecraft:evoker/wendigoism:corrupt_flesh/wendigoism:corrupt_flesh", "minecraft:illusioner/wendigoism:corrupt_flesh/wendigoism:corrupt_flesh", "minecraft:pig/minecraft:porkchop/minecraft:cooked_porkchop", "minecraft:cow/minecraft:beef/minecraft:cooked_beef", "minecraft:mooshroom/minecraft:beef/minecraft:cooked_beef", "minecraft:sheep/minecraft:mutton/minecraft:cooked_mutton", "minecraft:chicken/minecraft:chicken/minecraft:cooked_chicken", "minecraft:rabbit/minecraft:rabbit/minecraft:cooked_rabbit");
-	
 	@Comment("Whether or not the Wendigo will have 120 health instead of 60 and deal 12 damage instead of 6")
 	public boolean strongerWendigo = false;
 }

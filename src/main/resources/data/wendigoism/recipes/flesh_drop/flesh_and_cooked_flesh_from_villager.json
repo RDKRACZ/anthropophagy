@@ -1,0 +1,6 @@
+{
+  "type": "wendigoism:flesh_drop",
+  "entity_type": "minecraft:villager",
+  "raw_drop": "wendigoism:flesh",
+  "cooked_drop": "wendigoism:cooked_flesh"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "wendigoism:flesh_drop",
+  "entity_type": "minecraft:mooshroom",
+  "raw_drop": "minecraft:beef",
+  "cooked_drop": "minecraft:cooked_beef"
+}

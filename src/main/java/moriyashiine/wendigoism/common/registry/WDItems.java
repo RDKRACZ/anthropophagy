@@ -1,12 +1,10 @@
 package moriyashiine.wendigoism.common.registry;
 
-import moriyashiine.wendigoism.common.WDConfig;
 import moriyashiine.wendigoism.common.Wendigoism;
 import moriyashiine.wendigoism.common.item.FleshItem;
 import moriyashiine.wendigoism.common.item.KnifeItem;
 import moriyashiine.wendigoism.common.item.TetheredHeartItem;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -45,27 +43,5 @@ public class WDItems {
 	
 	public static void init() {
 		ITEMS.keySet().forEach(item -> Registry.register(Registry.ITEM, ITEMS.get(item), item));
-		
-		for (String string : WDConfig.INSTANCE.dropMap) {
-			String[] parts = string.split("/");
-			if (parts.length != 3) {
-				throw new IllegalArgumentException("Failed to parse " + string + ", there must be 2 '/' characters.");
-			}
-			EntityType<?> type = null;
-			Item normal = null, fire = null;
-			for (int i = 0; i < parts.length; i++) {
-				String part = parts[i];
-				if (i == 0) {
-					type = Registry.ENTITY_TYPE.get(new Identifier(part));
-				}
-				else if (i == 1) {
-					normal = Registry.ITEM.get(new Identifier(part));
-				}
-				else {
-					fire = Registry.ITEM.get(new Identifier(part));
-				}
-			}
-			KnifeItem.DROPS.add(new KnifeItem.DropEntry(type, normal, fire));
-		}
 	}
 }

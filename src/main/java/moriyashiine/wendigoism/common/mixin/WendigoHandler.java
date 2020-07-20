@@ -6,6 +6,7 @@ import moriyashiine.wendigoism.common.WDConfig;
 import moriyashiine.wendigoism.common.item.FleshItem;
 import moriyashiine.wendigoism.common.item.KnifeItem;
 import moriyashiine.wendigoism.common.registry.WDItems;
+import moriyashiine.wendigoism.common.registry.WDRecipeTypes;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -137,14 +138,16 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 	private void dropFlesh(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
 			if (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem) {
-				KnifeItem.DROPS.stream().filter(e -> e.type == getType()).findFirst().ifPresent(c -> {
-					if (world.random.nextFloat() * WDConfig.INSTANCE.damageNeeded < amount) {
-						ItemStack drop = new ItemStack(getFireTicks() > 0 ? c.fireDrop : c.normalDrop);
-						if (drop.getItem() instanceof FleshItem) {
-							drop.getOrCreateTag().putString("name", getDisplayName().getString());
+				world.getRecipeManager().method_30027(WDRecipeTypes.flesh_drop_type).forEach(recipe -> {
+					if (recipe.entity_type == getType()) {
+						if (world.random.nextFloat() * WDConfig.INSTANCE.damageNeeded < amount) {
+							ItemStack drop = new ItemStack(getFireTicks() > 0 ? recipe.cooked_drop : recipe.raw_drop);
+							if (drop.getItem() instanceof FleshItem) {
+								drop.getOrCreateTag().putString("name", getDisplayName().getString());
+							}
+							BlockPos pos = getBlockPos();
+							world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
 						}
-						BlockPos pos = getBlockPos();
-						world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
 					}
 				});
 			}

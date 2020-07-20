@@ -1,0 +1,6 @@
+{
+  "type": "wendigoism:flesh_drop",
+  "entity_type": "minecraft:chicken",
+  "raw_drop": "minecraft:chicken",
+  "cooked_drop": "minecraft:cooked_chicken"
+}

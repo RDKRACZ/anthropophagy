@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+	"recipes": [
+	  "wendigoism:smelting/cooked_flesh_from_campfire_cooking"
+	]
+  },
+  "criteria": {
+	"has_flesh": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "wendigoism:flesh"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "wendigoism:smelting/cooked_flesh_from_campfire_cooking"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_flesh",
+	  "has_the_recipe"
+	]
+  ]
+}

@@ -3,6 +3,7 @@ package moriyashiine.wendigoism.common.registry;
 import moriyashiine.wendigoism.common.WDConfig;
 import moriyashiine.wendigoism.common.Wendigoism;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
+import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
@@ -30,11 +31,21 @@ public class WDEntityTypes {
 	public static void init() {
 		Registry.register(Registry.ENTITY_TYPE, new Identifier(Wendigoism.MODID, "wendigo"), WENDIGO);
 		if (WDConfig.INSTANCE.enableWendigo) {
+			Biome.SpawnEntry entry = new Biome.SpawnEntry(WENDIGO, 1, 1, 1);
 			for (Biome biome : Registry.BIOME) {
 				if (biome.getCategory() == Biome.Category.TAIGA) {
-					biome.getEntitySpawnList(SpawnGroup.MONSTER).add(new Biome.SpawnEntry(WENDIGO, 1, 1, 1));
+					addEntitySpawn(biome, WENDIGO.getSpawnGroup(), entry);
 				}
 			}
+			RegistryEntryAddedCallback.event(Registry.BIOME).register((i, identifier, biome) -> {
+				if (biome.getCategory() == Biome.Category.TAIGA) {
+					addEntitySpawn(biome, WENDIGO.getSpawnGroup(), entry);
+				}
+			});
 		}
+	}
+	
+	private static void addEntitySpawn(Biome biome, SpawnGroup group, Biome.SpawnEntry entry) {
+		biome.getEntitySpawnList(group).add(entry);
 	}
 }

@@ -9,7 +9,7 @@ public class WDConfig {
 	
 	@Comment("Whether or not the Wendigo should spawn by any means")
 	public boolean enableWendigo = true;
-
+	
 	@Comment("The amount of damage needed to get a guaranteed flesh drop")
 	public int damageNeeded = 8;
 	

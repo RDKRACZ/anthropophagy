@@ -34,18 +34,14 @@ public class WDEntityTypes {
 			Biome.SpawnEntry entry = new Biome.SpawnEntry(WENDIGO, 1, 1, 1);
 			for (Biome biome : Registry.BIOME) {
 				if (biome.getCategory() == Biome.Category.TAIGA) {
-					addEntitySpawn(biome, WENDIGO.getSpawnGroup(), entry);
+					biome.getEntitySpawnList(WENDIGO.getSpawnGroup()).add(entry);
 				}
 			}
 			RegistryEntryAddedCallback.event(Registry.BIOME).register((i, identifier, biome) -> {
 				if (biome.getCategory() == Biome.Category.TAIGA) {
-					addEntitySpawn(biome, WENDIGO.getSpawnGroup(), entry);
+					biome.getEntitySpawnList(WENDIGO.getSpawnGroup()).add(entry);
 				}
 			});
 		}
-	}
-	
-	private static void addEntitySpawn(Biome biome, SpawnGroup group, Biome.SpawnEntry entry) {
-		biome.getEntitySpawnList(group).add(entry);
 	}
 }

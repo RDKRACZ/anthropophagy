@@ -18,7 +18,7 @@ public class KnifeItem extends SwordItem {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		if (user.isSneaking()) {
 			user.attack(user);
-			return new TypedActionResult<>(ActionResult.SUCCESS, user.getStackInHand(hand));
+			return new TypedActionResult<>(ActionResult.success(world.isClient), user.getStackInHand(hand));
 		}
 		return super.use(world, user, hand);
 	}

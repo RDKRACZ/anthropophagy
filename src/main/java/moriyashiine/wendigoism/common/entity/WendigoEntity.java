@@ -1,8 +1,11 @@
 package moriyashiine.wendigoism.common.entity;
 
-import moriyashiine.wendigoism.common.WDConfig;
+import moriyashiine.wendigoism.common.Wendigoism;
 import moriyashiine.wendigoism.common.registry.WDItems;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -16,16 +19,12 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.passive.AbstractTraderEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-
-import java.util.Objects;
 
 public class WendigoEntity extends HostileEntity {
 	public static final TrackedData<Boolean> ATTACKING = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -35,7 +34,7 @@ public class WendigoEntity extends HostileEntity {
 	}
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
-		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, WDConfig.INSTANCE.strongerWendigo ? 120 : 60).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, WDConfig.INSTANCE.strongerWendigo ? 12 : 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
+		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, Wendigoism.CONFIG.strongerWendigo ? 120 : 60).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, Wendigoism.CONFIG.strongerWendigo ? 12 : 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
 	}
 	
 	@Override
@@ -92,16 +91,5 @@ public class WendigoEntity extends HostileEntity {
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, e -> e instanceof PlayerEntity || e instanceof AbstractTraderEntity || e instanceof IllagerEntity || e instanceof WitchEntity));
-	}
-	
-	@Override
-	public EntityData initialize(WorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
-		MobEntity.createMobAttributes();
-		Objects.requireNonNull(getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(WDConfig.INSTANCE.strongerWendigo ? 120 : 60);
-		Objects.requireNonNull(getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(WDConfig.INSTANCE.strongerWendigo ? 12 : 6);
-		Objects.requireNonNull(getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.45);
-		Objects.requireNonNull(getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)).setBaseValue(0.5);
-		Objects.requireNonNull(getAttributeInstance(EntityAttributes.GENERIC_FOLLOW_RANGE)).setBaseValue(48);
-		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 	}
 }

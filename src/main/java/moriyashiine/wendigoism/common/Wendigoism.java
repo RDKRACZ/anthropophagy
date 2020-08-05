@@ -9,6 +9,8 @@ import net.fabricmc.api.ModInitializer;
 public class Wendigoism implements ModInitializer {
 	public static final String MODID = "wendigoism";
 	
+	public static final WDConfig CONFIG = new WDConfig();
+	
 	@Override
 	public void onInitialize() {
 		ConfigManager.loadConfig(WDConfig.class);

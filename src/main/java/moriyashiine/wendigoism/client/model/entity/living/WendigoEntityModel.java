@@ -1,6 +1,8 @@
 package moriyashiine.wendigoism.client.model.entity.living;
 
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -8,6 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
+@Environment(EnvType.CLIENT)
 public class WendigoEntityModel<T extends Entity> extends EntityModel<T> {
 	private final ModelPart chest;
 	private final ModelPart lArm00;

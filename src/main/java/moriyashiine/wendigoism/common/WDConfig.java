@@ -5,8 +5,6 @@ import io.github.cottonmc.cotton.config.annotations.ConfigFile;
 
 @ConfigFile(name = Wendigoism.MODID)
 public class WDConfig {
-	public static final WDConfig INSTANCE = new WDConfig();
-	
 	@Comment("Whether or not the Wendigo should spawn by any means")
 	public boolean enableWendigo = true;
 	

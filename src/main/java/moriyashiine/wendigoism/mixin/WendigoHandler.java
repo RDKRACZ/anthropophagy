@@ -1,8 +1,8 @@
-package moriyashiine.wendigoism.common.mixin;
+package moriyashiine.wendigoism.mixin;
 
 import com.mojang.authlib.GameProfile;
 import moriyashiine.wendigoism.api.accessor.WendigoAccessor;
-import moriyashiine.wendigoism.common.WDConfig;
+import moriyashiine.wendigoism.common.Wendigoism;
 import moriyashiine.wendigoism.common.item.FleshItem;
 import moriyashiine.wendigoism.common.item.KnifeItem;
 import moriyashiine.wendigoism.common.registry.WDItems;
@@ -140,7 +140,7 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 			if (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem) {
 				world.getRecipeManager().method_30027(WDRecipeTypes.flesh_drop_type).forEach(recipe -> {
 					if (recipe.entity_type == getType()) {
-						if (world.random.nextFloat() * WDConfig.INSTANCE.damageNeeded < amount) {
+						if (world.random.nextFloat() * Wendigoism.CONFIG.damageNeeded < amount) {
 							ItemStack drop = new ItemStack(getFireTicks() > 0 ? recipe.cooked_drop : recipe.raw_drop);
 							if (drop.getItem() instanceof FleshItem) {
 								drop.getOrCreateTag().putString("name", getDisplayName().getString());
@@ -232,7 +232,7 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 	}
 	
 	@Mixin(ServerPlayerEntity.class)
-	private static abstract class Server extends PlayerEntity implements WendigoAccessor {
+	private static abstract class Server extends PlayerEntity {
 		public Server(World world, BlockPos blockPos, GameProfile gameProfile) {
 			super(world, blockPos, gameProfile);
 		}
@@ -240,10 +240,11 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 		@Inject(method = "copyFrom", at = @At("TAIL"))
 		public void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
 			if (alive) {
-				WendigoAccessor oldWendigo = (WendigoAccessor) oldPlayer;
-				setTethered(oldWendigo.getTethered());
-				setWendigoLevel(oldWendigo.getWendigoLevel());
-				setHungerTimer(oldWendigo.getHungerTimer());
+				WendigoAccessor.get(this).ifPresent(wendigoAccessor -> WendigoAccessor.get(oldPlayer).ifPresent(oldWendigoAccessor -> {
+					wendigoAccessor.setTethered(oldWendigoAccessor.getTethered());
+					wendigoAccessor.setWendigoLevel(oldWendigoAccessor.getWendigoLevel());
+					wendigoAccessor.setHungerTimer(oldWendigoAccessor.getHungerTimer());
+				}));
 			}
 		}
 	}

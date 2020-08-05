@@ -1,6 +1,5 @@
 package moriyashiine.wendigoism.common.registry;
 
-import moriyashiine.wendigoism.common.WDConfig;
 import moriyashiine.wendigoism.common.Wendigoism;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
@@ -25,7 +24,7 @@ public class WDEntityTypes {
 	
 	public static void init() {
 		Registry.register(Registry.ENTITY_TYPE, new Identifier(Wendigoism.MODID, "wendigo"), WENDIGO);
-		if (WDConfig.INSTANCE.enableWendigo) {
+		if (Wendigoism.CONFIG.enableWendigo) {
 			Biome.SpawnEntry entry = new Biome.SpawnEntry(WENDIGO, 1, 1, 1);
 			for (Biome biome : Registry.BIOME) {
 				if (biome.getCategory() == Biome.Category.TAIGA) {

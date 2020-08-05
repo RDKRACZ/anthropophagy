@@ -1,7 +1,7 @@
 package moriyashiine.wendigoism.common.item;
 
 import moriyashiine.wendigoism.api.accessor.WendigoAccessor;
-import moriyashiine.wendigoism.common.WDConfig;
+import moriyashiine.wendigoism.common.Wendigoism;
 import moriyashiine.wendigoism.common.entity.WendigoEntity;
 import moriyashiine.wendigoism.common.registry.WDEntityTypes;
 import moriyashiine.wendigoism.common.registry.WDItems;
@@ -39,21 +39,22 @@ public class FleshItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient) {
-			WendigoAccessor wendigoAccessor = (WendigoAccessor) user;
-			int wendigoLevel = wendigoAccessor.getWendigoLevel();
-			if (stack.getItem() == WDItems.CORRUPT_FLESH) {
-				user.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE, 1, 1));
-			}
-			if (!wendigoAccessor.getTethered()) {
-				wendigoAccessor.setWendigoLevel(Math.min(wendigoLevel + 10, 300));
-			}
-			if (wendigoLevel == 100) {
-				user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
-				user.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
-			}
-			if (WDConfig.INSTANCE.enableWendigo) {
-				attemptSpawnWendigo(world, user, wendigoLevel);
-			}
+			WendigoAccessor.get(user).ifPresent(wendigoAccessor -> {
+				int wendigoLevel = wendigoAccessor.getWendigoLevel();
+				if (stack.getItem() == WDItems.CORRUPT_FLESH) {
+					user.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE, 1, 1));
+				}
+				if (!wendigoAccessor.getTethered()) {
+					wendigoAccessor.setWendigoLevel(Math.min(wendigoLevel + 10, 300));
+				}
+				if (wendigoLevel == 100) {
+					user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
+					user.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
+				}
+				if (Wendigoism.CONFIG.enableWendigo) {
+					attemptSpawnWendigo(world, user, wendigoLevel);
+				}
+			});
 		}
 		return super.finishUsing(stack, world, user);
 	}

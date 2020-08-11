@@ -138,7 +138,7 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 	private void dropFlesh(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
 			if (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem) {
-				world.getRecipeManager().method_30027(WDRecipeTypes.flesh_drop_type).forEach(recipe -> {
+				world.getRecipeManager().listAllOfType(WDRecipeTypes.flesh_drop_type).forEach(recipe -> {
 					if (recipe.entity_type == getType()) {
 						if (world.random.nextFloat() * Wendigoism.CONFIG.damageNeeded < amount) {
 							ItemStack drop = new ItemStack(getFireTicks() > 0 ? recipe.cooked_drop : recipe.raw_drop);
@@ -233,8 +233,8 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 	
 	@Mixin(ServerPlayerEntity.class)
 	private static abstract class Server extends PlayerEntity {
-		public Server(World world, BlockPos blockPos, GameProfile gameProfile) {
-			super(world, blockPos, gameProfile);
+		public Server(World world, BlockPos pos, float yaw, GameProfile profile) {
+			super(world, pos, yaw, profile);
 		}
 		
 		@Inject(method = "copyFrom", at = @At("TAIL"))

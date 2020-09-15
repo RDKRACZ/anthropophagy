@@ -140,7 +140,7 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 			if (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem) {
 				world.getRecipeManager().listAllOfType(WDRecipeTypes.flesh_drop_type).forEach(recipe -> {
 					if (recipe.entity_type == getType()) {
-						if (world.random.nextFloat() * Wendigoism.CONFIG.damageNeeded < amount) {
+						if (world.random.nextFloat() * Wendigoism.CONFIG.damageNeededForGuaranteedFleshDrop < amount) {
 							ItemStack drop = new ItemStack(getFireTicks() > 0 ? recipe.cooked_drop : recipe.raw_drop);
 							if (drop.getItem() instanceof FleshItem) {
 								drop.getOrCreateTag().putString("name", getDisplayName().getString());

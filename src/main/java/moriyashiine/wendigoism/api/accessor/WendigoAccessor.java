@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import java.util.Optional;
 
 public interface WendigoAccessor {
-	static Optional<WendigoAccessor> get(Entity entity) {
+	static Optional<WendigoAccessor> of(Entity entity) {
 		if (entity instanceof WendigoAccessor) {
 			return Optional.of(((WendigoAccessor) entity));
 		}

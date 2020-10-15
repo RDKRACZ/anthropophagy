@@ -29,9 +29,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class WendigoHandler extends Entity implements WendigoAccessor {
@@ -98,7 +95,26 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 				dropStack(getEquippedStack(EquipmentSlot.CHEST).split(1));
 			}
 			if (age % 200 == 0) {
-				getValidEffects(wendigoLevel).forEach(this::addStatusEffect);
+				if (wendigoLevel >= 30) {
+					addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 600));
+				}
+				if (wendigoLevel >= 50) {
+					addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 600, 1));
+					addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600));
+				}
+				if (wendigoLevel >= 100) {
+					addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 600, 2));
+				}
+				if (wendigoLevel >= 150) {
+					addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 600, 1));
+				}
+				if (wendigoLevel >= 240) {
+					addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 600));
+					addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 600));
+				}
+				if (wendigoLevel >= 270) {
+					addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 600, 2));
+				}
 			}
 			Object obj = this;
 			if (obj instanceof PlayerEntity) {
@@ -184,31 +200,6 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 		dataTracker.startTracking(HUNGER_TIMER, 0);
 	}
 	
-	private static List<StatusEffectInstance> getValidEffects(int level) {
-		List<StatusEffectInstance> fin = new ArrayList<>();
-		if (level >= 30) {
-			fin.add(new StatusEffectInstance(StatusEffects.SPEED, 600));
-		}
-		if (level >= 50) {
-			fin.add(new StatusEffectInstance(StatusEffects.SPEED, 600, 1));
-			fin.add(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600));
-		}
-		if (level >= 100) {
-			fin.add(new StatusEffectInstance(StatusEffects.SPEED, 600, 2));
-		}
-		if (level >= 150) {
-			fin.add(new StatusEffectInstance(StatusEffects.STRENGTH, 600, 1));
-		}
-		if (level >= 240) {
-			fin.add(new StatusEffectInstance(StatusEffects.RESISTANCE, 600));
-			fin.add(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 600));
-		}
-		if (level >= 270) {
-			fin.add(new StatusEffectInstance(StatusEffects.STRENGTH, 600, 2));
-		}
-		return fin;
-	}
-	
 	private static float getFoodModifier(int level) {
 		if (level >= 300) {
 			return 1.6f;
@@ -240,7 +231,7 @@ public abstract class WendigoHandler extends Entity implements WendigoAccessor {
 		@Inject(method = "copyFrom", at = @At("TAIL"))
 		public void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
 			if (alive) {
-				WendigoAccessor.get(this).ifPresent(wendigoAccessor -> WendigoAccessor.get(oldPlayer).ifPresent(oldWendigoAccessor -> {
+				WendigoAccessor.of(this).ifPresent(wendigoAccessor -> WendigoAccessor.of(oldPlayer).ifPresent(oldWendigoAccessor -> {
 					wendigoAccessor.setTethered(oldWendigoAccessor.getTethered());
 					wendigoAccessor.setWendigoLevel(oldWendigoAccessor.getWendigoLevel());
 					wendigoAccessor.setHungerTimer(oldWendigoAccessor.getHungerTimer());

@@ -39,7 +39,7 @@ public class FleshItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient) {
-			WendigoAccessor.get(user).ifPresent(wendigoAccessor -> {
+			WendigoAccessor.of(user).ifPresent(wendigoAccessor -> {
 				int wendigoLevel = wendigoAccessor.getWendigoLevel();
 				if (stack.getItem() == WDItems.CORRUPT_FLESH) {
 					user.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE, 1, 1));

@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "moriyashiine.anthropophagy.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+	"AnthropophagyHandler",
+	"AnthropophagyHandler$Server"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
+}

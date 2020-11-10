@@ -1,6 +1,0 @@
-{
-  "type": "wendigoism:flesh_drop",
-  "entity_type": "minecraft:pillager",
-  "raw_drop": "wendigoism:flesh",
-  "cooked_drop": "wendigoism:cooked_flesh"
-}

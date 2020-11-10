@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "wendigoism",
+  "id": "anthropophagy",
   "version": "${version}",
-  "name": "Wendigoism",
+  "name": "Anthropophagy",
   "description": "A remake of the original Cannibalism mod",
   "authors": [
 	"MoriyaShiine",
@@ -10,22 +10,22 @@
 	"sorazodia"
   ],
   "contact": {
-	"homepage": "https://www.curseforge.com/minecraft/mc-mods/wendigoism",
-	"sources": "https://github.com/MoriyaShiine/wendigoism"
+	"homepage": "https://www.curseforge.com/minecraft/mc-mods/anthropophagy",
+	"sources": "https://github.com/MoriyaShiine/anthropophagy"
   },
   "license": "GPL-3.0",
-  "icon": "assets/wendigoism/icon.png",
+  "icon": "assets/anthropophagy/icon.png",
   "environment": "*",
   "entrypoints": {
 	"main": [
-	  "moriyashiine.wendigoism.common.Wendigoism"
+	  "moriyashiine.anthropophagy.common.Anthropophagy"
 	],
 	"client": [
-	  "moriyashiine.wendigoism.client.WendigoismClient"
+	  "moriyashiine.anthropophagy.client.AnthropophagyClient"
 	]
   },
   "mixins": [
-	"wendigoism.mixins.json"
+	"anthropophagy.mixins.json"
   ],
   "depends": {
 	"fabricloader": ">=0.10.0",

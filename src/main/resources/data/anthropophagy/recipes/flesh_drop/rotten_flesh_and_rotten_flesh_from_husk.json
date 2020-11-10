@@ -1,0 +1,6 @@
+{
+  "type": "anthropophagy:flesh_drop",
+  "entity_type": "minecraft:husk",
+  "raw_drop": "minecraft:rotten_flesh",
+  "cooked_drop": "minecraft:rotten_flesh"
+}

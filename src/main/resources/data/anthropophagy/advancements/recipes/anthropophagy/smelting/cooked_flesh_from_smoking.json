@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+	"recipes": [
+	  "anthropophagy:smelting/cooked_flesh_from_smoking"
+	]
+  },
+  "criteria": {
+	"has_flesh": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "anthropophagy:flesh"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "anthropophagy:smelting/cooked_flesh_from_smoking"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_flesh",
+	  "has_the_recipe"
+	]
+  ]
+}

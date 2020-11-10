@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+	"recipes": [
+	  "anthropophagy:crafting/tethered_heart"
+	]
+  },
+  "criteria": {
+	"has_wendigo_heart": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "anthropophagy:piglutton_heart"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "anthropophagy:tethered_heart"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_wendigo_heart",
+	  "has_the_recipe"
+	]
+  ]
+}

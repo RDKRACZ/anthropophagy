@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+	"item": "anthropophagy:flesh"
+  },
+  "result": "anthropophagy:cooked_flesh",
+  "experience": 0.35,
+  "cookingtime": 200
+}

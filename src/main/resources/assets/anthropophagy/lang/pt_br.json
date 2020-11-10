@@ -1,0 +1,20 @@
+{
+  "itemGroup.anthropophagy.anthropophagy": "Wendigoísmo (old name, needs update)",
+  "item.anthropophagy.wooden_knife": "Faca de madeira",
+  "item.anthropophagy.stone_knife": "Faca de pedra",
+  "item.anthropophagy.iron_knife": "Faca de ferro",
+  "item.anthropophagy.golden_knife": "Faca de ouro",
+  "item.anthropophagy.diamond_knife": "Faca de diamante",
+  "item.anthropophagy.flesh": "Carne humana",
+  "item.anthropophagy.cooked_flesh": "Carne humana assada",
+  "item.anthropophagy.corrupt_flesh": "Carne humana corrupta",
+  "item.anthropophagy.flesh_owned": "Carne de %s",
+  "item.anthropophagy.cooked_flesh_owned": "Carne de %s assada",
+  "item.anthropophagy.corrupt_flesh_owned": "Carne de %s corrupta",
+  "item.anthropophagy.piglutton_heart": "Coração de wendigo (old name, needs update)",
+  "item.anthropophagy.tethered_heart": "Coração amarrado",
+  "item.anthropophagy.piglutton_spawn_egg": "Gerar Wendigo (old name, needs update)",
+  "entity.anthropophagy.piglutton": "Wendigo (old name, needs update)",
+  "message.anthropophagy.tether": "A sua fome foi saciada por enquanto",
+  "message.anthropophagy.tethered": "Você já está amarrado(a)"
+}

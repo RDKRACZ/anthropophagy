@@ -16,7 +16,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 
 public class APEntityTypes {
-	public static final EntityType<PigluttonEntity> PIGLUTTON = create(PigluttonEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, PigluttonEntity::new).dimensions(EntityDimensions.fixed(1, 2.8f)).trackRangeBlocks(10).trackedUpdateRate(1).forceTrackedVelocityUpdates(true).build());
+	public static final EntityType<PigluttonEntity> PIGLUTTON = create(PigluttonEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, PigluttonEntity::new).dimensions(EntityDimensions.fixed(1, 1.75f)).trackRangeBlocks(10).trackedUpdateRate(1).forceTrackedVelocityUpdates(true).build());
 	
 	private static <T extends LivingEntity> EntityType<T> create(DefaultAttributeContainer.Builder attributes, EntityType<T> type) {
 		FabricDefaultAttributeRegistry.register(type, attributes);

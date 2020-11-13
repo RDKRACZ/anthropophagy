@@ -198,8 +198,8 @@ public class PigluttonEntityModel<T extends LivingEntity> extends EntityModel<T>
 	
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		neck.pitch = headPitch * 0.01f - 1.5f;
 		neck.yaw = headYaw * 0.01f;
+		neck.pitch = headPitch * 0.01f - 1.5f;
 		bipedLeftArm.pitch = (MathHelper.cos(limbAngle * 0.6662f) * limbDistance * 0.5f) - 5 / 3f;
 		bipedRightArm.pitch = (MathHelper.cos(limbAngle * 0.6662f + (float) Math.PI) * limbDistance * 0.5f) - 5 / 3f - MathHelper.sin((float) (handSwingProgress * Math.PI));
 		bipedRightArm.yaw = MathHelper.sin((float) (handSwingProgress * Math.PI));

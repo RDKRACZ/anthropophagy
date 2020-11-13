@@ -157,7 +157,7 @@ public abstract class AnthropophagyHandler extends Entity implements CannibalAcc
 			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem)) {
 				world.getRecipeManager().listAllOfType(APRecipeTypes.flesh_drop_type).forEach(recipe -> {
 					if (recipe.entity_type == getType()) {
-						if (world.random.nextFloat() * Anthropophagy.CONFIG.damageNeededForGuaranteedFleshDrop < amount) {
+						if (world.random.nextFloat() * Anthropophagy.config.damageNeededForGuaranteedFleshDrop < amount) {
 							ItemStack drop = new ItemStack(getFireTicks() > 0 ? recipe.cooked_drop : recipe.raw_drop);
 							if (drop.getItem() instanceof FleshItem) {
 								drop.getOrCreateTag().putString("name", getDisplayName().getString());

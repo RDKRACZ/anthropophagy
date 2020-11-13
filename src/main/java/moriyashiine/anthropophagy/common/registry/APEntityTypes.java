@@ -25,7 +25,7 @@ public class APEntityTypes {
 	
 	public static void init() {
 		Registry.register(Registry.ENTITY_TYPE, new Identifier(Anthropophagy.MODID, "piglutton"), PIGLUTTON);
-		if (Anthropophagy.CONFIG.enablePiglutton) {
+		if (Anthropophagy.config.enablePiglutton) {
 			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(BiomeSelectors.categories(Biome.Category.FOREST)), PIGLUTTON.getSpawnGroup(), PIGLUTTON, 1, 1, 1);
 		}
 	}

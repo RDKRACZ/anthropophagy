@@ -35,7 +35,7 @@ public class PigluttonEntity extends HostileEntity {
 	}
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
-		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, Anthropophagy.CONFIG.strongerPiglutton ? 200 : 100).add(EntityAttributes.GENERIC_ARMOR, 10).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, Anthropophagy.CONFIG.strongerPiglutton ? 16 : 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
+		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, Anthropophagy.config.strongerPiglutton ? 200 : 100).add(EntityAttributes.GENERIC_ARMOR, 10).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, Anthropophagy.config.strongerPiglutton ? 16 : 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
 	}
 	
 	@Override

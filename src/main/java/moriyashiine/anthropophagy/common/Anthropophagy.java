@@ -10,12 +10,12 @@ import net.fabricmc.api.ModInitializer;
 public class Anthropophagy implements ModInitializer {
 	public static final String MODID = "anthropophagy";
 	
-	public static APConfig CONFIG;
+	public static APConfig config;
 	
 	@Override
 	public void onInitialize() {
 		AutoConfig.register(APConfig.class, GsonConfigSerializer::new);
-		CONFIG = AutoConfig.getConfigHolder(APConfig.class).getConfig();
+		config = AutoConfig.getConfigHolder(APConfig.class).getConfig();
 		APItems.init();
 		APEntityTypes.init();
 		APRecipeTypes.init();

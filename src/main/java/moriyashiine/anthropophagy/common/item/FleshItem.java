@@ -51,7 +51,7 @@ public class FleshItem extends Item {
 					user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
 					user.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
 				}
-				if (Anthropophagy.CONFIG.enablePiglutton) {
+				if (Anthropophagy.config.enablePiglutton) {
 					attemptSpawnPiglutton(world, user, cannibalLevel);
 				}
 			});

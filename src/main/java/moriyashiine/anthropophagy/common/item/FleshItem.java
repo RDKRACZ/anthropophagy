@@ -10,6 +10,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
@@ -96,6 +98,7 @@ public class FleshItem extends Item {
 				if (valid) {
 					world.spawnEntity(piglutton);
 					piglutton.setTarget(target);
+					world.playSoundFromEntity(null, target, SoundEvents.ENTITY_HOGLIN_CONVERTED_TO_ZOMBIFIED, SoundCategory.HOSTILE, 1, 1);
 				}
 			}
 		}

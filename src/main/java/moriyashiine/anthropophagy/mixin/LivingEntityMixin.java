@@ -1,6 +1,5 @@
 package moriyashiine.anthropophagy.mixin;
 
-import com.mojang.authlib.GameProfile;
 import moriyashiine.anthropophagy.api.accessor.CannibalAccessor;
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
@@ -20,7 +19,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,15 +28,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public abstract class AnthropophagyHandler extends Entity implements CannibalAccessor {
+public abstract class LivingEntityMixin extends Entity implements CannibalAccessor {
 	private static final TrackedData<Boolean> TETHERED = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	private static final TrackedData<Integer> CANNIBAL_LEVEL = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	private static final TrackedData<Integer> HUNGER_TIMER = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
-	public AnthropophagyHandler(EntityType<?> type, World world) {
+	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
 	
@@ -75,7 +72,6 @@ public abstract class AnthropophagyHandler extends Entity implements CannibalAcc
 	@Shadow
 	public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 	
-	@SuppressWarnings("UnusedReturnValue")
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
 	
@@ -117,9 +113,9 @@ public abstract class AnthropophagyHandler extends Entity implements CannibalAcc
 					addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 600, 2));
 				}
 			}
-			Object obj = this;
-			if (obj instanceof PlayerEntity) {
-				PlayerEntity thisObj = (PlayerEntity) obj;
+			//noinspection ConstantConditions
+			if ((Object) this instanceof PlayerEntity) {
+				PlayerEntity thisObj = (PlayerEntity) (Object) this;
 				int hungerTimer = getHungerTimer();
 				if (hungerTimer > 0) {
 					setHungerTimer(--hungerTimer);
@@ -131,7 +127,7 @@ public abstract class AnthropophagyHandler extends Entity implements CannibalAcc
 	}
 	
 	@Inject(method = "eatFood", at = @At("HEAD"))
-	private void handleHunger(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
+	private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {
 			if (stack.isFood()) {
 				if (!(stack.getItem() instanceof FleshItem) && stack.getItem() != APItems.PIGLUTTON_HEART) {
@@ -152,7 +148,7 @@ public abstract class AnthropophagyHandler extends Entity implements CannibalAcc
 	}
 	
 	@Inject(method = "damage", at = @At("HEAD"))
-	private void dropFlesh(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
+	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
 			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem)) {
 				world.getRecipeManager().listAllOfType(APRecipeTypes.flesh_drop_type).forEach(recipe -> {
@@ -172,7 +168,7 @@ public abstract class AnthropophagyHandler extends Entity implements CannibalAcc
 	}
 	
 	@Inject(method = "onDeath", at = @At("HEAD"))
-	private void dropHeart(DamageSource source, CallbackInfo callbackInfo) {
+	private void onDeath(DamageSource source, CallbackInfo callbackInfo) {
 		if (!world.isClient) {
 			if (getTethered()) {
 				dropStack(new ItemStack(APItems.PIGLUTTON_HEART));
@@ -221,23 +217,5 @@ public abstract class AnthropophagyHandler extends Entity implements CannibalAcc
 			return 1.1f;
 		}
 		return 1;
-	}
-	
-	@Mixin(ServerPlayerEntity.class)
-	private static abstract class Server extends PlayerEntity {
-		public Server(World world, BlockPos pos, float yaw, GameProfile profile) {
-			super(world, pos, yaw, profile);
-		}
-		
-		@Inject(method = "copyFrom", at = @At("TAIL"))
-		public void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
-			if (alive) {
-				CannibalAccessor.of(this).ifPresent(cannibalAccessor -> CannibalAccessor.of(oldPlayer).ifPresent(oldCannibalAccessor -> {
-					cannibalAccessor.setTethered(oldCannibalAccessor.getTethered());
-					cannibalAccessor.setCannibalLevel(oldCannibalAccessor.getCannibalLevel());
-					cannibalAccessor.setHungerTimer(oldCannibalAccessor.getHungerTimer());
-				}));
-			}
-		}
 	}
 }

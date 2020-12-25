@@ -4,8 +4,8 @@
   "package": "moriyashiine.anthropophagy.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-	"AnthropophagyHandler",
-	"AnthropophagyHandler$Server"
+	"LivingEntityMixin",
+	"ServerPlayerEntityMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

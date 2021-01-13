@@ -1,0 +1,35 @@
+{
+  "entity.piglutton.ambient": {
+	"sounds": [
+	  "mob/hoglin/idle1",
+	  "mob/hoglin/idle2",
+	  "mob/hoglin/idle3",
+	  "mob/hoglin/idle4",
+	  "mob/hoglin/idle5",
+	  "mob/hoglin/idle6",
+	  "mob/hoglin/idle7",
+	  "mob/hoglin/idle8",
+	  "mob/hoglin/idle9",
+	  "mob/hoglin/idle10",
+	  "mob/hoglin/idle11"
+	],
+	"subtitle": "anthropophagy.subtitles.entity.piglutton.ambient"
+  },
+  "entity.piglutton.hurt": {
+	"sounds": [
+	  "mob/hoglin/hurt1",
+	  "mob/hoglin/hurt2",
+	  "mob/hoglin/hurt3",
+	  "mob/hoglin/hurt4"
+	],
+	"subtitle": "anthropophagy.subtitles.entity.piglutton.hurt"
+  },
+  "entity.piglutton.death": {
+	"sounds": [
+	  "mob/hoglin/death1",
+	  "mob/hoglin/death2",
+	  "mob/hoglin/death3"
+	],
+	"subtitle": "anthropophagy.subtitles.entity.piglutton.death"
+  }
+}

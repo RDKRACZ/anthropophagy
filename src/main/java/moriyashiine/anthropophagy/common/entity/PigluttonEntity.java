@@ -2,6 +2,7 @@ package moriyashiine.anthropophagy.common.entity;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.item.FleshItem;
+import moriyashiine.anthropophagy.common.registry.APSoundEvents;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -39,17 +40,17 @@ public class PigluttonEntity extends HostileEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_HOGLIN_AMBIENT;
+		return APSoundEvents.ENTITY_PIGLUTTON_AMBIENT;
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_HOGLIN_HURT;
+		return APSoundEvents.ENTITY_PIGLUTTON_HURT;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_HOGLIN_DEATH;
+		return APSoundEvents.ENTITY_PIGLUTTON_DEATH;
 	}
 	
 	@Override

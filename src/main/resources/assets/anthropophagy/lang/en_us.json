@@ -16,6 +16,9 @@
   "item.anthropophagy.tethered_heart": "Tethered Heart",
   "item.anthropophagy.piglutton_spawn_egg": "Piglutton Spawn Egg",
   "entity.anthropophagy.piglutton": "Piglutton",
+  "anthropophagy.subtitles.entity.piglutton.ambient": "Piglutton growls",
+  "anthropophagy.subtitles.entity.piglutton.hurt": "Piglutton hurts",
+  "anthropophagy.subtitles.entity.piglutton.death": "Piglutton dies",
   "message.anthropophagy.tether": "Your hunger seems to have settled for now",
   "message.anthropophagy.tethered": "You are already tethered"
 }

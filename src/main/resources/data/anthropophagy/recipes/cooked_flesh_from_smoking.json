@@ -1,9 +1,9 @@
 {
-  "type": "minecraft:campfire_cooking",
+  "type": "smoking",
   "ingredient": {
 	"item": "anthropophagy:flesh"
   },
   "result": "anthropophagy:cooked_flesh",
   "experience": 0.35,
-  "cookingtime": 600
+  "cookingtime": 100
 }

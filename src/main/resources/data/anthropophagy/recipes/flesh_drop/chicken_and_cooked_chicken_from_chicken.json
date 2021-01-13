@@ -1,6 +1,6 @@
 {
   "type": "anthropophagy:flesh_drop",
-  "entity_type": "minecraft:chicken",
-  "raw_drop": "minecraft:chicken",
-  "cooked_drop": "minecraft:cooked_chicken"
+  "entity_type": "chicken",
+  "raw_drop": "chicken",
+  "cooked_drop": "cooked_chicken"
 }

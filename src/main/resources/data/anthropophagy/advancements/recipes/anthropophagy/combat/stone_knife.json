@@ -1,23 +1,23 @@
 {
-  "parent": "minecraft:recipes/root",
+  "parent": "recipes/root",
   "rewards": {
 	"recipes": [
-	  "anthropophagy:crafting/stone_knife"
+	  "anthropophagy:stone_knife"
 	]
   },
   "criteria": {
-	"has_cobblestone": {
-	  "trigger": "minecraft:inventory_changed",
+	"has_item": {
+	  "trigger": "inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
-			"tag": "minecraft:stone_tool_materials"
+			"tag": "stone_tool_materials"
 		  }
 		]
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "minecraft:recipe_unlocked",
+	  "trigger": "recipe_unlocked",
 	  "conditions": {
 		"recipe": "anthropophagy:stone_knife"
 	  }
@@ -25,7 +25,7 @@
   },
   "requirements": [
 	[
-	  "has_cobblestone",
+	  "has_item",
 	  "has_the_recipe"
 	]
   ]

@@ -1,6 +1,6 @@
 {
   "type": "anthropophagy:flesh_drop",
-  "entity_type": "minecraft:wandering_trader",
+  "entity_type": "wandering_trader",
   "raw_drop": "anthropophagy:flesh",
   "cooked_drop": "anthropophagy:cooked_flesh"
 }

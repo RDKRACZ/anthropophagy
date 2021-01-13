@@ -15,7 +15,7 @@ import java.util.Map;
 public class APItems {
 	private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
 	
-	public static final ItemGroup group = FabricItemGroupBuilder.build(new Identifier(Anthropophagy.MODID, Anthropophagy.MODID), () -> new ItemStack(APItems.IRON_KNIFE));
+	public static final ItemGroup GROUP = FabricItemGroupBuilder.build(new Identifier(Anthropophagy.MODID, Anthropophagy.MODID), () -> new ItemStack(APItems.IRON_KNIFE));
 	
 	public static final Item WOODEN_KNIFE = create("wooden_knife", new KnifeItem(ToolMaterials.WOOD, gen()));
 	public static final Item STONE_KNIFE = create("stone_knife", new KnifeItem(ToolMaterials.STONE, gen()));
@@ -33,7 +33,7 @@ public class APItems {
 	public static final Item PIGLUTTON_SPAWN_EGG = create("piglutton_spawn_egg", new SpawnEggItem(APEntityTypes.PIGLUTTON, 0x7f3d00, 0xc4c4c4, gen()));
 	
 	private static Item.Settings gen() {
-		return new Item.Settings().group(group);
+		return new Item.Settings().group(GROUP);
 	}
 	
 	private static <T extends Item> T create(String name, T item) {

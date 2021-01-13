@@ -1,6 +1,6 @@
 {
   "type": "anthropophagy:flesh_drop",
-  "entity_type": "minecraft:rabbit",
-  "raw_drop": "minecraft:rabbit",
-  "cooked_drop": "minecraft:cooked_rabbit"
+  "entity_type": "rabbit",
+  "raw_drop": "rabbit",
+  "cooked_drop": "cooked_rabbit"
 }

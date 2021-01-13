@@ -2,7 +2,6 @@ package moriyashiine.anthropophagy.common.entity;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.item.FleshItem;
-import moriyashiine.anthropophagy.common.registry.APItems;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -62,15 +61,6 @@ public class PigluttonEntity extends HostileEntity {
 			return true;
 		}
 		return false;
-	}
-	
-	@Override
-	protected void dropEquipment(DamageSource source, int lootingMultiplier, boolean allowDrops) {
-		super.dropEquipment(source, lootingMultiplier, allowDrops);
-		ItemEntity itemEntity = dropItem(APItems.PIGLUTTON_HEART);
-		if (itemEntity != null) {
-			itemEntity.setCovetedItem();
-		}
 	}
 	
 	@Override

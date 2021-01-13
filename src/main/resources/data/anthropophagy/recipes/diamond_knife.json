@@ -1,15 +1,15 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "crafting_shaped",
   "pattern": [
 	" M",
 	"S "
   ],
   "key": {
 	"M": {
-	  "item": "minecraft:diamond"
+	  "item": "diamond"
 	},
 	"S": {
-	  "item": "minecraft:stick"
+	  "item": "stick"
 	}
   },
   "result": {

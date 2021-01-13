@@ -10,17 +10,21 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class APRecipeTypes {
 	private static final Map<RecipeSerializer<?>, Identifier> RECIPE_SERIALIZERS = new LinkedHashMap<>();
-	private static final Map<DummyRecipeType<?>, Identifier> RECIPE_TYPES = new LinkedHashMap<>();
+	private static final Map<RecipeType<?>, Identifier> RECIPE_TYPES = new LinkedHashMap<>();
 	
-	public static final RecipeSerializer<FleshDropRecipe> flesh_drop_serializer = create("flesh_drop", new FleshDropRecipe.Serializer());
-	public static final DummyRecipeType<FleshDropRecipe> flesh_drop_type = create("flesh_drop");
+	public static final RecipeSerializer<FleshDropRecipe> FLESH_DROP_SERIALIZER = create("flesh_drop", new FleshDropRecipe.Serializer());
+	public static final RecipeType<FleshDropRecipe> FLESH_DROP_RECIPE_TYPE = create("flesh_drop");
 	
-	private static <T extends Recipe<?>> DummyRecipeType<T> create(String name) {
-		DummyRecipeType<T> type = new DummyRecipeType<>();
+	private static <T extends Recipe<?>> RecipeType<T> create(String name) {
+		RecipeType<T> type = new RecipeType<T>() {
+			@Override
+			public String toString() {
+				return name;
+			}
+		};
 		RECIPE_TYPES.put(type, new Identifier(Anthropophagy.MODID, name));
 		return type;
 	}
@@ -33,12 +37,5 @@ public class APRecipeTypes {
 	public static void init() {
 		RECIPE_TYPES.keySet().forEach(type -> Registry.register(Registry.RECIPE_TYPE, RECIPE_TYPES.get(type), type));
 		RECIPE_SERIALIZERS.keySet().forEach(serializer -> Registry.register(Registry.RECIPE_SERIALIZER, RECIPE_SERIALIZERS.get(serializer), serializer));
-	}
-	
-	private static class DummyRecipeType<T extends Recipe<?>> implements RecipeType<T> {
-		@Override
-		public String toString() {
-			return Objects.requireNonNull(Registry.RECIPE_TYPE.getKey(this)).toString();
-		}
 	}
 }

@@ -1,6 +1,6 @@
 {
   "type": "anthropophagy:flesh_drop",
-  "entity_type": "minecraft:vindicator",
+  "entity_type": "vindicator",
   "raw_drop": "anthropophagy:flesh",
   "cooked_drop": "anthropophagy:cooked_flesh"
 }

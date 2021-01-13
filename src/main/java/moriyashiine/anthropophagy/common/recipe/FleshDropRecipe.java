@@ -55,12 +55,12 @@ public class FleshDropRecipe implements Recipe<Inventory> {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return APRecipeTypes.flesh_drop_serializer;
+		return APRecipeTypes.FLESH_DROP_SERIALIZER;
 	}
 	
 	@Override
 	public RecipeType<?> getType() {
-		return APRecipeTypes.flesh_drop_type;
+		return APRecipeTypes.FLESH_DROP_RECIPE_TYPE;
 	}
 	
 	public static class Serializer implements RecipeSerializer<FleshDropRecipe> {

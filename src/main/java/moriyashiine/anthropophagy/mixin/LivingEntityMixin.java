@@ -151,7 +151,7 @@ public abstract class LivingEntityMixin extends Entity implements CannibalAccess
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
 			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem)) {
-				world.getRecipeManager().listAllOfType(APRecipeTypes.flesh_drop_type).forEach(recipe -> {
+				world.getRecipeManager().listAllOfType(APRecipeTypes.FLESH_DROP_RECIPE_TYPE).forEach(recipe -> {
 					if (recipe.entity_type == getType()) {
 						if (world.random.nextFloat() * Anthropophagy.config.damageNeededForGuaranteedFleshDrop < amount) {
 							ItemStack drop = new ItemStack(getFireTicks() > 0 ? recipe.cooked_drop : recipe.raw_drop);

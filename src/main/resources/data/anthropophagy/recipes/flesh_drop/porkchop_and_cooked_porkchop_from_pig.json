@@ -1,6 +1,6 @@
 {
   "type": "anthropophagy:flesh_drop",
-  "entity_type": "minecraft:pig",
-  "raw_drop": "minecraft:porkchop",
-  "cooked_drop": "minecraft:cooked_porkchop"
+  "entity_type": "pig",
+  "raw_drop": "porkchop",
+  "cooked_drop": "cooked_porkchop"
 }

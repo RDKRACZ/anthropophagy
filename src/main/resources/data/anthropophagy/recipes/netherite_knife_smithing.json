@@ -1,10 +1,10 @@
 {
-  "type": "minecraft:smithing",
+  "type": "smithing",
   "base": {
 	"item": "anthropophagy:diamond_knife"
   },
   "addition": {
-	"item": "minecraft:netherite_ingot"
+	"item": "netherite_ingot"
   },
   "result": {
 	"item": "anthropophagy:netherite_knife"

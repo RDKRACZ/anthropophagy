@@ -7,7 +7,10 @@ import moriyashiine.anthropophagy.common.item.FleshItem;
 import moriyashiine.anthropophagy.common.item.KnifeItem;
 import moriyashiine.anthropophagy.common.registry.APItems;
 import moriyashiine.anthropophagy.common.registry.APRecipeTypes;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -19,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,6 +41,12 @@ public abstract class LivingEntityMixin extends Entity implements CannibalAccess
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
+	
+	@Shadow
+	public abstract ItemStack getEquippedStack(EquipmentSlot slot);
+	
+	@Shadow
+	public abstract boolean addStatusEffect(StatusEffectInstance effect);
 	
 	@Override
 	public boolean getTethered() {
@@ -68,12 +77,6 @@ public abstract class LivingEntityMixin extends Entity implements CannibalAccess
 	public void setHungerTimer(int hungerTimer) {
 		dataTracker.set(HUNGER_TIMER, hungerTimer);
 	}
-	
-	@Shadow
-	public abstract ItemStack getEquippedStack(EquipmentSlot slot);
-	
-	@Shadow
-	public abstract boolean addStatusEffect(StatusEffectInstance effect);
 	
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
@@ -147,9 +150,9 @@ public abstract class LivingEntityMixin extends Entity implements CannibalAccess
 		}
 	}
 	
-	@Inject(method = "damage", at = @At("HEAD"))
+	@Inject(method = "damage", at = @At("RETURN"))
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient) {
+		if (!world.isClient && callbackInfo.getReturnValue()) {
 			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem)) {
 				world.getRecipeManager().listAllOfType(APRecipeTypes.FLESH_DROP_RECIPE_TYPE).forEach(recipe -> {
 					if (recipe.entity_type == getType()) {
@@ -158,8 +161,7 @@ public abstract class LivingEntityMixin extends Entity implements CannibalAccess
 							if (drop.getItem() instanceof FleshItem) {
 								drop.getOrCreateTag().putString("name", getDisplayName().getString());
 							}
-							BlockPos pos = getBlockPos();
-							world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
+							ItemScatterer.spawn(world, getX(), getY(), getZ(), drop);
 						}
 					}
 				});

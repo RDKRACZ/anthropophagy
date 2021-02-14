@@ -18,24 +18,19 @@ public class TetheredHeartItem extends Item {
 	
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		CannibalAccessor cannibalAccessor = CannibalAccessor.of(user).orElse(null);
-		if (cannibalAccessor != null) {
-			ItemStack stack = user.getStackInHand(hand);
-			if (!cannibalAccessor.getTethered()) {
-				cannibalAccessor.setTethered(true);
-				if (!world.isClient) {
-					user.sendMessage(new TranslatableText("message." + Anthropophagy.MODID + ".tether"), true);
-				}
-				stack.decrement(1);
-				return new TypedActionResult<>(ActionResult.success(world.isClient), stack);
+		boolean client = world.isClient;
+		ItemStack stack = user.getStackInHand(hand);
+		if (!((CannibalAccessor) user).getTethered()) {
+			((CannibalAccessor) user).setTethered(true);
+			if (!client) {
+				user.sendMessage(new TranslatableText("message." + Anthropophagy.MODID + ".tether"), true);
 			}
-			else {
-				if (!world.isClient) {
-					user.sendMessage(new TranslatableText("message." + Anthropophagy.MODID + ".tethered"), true);
-				}
-				return new TypedActionResult<>(ActionResult.FAIL, stack);
-			}
+			stack.decrement(1);
+			return new TypedActionResult<>(ActionResult.success(client), stack);
 		}
-		return super.use(world, user, hand);
+		if (!client) {
+			user.sendMessage(new TranslatableText("message." + Anthropophagy.MODID + ".tethered"), true);
+		}
+		return new TypedActionResult<>(ActionResult.FAIL, stack);
 	}
 }

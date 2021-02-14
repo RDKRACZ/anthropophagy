@@ -1,7 +1,7 @@
 package moriyashiine.anthropophagy.common;
 
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.anthropophagy.common.registry.APEntityTypes;
 import moriyashiine.anthropophagy.common.registry.APItems;
 import moriyashiine.anthropophagy.common.registry.APRecipeTypes;

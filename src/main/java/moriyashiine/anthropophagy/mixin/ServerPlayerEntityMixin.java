@@ -20,11 +20,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 	@Inject(method = "copyFrom", at = @At("TAIL"))
 	public void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
 		if (alive) {
-			CannibalAccessor.of(this).ifPresent(cannibalAccessor -> CannibalAccessor.of(oldPlayer).ifPresent(oldCannibalAccessor -> {
-				cannibalAccessor.setTethered(oldCannibalAccessor.getTethered());
-				cannibalAccessor.setCannibalLevel(oldCannibalAccessor.getCannibalLevel());
-				cannibalAccessor.setHungerTimer(oldCannibalAccessor.getHungerTimer());
-			}));
+			((CannibalAccessor) this).setTethered(((CannibalAccessor) oldPlayer).getTethered());
+			((CannibalAccessor) this).setCannibalLevel(((CannibalAccessor) oldPlayer).getCannibalLevel());
+			((CannibalAccessor) this).setHungerTimer(((CannibalAccessor) oldPlayer).getHungerTimer());
 		}
 	}
 }

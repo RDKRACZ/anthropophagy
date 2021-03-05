@@ -22,7 +22,7 @@ public class APItems {
 	public static final Item GOLDEN_KNIFE = create("golden_knife", new KnifeItem(ToolMaterials.GOLD, gen()));
 	public static final Item IRON_KNIFE = create("iron_knife", new KnifeItem(ToolMaterials.IRON, gen()));
 	public static final Item DIAMOND_KNIFE = create("diamond_knife", new KnifeItem(ToolMaterials.DIAMOND, gen()));
-	public static final Item NETHERITE_KNIFE = create("netherite_knife", new KnifeItem(ToolMaterials.NETHERITE, gen()));
+	public static final Item NETHERITE_KNIFE = create("netherite_knife", new KnifeItem(ToolMaterials.NETHERITE, gen().fireproof()));
 	
 	public static final Item FLESH = create("flesh", new FleshItem(gen().food(FoodComponents.BEEF)));
 	public static final Item COOKED_FLESH = create("cooked_flesh", new FleshItem(gen().food(FoodComponents.COOKED_BEEF)));

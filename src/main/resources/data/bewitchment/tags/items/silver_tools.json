@@ -1,6 +1,8 @@
 {
-  "replace": false,
   "values": [
-	"anthropophagy:silver_knife"
+	{
+	  "id": "anthropophagy:silver_knife",
+	  "required": false
+	}
   ]
 }

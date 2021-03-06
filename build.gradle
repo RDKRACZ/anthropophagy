@@ -69,7 +69,7 @@ dependencies {
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
     modImplementation "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
     modImplementation "top.theillusivec4.somnus:somnus-fabric:${project.somnus_version}"
-    modImplementation ("com.github.virtuoel:pehkui:${project.pehkui_version}") {
+    modImplementation("com.github.virtuoel:pehkui:${project.pehkui_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation "io.github.ladysnake:Impersonate:${impersonate_version}"

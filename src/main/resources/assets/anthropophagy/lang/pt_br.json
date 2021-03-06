@@ -15,6 +15,6 @@
   "item.anthropophagy.tethered_heart": "Coração amarrado",
   "item.anthropophagy.piglutton_spawn_egg": "Gerar Wendigo (old name, needs update)",
   "entity.anthropophagy.piglutton": "Wendigo (old name, needs update)",
-  "message.anthropophagy.tether": "A sua fome foi saciada por enquanto",
-  "message.anthropophagy.tethered": "Você já está amarrado(a)"
+  "anthropophagy.message.tether": "A sua fome foi saciada por enquanto",
+  "anthropophagy.message.tethered": "Você já está amarrado(a)"
 }

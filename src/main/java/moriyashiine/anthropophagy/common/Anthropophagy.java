@@ -7,11 +7,14 @@ import moriyashiine.anthropophagy.common.registry.APItems;
 import moriyashiine.anthropophagy.common.registry.APRecipeTypes;
 import moriyashiine.anthropophagy.common.registry.APSoundEvents;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class Anthropophagy implements ModInitializer {
 	public static final String MODID = "anthropophagy";
 	
 	public static APConfig config;
+	
+	public static boolean isBewitchmentLoaded;
 	
 	@Override
 	public void onInitialize() {
@@ -21,5 +24,6 @@ public class Anthropophagy implements ModInitializer {
 		APEntityTypes.init();
 		APRecipeTypes.init();
 		APSoundEvents.init();
+		isBewitchmentLoaded = FabricLoader.getInstance().isModLoaded("bewitchment");
 	}
 }

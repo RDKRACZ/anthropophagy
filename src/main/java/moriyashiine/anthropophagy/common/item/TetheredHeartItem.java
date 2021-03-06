@@ -23,13 +23,13 @@ public class TetheredHeartItem extends Item {
 		if (!((CannibalAccessor) user).getTethered()) {
 			((CannibalAccessor) user).setTethered(true);
 			if (!client) {
-				user.sendMessage(new TranslatableText("message." + Anthropophagy.MODID + ".tether"), true);
+				user.sendMessage(new TranslatableText(Anthropophagy.MODID + ".message.tether"), true);
 			}
 			stack.decrement(1);
 			return new TypedActionResult<>(ActionResult.success(client), stack);
 		}
 		if (!client) {
-			user.sendMessage(new TranslatableText("message." + Anthropophagy.MODID + ".tethered"), true);
+			user.sendMessage(new TranslatableText(Anthropophagy.MODID + ".message.tethered"), true);
 		}
 		return new TypedActionResult<>(ActionResult.FAIL, stack);
 	}

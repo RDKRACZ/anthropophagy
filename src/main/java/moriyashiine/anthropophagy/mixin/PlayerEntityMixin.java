@@ -46,12 +46,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Cannibal
 	private static final EntityAttributeModifier ATTACK_DAMAGE_MODIFIER_6 = new EntityAttributeModifier(UUID.fromString("500d09c9-efbe-4ac4-95f0-0535a087e4b6"), "Cannibal modifier", 5, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier ATTACK_SPEED_MODIFIER_6 = new EntityAttributeModifier(UUID.fromString("b15887df-6a68-4446-9b0e-c6b45744255c"), "Cannibal modifier", 0.8, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier ARMOR_MODIFIER_6 = new EntityAttributeModifier(UUID.fromString("29e088db-9aa8-4c8a-88b6-f519ef822326"), "Cannibal modifier", 12, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier MOVEMENT_SPEED_MODIFIER_6 = new EntityAttributeModifier(UUID.fromString("7c2d047f-f666-43a1-882b-ad751e7d5800"), "Cannibal modifier", 1 / 30f, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier MOVEMENT_SPEED_MODIFIER_6 = new EntityAttributeModifier(UUID.fromString("7c2d047f-f666-43a1-882b-ad751e7d5800"), "Cannibal modifier", 1 / 25f, EntityAttributeModifier.Operation.ADDITION);
 	
 	private static final EntityAttributeModifier ATTACK_DAMAGE_MODIFIER_5 = new EntityAttributeModifier(UUID.fromString("519e0e77-b8a8-4b76-980b-4f407b5afca7"), "Cannibal modifier", 4, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier ATTACK_SPEED_MODIFIER_5 = new EntityAttributeModifier(UUID.fromString("6fa06abe-f5df-4542-8ed5-d478a3b268d7"), "Cannibal modifier", 0.6, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier ARMOR_MODIFIER_5 = new EntityAttributeModifier(UUID.fromString("301ccf45-24c8-4a79-9506-28bf6da92046"), "Cannibal modifier", 10, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier MOVEMENT_SPEED_MODIFIER_5 = new EntityAttributeModifier(UUID.fromString("e4be7101-30a6-417c-917b-4a54ccc53f33"), "Cannibal modifier", 1 / 40f, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier MOVEMENT_SPEED_MODIFIER_5 = new EntityAttributeModifier(UUID.fromString("e4be7101-30a6-417c-917b-4a54ccc53f33"), "Cannibal modifier", 1 / 30f, EntityAttributeModifier.Operation.ADDITION);
 	
 	private static final EntityAttributeModifier ATTACK_DAMAGE_MODIFIER_4 = new EntityAttributeModifier(UUID.fromString("31187db9-4b70-4f79-98c8-2aec225dcae1"), "Cannibal modifier", 3, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier ATTACK_SPEED_MODIFIER_4 = new EntityAttributeModifier(UUID.fromString("2ba3906b-5d20-4729-a3df-aa59cef97667"), "Cannibal modifier", 0.4, EntityAttributeModifier.Operation.ADDITION);
@@ -318,10 +318,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Cannibal
 	
 	@Inject(method = "onDeath", at = @At("HEAD"))
 	private void onDeath(DamageSource source, CallbackInfo callbackInfo) {
-		if (!world.isClient) {
-			if (getTethered()) {
-				dropStack(new ItemStack(APItems.PIGLUTTON_HEART));
-			}
+		if (!world.isClient && getTethered()) {
+			dropStack(new ItemStack(APItems.PIGLUTTON_HEART));
 		}
 	}
 	

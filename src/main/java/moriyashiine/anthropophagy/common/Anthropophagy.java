@@ -3,12 +3,15 @@ package moriyashiine.anthropophagy.common;
 import com.google.gson.JsonObject;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import moriyashiine.anthropophagy.api.accessor.CannibalAccessor;
 import moriyashiine.anthropophagy.common.registry.APEntityTypes;
 import moriyashiine.anthropophagy.common.registry.APItems;
 import moriyashiine.anthropophagy.common.registry.APRecipeTypes;
 import moriyashiine.anthropophagy.common.registry.APSoundEvents;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public class Anthropophagy implements ModInitializer {
 	public static final String MODID = "anthropophagy";
@@ -24,6 +27,13 @@ public class Anthropophagy implements ModInitializer {
 		isBewitchmentLoaded = FabricLoader.getInstance().isModLoaded("bewitchment");
 		AutoConfig.register(APConfig.class, GsonConfigSerializer::new);
 		config = AutoConfig.getConfigHolder(APConfig.class).getConfig();
+		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
+			if (alive) {
+				((CannibalAccessor) newPlayer).setTethered(((CannibalAccessor) oldPlayer).getTethered());
+				((CannibalAccessor) newPlayer).setCannibalLevel(((CannibalAccessor) oldPlayer).getCannibalLevel());
+				((CannibalAccessor) newPlayer).setHungerTimer(((CannibalAccessor) oldPlayer).getHungerTimer());
+			}
+		});
 		APItems.init();
 		APEntityTypes.init();
 		APRecipeTypes.init();

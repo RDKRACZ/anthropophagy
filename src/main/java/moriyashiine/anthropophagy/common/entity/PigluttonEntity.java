@@ -3,7 +3,10 @@ package moriyashiine.anthropophagy.common.entity;
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.item.FleshItem;
 import moriyashiine.anthropophagy.common.registry.APSoundEvents;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -25,7 +28,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 
 import java.util.List;
 
@@ -51,17 +53,6 @@ public class PigluttonEntity extends HostileEntity {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return APSoundEvents.ENTITY_PIGLUTTON_DEATH;
-	}
-	
-	@Override
-	public boolean canSpawn(WorldAccess world, SpawnReason spawnReason) {
-		if (super.canSpawn(world, spawnReason)) {
-			if (spawnReason == SpawnReason.NATURAL || spawnReason == SpawnReason.CHUNK_GENERATION) {
-				return world.getRandom().nextFloat() < 1 / 5f;
-			}
-			return true;
-		}
-		return false;
 	}
 	
 	@Override

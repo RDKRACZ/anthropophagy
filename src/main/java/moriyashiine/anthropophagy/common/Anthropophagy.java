@@ -11,7 +11,6 @@ import moriyashiine.anthropophagy.common.registry.APSoundEvents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 public class Anthropophagy implements ModInitializer {
 	public static final String MODID = "anthropophagy";

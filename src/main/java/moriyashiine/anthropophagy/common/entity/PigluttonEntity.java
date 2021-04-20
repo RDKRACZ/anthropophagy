@@ -3,6 +3,7 @@ package moriyashiine.anthropophagy.common.entity;
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.item.FleshItem;
 import moriyashiine.anthropophagy.common.registry.APSoundEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -90,7 +91,8 @@ public class PigluttonEntity extends HostileEntity {
 		if (horizontalCollision && world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
 			Box box = getBoundingBox().expand(0.2);
 			for (BlockPos pos : BlockPos.iterate(MathHelper.floor(box.minX), MathHelper.floor(box.minY), MathHelper.floor(box.minZ), MathHelper.floor(box.maxX), MathHelper.floor(box.maxY), MathHelper.floor(box.maxZ))) {
-				if (world.getBlockState(pos).getHardness(world, pos) < 0.5f) {
+				float hardness = world.getBlockState(pos).getHardness(world, pos);
+				if (hardness >= 0 && hardness < 0.5f) {
 					world.breakBlock(pos, true);
 				}
 			}

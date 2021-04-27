@@ -4,7 +4,6 @@ import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.item.FleshItem;
 import moriyashiine.anthropophagy.common.item.KnifeItem;
 import moriyashiine.anthropophagy.common.item.TetheredHeartItem;
-import moriyashiine.bewitchment.common.registry.BWMaterials;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
@@ -24,12 +23,6 @@ public class APItems {
 	public static final Item IRON_KNIFE = create("iron_knife", new KnifeItem(ToolMaterials.IRON, gen()));
 	public static final Item DIAMOND_KNIFE = create("diamond_knife", new KnifeItem(ToolMaterials.DIAMOND, gen()));
 	public static final Item NETHERITE_KNIFE = create("netherite_knife", new KnifeItem(ToolMaterials.NETHERITE, gen().fireproof()));
-	
-	static {
-		if (Anthropophagy.isBewitchmentLoaded) {
-			create("silver_knife", new KnifeItem(BWMaterials.SILVER_TOOL, gen()));
-		}
-	}
 	
 	public static final Item FLESH = create("flesh", new FleshItem(gen().food(FoodComponents.BEEF)));
 	public static final Item COOKED_FLESH = create("cooked_flesh", new FleshItem(gen().food(FoodComponents.COOKED_BEEF)));

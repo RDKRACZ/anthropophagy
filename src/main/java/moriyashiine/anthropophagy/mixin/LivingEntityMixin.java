@@ -25,7 +25,7 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@Inject(method = "damage", at = @At("RETURN"))
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && callbackInfo.getReturnValue()) {
+		if (callbackInfo.getReturnValue() && !world.isClient) {
 			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity && ((LivingEntity) source.getAttacker()).getMainHandStack().getItem() instanceof KnifeItem)) {
 				world.getRecipeManager().listAllOfType(APRecipeTypes.FLESH_DROP_RECIPE_TYPE).forEach(recipe -> {
 					if (recipe.entity_type == getType()) {

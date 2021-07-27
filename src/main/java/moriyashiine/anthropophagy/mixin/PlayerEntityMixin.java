@@ -19,7 +19,7 @@ import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -32,7 +32,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Random;
 import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
@@ -113,7 +112,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Cannibal
 		this.hungerTimer = hungerTimer;
 	}
 	
-	@Inject(method = "tick", at = @At("HEAD"))
+	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
 			int cannibalLevel = getCannibalLevel();
@@ -279,7 +278,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Cannibal
 								chance = 1 / 25f;
 							}
 						}
-						Random random = world.random;
 						if (random.nextFloat() < chance) {
 							PigluttonEntity piglutton = APEntityTypes.PIGLUTTON.create(world);
 							if (piglutton != null) {
@@ -323,18 +321,18 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Cannibal
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		setTethered(tag.getBoolean("Tethered"));
-		setCannibalLevel(tag.getInt("CannibalLevel"));
-		setHungerTimer(tag.getInt("HungerTimer"));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		setTethered(nbt.getBoolean("Tethered"));
+		setCannibalLevel(nbt.getInt("CannibalLevel"));
+		setHungerTimer(nbt.getInt("HungerTimer"));
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		tag.putBoolean("Tethered", getTethered());
-		tag.putInt("CannibalLevel", getCannibalLevel());
-		tag.putInt("HungerTimer", getHungerTimer());
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		nbt.putBoolean("Tethered", getTethered());
+		nbt.putInt("CannibalLevel", getCannibalLevel());
+		nbt.putInt("HungerTimer", getHungerTimer());
 	}
 	
 	private static float getFoodModifier(int level) {

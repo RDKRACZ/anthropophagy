@@ -19,6 +19,10 @@ public class Anthropophagy implements ModInitializer {
 	public void onInitialize() {
 		AutoConfig.register(APConfig.class, GsonConfigSerializer::new);
 		config = AutoConfig.getConfigHolder(APConfig.class).getConfig();
+		APItems.init();
+		APEntityTypes.init();
+		APRecipeTypes.init();
+		APSoundEvents.init();
 		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
 			if (alive) {
 				((CannibalAccessor) newPlayer).setTethered(((CannibalAccessor) oldPlayer).getTethered());
@@ -26,9 +30,5 @@ public class Anthropophagy implements ModInitializer {
 				((CannibalAccessor) newPlayer).setHungerTimer(((CannibalAccessor) oldPlayer).getHungerTimer());
 			}
 		});
-		APItems.init();
-		APEntityTypes.init();
-		APRecipeTypes.init();
-		APSoundEvents.init();
 	}
 }

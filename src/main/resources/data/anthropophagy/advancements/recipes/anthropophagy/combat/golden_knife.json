@@ -1,5 +1,5 @@
 {
-  "parent": "recipes/root",
+  "parent": "minecraft:recipes/root",
   "rewards": {
 	"recipes": [
 	  "anthropophagy:golden_knife"
@@ -7,17 +7,19 @@
   },
   "criteria": {
 	"has_item": {
-	  "trigger": "inventory_changed",
+	  "trigger": "minecraft:inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
-			"item": "gold_ingot"
+			"items": [
+			  "minecraft:gold_ingot"
+			]
 		  }
 		]
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "recipe_unlocked",
+	  "trigger": "minecraft:recipe_unlocked",
 	  "conditions": {
 		"recipe": "anthropophagy:golden_knife"
 	  }

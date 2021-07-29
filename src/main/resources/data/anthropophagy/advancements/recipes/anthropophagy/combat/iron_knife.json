@@ -1,5 +1,5 @@
 {
-  "parent": "recipes/root",
+  "parent": "minecraft:recipes/root",
   "rewards": {
 	"recipes": [
 	  "anthropophagy:iron_knife"
@@ -7,17 +7,19 @@
   },
   "criteria": {
 	"has_item": {
-	  "trigger": "inventory_changed",
+	  "trigger": "minecraft:inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
-			"item": "iron_ingot"
+			"items": [
+			  "minecraft:iron_ingot"
+			]
 		  }
 		]
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "recipe_unlocked",
+	  "trigger": "minecraft:recipe_unlocked",
 	  "conditions": {
 		"recipe": "anthropophagy:iron_knife"
 	  }

@@ -1,6 +1,6 @@
 {
   "type": "anthropophagy:flesh_drop",
-  "entity_type": "mooshroom",
-  "raw_drop": "beef",
-  "cooked_drop": "cooked_beef"
+  "entity_type": "minecraft:mooshroom",
+  "raw_drop": "minecraft:beef",
+  "cooked_drop": "minecraft:cooked_beef"
 }

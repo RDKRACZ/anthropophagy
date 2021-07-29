@@ -1,6 +1,6 @@
 {
   "type": "anthropophagy:flesh_drop",
-  "entity_type": "pillager",
+  "entity_type": "minecraft:pillager",
   "raw_drop": "anthropophagy:flesh",
   "cooked_drop": "anthropophagy:cooked_flesh"
 }

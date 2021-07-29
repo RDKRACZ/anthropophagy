@@ -1,5 +1,5 @@
 {
-  "parent": "recipes/root",
+  "parent": "minecraft:recipes/root",
   "rewards": {
 	"recipes": [
 	  "anthropophagy:netherite_knife_smithing"
@@ -7,17 +7,19 @@
   },
   "criteria": {
 	"has_item": {
-	  "trigger": "inventory_changed",
+	  "trigger": "minecraft:inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
-			"item": "netherite_ingot"
+			"items": [
+			  "minecraft:netherite_ingot"
+			]
 		  }
 		]
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "recipe_unlocked",
+	  "trigger": "minecraft:recipe_unlocked",
 	  "conditions": {
 		"recipe": "anthropophagy:netherite_knife_smithing"
 	  }

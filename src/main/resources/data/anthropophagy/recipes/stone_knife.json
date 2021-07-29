@@ -1,15 +1,15 @@
 {
-  "type": "crafting_shaped",
+  "type": "minecraft:crafting_shaped",
   "pattern": [
 	" M",
 	"S "
   ],
   "key": {
 	"M": {
-	  "tag": "stone_tool_materials"
+	  "tag": "minecraft:stone_tool_materials"
 	},
 	"S": {
-	  "item": "stick"
+	  "item": "minecraft:stick"
 	}
   },
   "result": {

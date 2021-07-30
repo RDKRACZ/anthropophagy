@@ -1,42 +1,35 @@
 package moriyashiine.anthropophagy.mixin;
 
-import moriyashiine.anthropophagy.api.accessor.CannibalAccessor;
+import moriyashiine.anthropophagy.api.component.CannibalComponent;
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
 import moriyashiine.anthropophagy.common.registry.APEntityTypes;
 import moriyashiine.anthropophagy.common.registry.APItems;
 import moriyashiine.anthropophagy.common.registry.APTags;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.UUID;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements CannibalAccessor {
+public abstract class PlayerEntityMixin extends LivingEntity {
 	private static final EntityAttributeModifier ATTACK_DAMAGE_MODIFIER_7 = new EntityAttributeModifier(UUID.fromString("cce7af90-8887-4b43-a3b0-3265ab5a1b27"), "Cannibal modifier", 6, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier ATTACK_SPEED_MODIFIER_7 = new EntityAttributeModifier(UUID.fromString("b7657ce5-e362-4cac-baba-9661ca780047"), "Cannibal modifier", 1, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier ARMOR_MODIFIER_7 = new EntityAttributeModifier(UUID.fromString("4fd0fcf3-a827-4ad0-8318-07fafaf3126e"), "Cannibal modifier", 14, EntityAttributeModifier.Operation.ADDITION);
@@ -71,268 +64,77 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Cannibal
 	
 	private static final EntityAttributeModifier MOVEMENT_SPEED_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("92118505-869f-437e-981f-fc238ed8633c"), "Cannibal modifier", 1 / 80f, EntityAttributeModifier.Operation.ADDITION);
 	
-	private boolean tethered = false;
-	private int cannibalLevel = 0;
-	private int hungerTimer = 0;
-	
-	@Shadow
-	public abstract HungerManager getHungerManager();
-	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
-	}
-	
-	@Override
-	public boolean getTethered() {
-		return tethered;
-	}
-	
-	@Override
-	public void setTethered(boolean tethered) {
-		this.tethered = tethered;
-	}
-	
-	@Override
-	public int getCannibalLevel() {
-		return cannibalLevel;
-	}
-	
-	@Override
-	public void setCannibalLevel(int cannibalLevel) {
-		this.cannibalLevel = cannibalLevel;
-	}
-	
-	@Override
-	public int getHungerTimer() {
-		return hungerTimer;
-	}
-	
-	@Override
-	public void setHungerTimer(int hungerTimer) {
-		this.hungerTimer = hungerTimer;
-	}
-	
-	@Inject(method = "tick", at = @At("TAIL"))
-	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient) {
-			int cannibalLevel = getCannibalLevel();
-			if (cannibalLevel >= 30) {
-				dropStack(getEquippedStack(EquipmentSlot.LEGS).split(1));
-			}
-			if (cannibalLevel >= 50) {
-				dropStack(getEquippedStack(EquipmentSlot.HEAD).split(1));
-			}
-			if (cannibalLevel >= 70) {
-				dropStack(getEquippedStack(EquipmentSlot.FEET).split(1));
-			}
-			if (cannibalLevel >= 90) {
-				dropStack(getEquippedStack(EquipmentSlot.CHEST).split(1));
-			}
-			EntityAttributeInstance attackDamageAttribute = getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-			EntityAttributeInstance attackSpeedAttribute = getAttributeInstance(EntityAttributes.GENERIC_ATTACK_SPEED);
-			EntityAttributeInstance armorAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
-			EntityAttributeInstance movementSpeedAttribute = getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-			boolean shouldHave = cannibalLevel >= 90;
-			if (shouldHave) {
-				addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 410, 0, true, false));
-				if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_7)) {
-					attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_7);
-					attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_7);
-					armorAttribute.addPersistentModifier(ARMOR_MODIFIER_7);
-					movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_7);
-				}
-			}
-			else if (!shouldHave && attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_7)) {
-				attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_7);
-				attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_7);
-				armorAttribute.removeModifier(ARMOR_MODIFIER_7);
-				movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_7);
-			}
-			shouldHave = cannibalLevel >= 80 && cannibalLevel < 90;
-			if (shouldHave) {
-				addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 410, 0, true, false));
-				if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_6)) {
-					attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_6);
-					attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_6);
-					armorAttribute.addPersistentModifier(ARMOR_MODIFIER_6);
-					movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_6);
-				}
-			}
-			else if (!shouldHave && attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_6)) {
-				attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_6);
-				attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_6);
-				armorAttribute.removeModifier(ARMOR_MODIFIER_6);
-				movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_6);
-			}
-			shouldHave = cannibalLevel >= 70 && cannibalLevel < 80;
-			if (shouldHave) {
-				addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 410, 0, true, false));
-				if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_5)) {
-					attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_5);
-					attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_5);
-					armorAttribute.addPersistentModifier(ARMOR_MODIFIER_5);
-					movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_5);
-				}
-			}
-			else if (!shouldHave && attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_5)) {
-				attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_5);
-				attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_5);
-				armorAttribute.removeModifier(ARMOR_MODIFIER_5);
-				movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_5);
-			}
-			shouldHave = cannibalLevel >= 60 && cannibalLevel < 70;
-			if (shouldHave) {
-				addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 410, 0, true, false));
-				if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_4)) {
-					attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_4);
-					attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_4);
-					armorAttribute.addPersistentModifier(ARMOR_MODIFIER_4);
-					movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_4);
-				}
-			}
-			else if (!shouldHave && attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_4)) {
-				attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_4);
-				attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_4);
-				armorAttribute.removeModifier(ARMOR_MODIFIER_4);
-				movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_4);
-			}
-			shouldHave = cannibalLevel >= 50 && cannibalLevel < 60;
-			if (shouldHave) {
-				addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 410, 0, true, false));
-				if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_3)) {
-					attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_3);
-					attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_3);
-					armorAttribute.addPersistentModifier(ARMOR_MODIFIER_3);
-					movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_3);
-				}
-			}
-			else if (!shouldHave && attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_3)) {
-				attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_3);
-				attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_3);
-				armorAttribute.removeModifier(ARMOR_MODIFIER_3);
-				movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_3);
-			}
-			shouldHave = cannibalLevel >= 40 && cannibalLevel < 50;
-			if (shouldHave && !attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_2)) {
-				attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_2);
-				armorAttribute.addPersistentModifier(ARMOR_MODIFIER_2);
-				movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_2);
-			}
-			else if (!shouldHave && attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_2)) {
-				attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_2);
-				armorAttribute.removeModifier(ARMOR_MODIFIER_2);
-				movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_2);
-			}
-			shouldHave = cannibalLevel >= 30 && cannibalLevel < 40;
-			if (shouldHave && !armorAttribute.hasModifier(ARMOR_MODIFIER_1)) {
-				armorAttribute.addPersistentModifier(ARMOR_MODIFIER_1);
-				movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_1);
-			}
-			else if (!shouldHave && armorAttribute.hasModifier(ARMOR_MODIFIER_1)) {
-				armorAttribute.removeModifier(ARMOR_MODIFIER_1);
-				movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_1);
-			}
-			shouldHave = cannibalLevel >= 20 && cannibalLevel < 30;
-			if (shouldHave && !movementSpeedAttribute.hasModifier(MOVEMENT_SPEED_MODIFIER_0)) {
-				movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_0);
-			}
-			else if (!shouldHave && movementSpeedAttribute.hasModifier(MOVEMENT_SPEED_MODIFIER_0)) {
-				movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_0);
-			}
-			int hungerTimer = getHungerTimer();
-			if (hungerTimer > 0) {
-				setHungerTimer(--hungerTimer);
-				getHungerManager().setFoodLevel(Math.max(getHungerManager().getFoodLevel() - 1, 0));
-			}
-		}
 	}
 	
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {
-			if (stack.isFood()) {
-				if (stack.getItem() == APItems.CORRUPT_FLESH) {
-					addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE, 1, 1));
-				}
-				if (APTags.FLESH.contains(stack.getItem())) {
-					if (!getTethered()) {
-						setCannibalLevel(Math.min(getCannibalLevel() + 2, 300));
+			CannibalComponent.maybeGet((PlayerEntity) (Object) this).ifPresent(cannibalComponent -> {
+				if (stack.isFood()) {
+					if (stack.getItem() == APItems.CORRUPT_FLESH) {
+						addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE, 1, 1));
 					}
-					if (getCannibalLevel() == 20 || getCannibalLevel() == 21) {
-						addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
-						addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
-					}
-					if (Anthropophagy.config.enablePiglutton) {
-						float chance = 0;
-						if (getCannibalLevel() >= 40) {
-							if (getCannibalLevel() >= 70) {
-								chance = 1 / 10f;
-							}
-							else if (getCannibalLevel() >= 60) {
-								chance = 1 / 15f;
-							}
-							else if (getCannibalLevel() >= 50) {
-								chance = 1 / 20f;
-							}
-							else {
-								chance = 1 / 25f;
-							}
+					if (APTags.FLESH.contains(stack.getItem())) {
+						if (!cannibalComponent.isTethered()) {
+							cannibalComponent.setCannibalLevel(Math.min(cannibalComponent.getCannibalLevel() + 2, 300));
 						}
-						if (random.nextFloat() < chance) {
-							PigluttonEntity piglutton = APEntityTypes.PIGLUTTON.create(world);
-							if (piglutton != null) {
-								boolean valid = false;
-								BlockPos pos = getBlockPos();
-								for (int i = 0; i < 8; i++) {
-									if (piglutton.teleport(pos.getX() + MathHelper.nextInt(random, -16, 16), pos.getY() + MathHelper.nextInt(random, -6, 6), pos.getZ() + MathHelper.nextInt(random, -16, 16), false)) {
-										valid = true;
-										break;
+						if (cannibalComponent.getCannibalLevel() == 20 || cannibalComponent.getCannibalLevel() == 21) {
+							addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
+							addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
+						}
+						if (Anthropophagy.config.enablePiglutton) {
+							float chance = 0;
+							if (cannibalComponent.getCannibalLevel() >= 40) {
+								if (cannibalComponent.getCannibalLevel() >= 70) {
+									chance = 1 / 10f;
+								}
+								else if (cannibalComponent.getCannibalLevel() >= 60) {
+									chance = 1 / 15f;
+								}
+								else if (cannibalComponent.getCannibalLevel() >= 50) {
+									chance = 1 / 20f;
+								}
+								else {
+									chance = 1 / 25f;
+								}
+							}
+							if (random.nextFloat() < chance) {
+								PigluttonEntity piglutton = APEntityTypes.PIGLUTTON.create(world);
+								if (piglutton != null) {
+									boolean valid = false;
+									BlockPos pos = getBlockPos();
+									for (int i = 0; i < 8; i++) {
+										if (piglutton.teleport(pos.getX() + MathHelper.nextInt(random, -16, 16), pos.getY() + MathHelper.nextInt(random, -6, 6), pos.getZ() + MathHelper.nextInt(random, -16, 16), false)) {
+											valid = true;
+											break;
+										}
+									}
+									if (valid) {
+										world.spawnEntity(piglutton);
+										piglutton.setTarget(this);
+										world.playSoundFromEntity(null, piglutton, SoundEvents.ENTITY_HOGLIN_CONVERTED_TO_ZOMBIFIED, SoundCategory.HOSTILE, 1, 1);
 									}
 								}
-								if (valid) {
-									world.spawnEntity(piglutton);
-									piglutton.setTarget(this);
-									world.playSoundFromEntity(null, piglutton, SoundEvents.ENTITY_HOGLIN_CONVERTED_TO_ZOMBIFIED, SoundCategory.HOSTILE, 1, 1);
-								}
 							}
 						}
 					}
-				}
-				else {
-					if (!getTethered()) {
-						setCannibalLevel(Math.max(getCannibalLevel() - 1, 0));
-					}
-					if (getCannibalLevel() >= 20) {
-						FoodComponent food = stack.getItem().getFoodComponent();
-						if (food != null) {
-							int hungerTimer = getHungerTimer();
-							setHungerTimer((int) (hungerTimer + (food.getHunger() * getFoodModifier(getCannibalLevel()))));
+					else {
+						if (!cannibalComponent.isTethered()) {
+							cannibalComponent.setCannibalLevel(Math.max(cannibalComponent.getCannibalLevel() - 1, 0));
+						}
+						if (cannibalComponent.getCannibalLevel() >= 20) {
+							FoodComponent food = stack.getItem().getFoodComponent();
+							if (food != null) {
+								cannibalComponent.setHungerTimer((int) (cannibalComponent.getHungerTimer() + (food.getHunger() * getFoodModifier(cannibalComponent.getCannibalLevel()))));
+							}
 						}
 					}
+					updateAttributes((PlayerEntity) (Object) this, cannibalComponent);
 				}
-			}
+			});
 		}
-	}
-	
-	@Inject(method = "onDeath", at = @At("HEAD"))
-	private void onDeath(DamageSource source, CallbackInfo callbackInfo) {
-		if (!world.isClient && getTethered()) {
-			dropStack(new ItemStack(APItems.PIGLUTTON_HEART));
-		}
-	}
-	
-	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		setTethered(nbt.getBoolean("Tethered"));
-		setCannibalLevel(nbt.getInt("CannibalLevel"));
-		setHungerTimer(nbt.getInt("HungerTimer"));
-	}
-	
-	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		nbt.putBoolean("Tethered", getTethered());
-		nbt.putInt("CannibalLevel", getCannibalLevel());
-		nbt.putInt("HungerTimer", getHungerTimer());
 	}
 	
 	private static float getFoodModifier(int level) {
@@ -355,5 +157,115 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Cannibal
 			return 1.1f;
 		}
 		return 1;
+	}
+	
+	@SuppressWarnings("ConstantConditions")
+	private static void updateAttributes(PlayerEntity player, CannibalComponent cannibalComponent) {
+		EntityAttributeInstance attackDamageAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+		EntityAttributeInstance attackSpeedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_SPEED);
+		EntityAttributeInstance armorAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
+		EntityAttributeInstance movementSpeedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+		boolean shouldHave = cannibalComponent.getCannibalLevel() >= 90;
+		if (shouldHave) {
+			if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_7)) {
+				attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_7);
+				attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_7);
+				armorAttribute.addPersistentModifier(ARMOR_MODIFIER_7);
+				movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_7);
+			}
+		}
+		else if (attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_7)) {
+			attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_7);
+			attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_7);
+			armorAttribute.removeModifier(ARMOR_MODIFIER_7);
+			movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_7);
+		}
+		shouldHave = cannibalComponent.getCannibalLevel() >= 80 && cannibalComponent.getCannibalLevel() < 90;
+		if (shouldHave) {
+			if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_6)) {
+				attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_6);
+				attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_6);
+				armorAttribute.addPersistentModifier(ARMOR_MODIFIER_6);
+				movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_6);
+			}
+		}
+		else if (attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_6)) {
+			attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_6);
+			attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_6);
+			armorAttribute.removeModifier(ARMOR_MODIFIER_6);
+			movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_6);
+		}
+		shouldHave = cannibalComponent.getCannibalLevel() >= 70 && cannibalComponent.getCannibalLevel() < 80;
+		if (shouldHave) {
+			if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_5)) {
+				attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_5);
+				attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_5);
+				armorAttribute.addPersistentModifier(ARMOR_MODIFIER_5);
+				movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_5);
+			}
+		}
+		else if (attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_5)) {
+			attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_5);
+			attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_5);
+			armorAttribute.removeModifier(ARMOR_MODIFIER_5);
+			movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_5);
+		}
+		shouldHave = cannibalComponent.getCannibalLevel() >= 60 && cannibalComponent.getCannibalLevel() < 70;
+		if (shouldHave) {
+			if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_4)) {
+				attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_4);
+				attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_4);
+				armorAttribute.addPersistentModifier(ARMOR_MODIFIER_4);
+				movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_4);
+			}
+		}
+		else if (attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_4)) {
+			attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_4);
+			attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_4);
+			armorAttribute.removeModifier(ARMOR_MODIFIER_4);
+			movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_4);
+		}
+		shouldHave = cannibalComponent.getCannibalLevel() >= 50 && cannibalComponent.getCannibalLevel() < 60;
+		if (shouldHave) {
+			if (!attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_3)) {
+				attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_3);
+				attackSpeedAttribute.addPersistentModifier(ATTACK_SPEED_MODIFIER_3);
+				armorAttribute.addPersistentModifier(ARMOR_MODIFIER_3);
+				movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_3);
+			}
+		}
+		else if (attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_3)) {
+			attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_3);
+			attackSpeedAttribute.removeModifier(ATTACK_SPEED_MODIFIER_3);
+			armorAttribute.removeModifier(ARMOR_MODIFIER_3);
+			movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_3);
+		}
+		shouldHave = cannibalComponent.getCannibalLevel() >= 40 && cannibalComponent.getCannibalLevel() < 50;
+		if (shouldHave && !attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_2)) {
+			attackDamageAttribute.addPersistentModifier(ATTACK_DAMAGE_MODIFIER_2);
+			armorAttribute.addPersistentModifier(ARMOR_MODIFIER_2);
+			movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_2);
+		}
+		else if (!shouldHave && attackDamageAttribute.hasModifier(ATTACK_DAMAGE_MODIFIER_2)) {
+			attackDamageAttribute.removeModifier(ATTACK_DAMAGE_MODIFIER_2);
+			armorAttribute.removeModifier(ARMOR_MODIFIER_2);
+			movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_2);
+		}
+		shouldHave = cannibalComponent.getCannibalLevel() >= 30 && cannibalComponent.getCannibalLevel() < 40;
+		if (shouldHave && !armorAttribute.hasModifier(ARMOR_MODIFIER_1)) {
+			armorAttribute.addPersistentModifier(ARMOR_MODIFIER_1);
+			movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_1);
+		}
+		else if (!shouldHave && armorAttribute.hasModifier(ARMOR_MODIFIER_1)) {
+			armorAttribute.removeModifier(ARMOR_MODIFIER_1);
+			movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_1);
+		}
+		shouldHave = cannibalComponent.getCannibalLevel() >= 20 && cannibalComponent.getCannibalLevel() < 30;
+		if (shouldHave && !movementSpeedAttribute.hasModifier(MOVEMENT_SPEED_MODIFIER_0)) {
+			movementSpeedAttribute.addPersistentModifier(MOVEMENT_SPEED_MODIFIER_0);
+		}
+		else if (!shouldHave && movementSpeedAttribute.hasModifier(MOVEMENT_SPEED_MODIFIER_0)) {
+			movementSpeedAttribute.removeModifier(MOVEMENT_SPEED_MODIFIER_0);
+		}
 	}
 }

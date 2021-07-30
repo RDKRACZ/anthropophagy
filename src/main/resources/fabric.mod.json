@@ -22,6 +22,14 @@
 	],
 	"client": [
 	  "moriyashiine.anthropophagy.client.AnthropophagyClient"
+	],
+	"cardinal-components-entity": [
+	  "moriyashiine.anthropophagy.common.registry.APComponents"
+	]
+  },
+  "custom": {
+	"cardinal-components": [
+	  "anthropophagy:cannibal"
 	]
   },
   "mixins": [

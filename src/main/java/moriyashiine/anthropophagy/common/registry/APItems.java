@@ -4,8 +4,10 @@ import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.item.FleshItem;
 import moriyashiine.anthropophagy.common.item.KnifeItem;
 import moriyashiine.anthropophagy.common.item.TetheredHeartItem;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.item.*;
+import net.minecraft.item.FoodComponents;
+import net.minecraft.item.Item;
+import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.ToolMaterials;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -14,8 +16,6 @@ import java.util.Map;
 
 public class APItems {
 	private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
-	
-	public static final ItemGroup GROUP = FabricItemGroupBuilder.build(new Identifier(Anthropophagy.MODID, Anthropophagy.MODID), () -> new ItemStack(APItems.IRON_KNIFE));
 	
 	public static final Item WOODEN_KNIFE = create("wooden_knife", new KnifeItem(ToolMaterials.WOOD, gen()));
 	public static final Item STONE_KNIFE = create("stone_knife", new KnifeItem(ToolMaterials.STONE, gen()));
@@ -33,7 +33,7 @@ public class APItems {
 	public static final Item PIGLUTTON_SPAWN_EGG = create("piglutton_spawn_egg", new SpawnEggItem(APEntityTypes.PIGLUTTON, 0x7f3d00, 0xc4c4c4, gen()));
 	
 	private static Item.Settings gen() {
-		return new Item.Settings().group(GROUP);
+		return new Item.Settings().group(Anthropophagy.ITEM_GROUP);
 	}
 	
 	private static <T extends Item> T create(String name, T item) {

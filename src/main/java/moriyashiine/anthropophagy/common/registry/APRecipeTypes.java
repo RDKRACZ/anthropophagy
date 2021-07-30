@@ -19,7 +19,7 @@ public class APRecipeTypes {
 	public static final RecipeType<FleshDropRecipe> FLESH_DROP_RECIPE_TYPE = create("flesh_drop");
 	
 	private static <T extends Recipe<?>> RecipeType<T> create(String name) {
-		RecipeType<T> type = new RecipeType<T>() {
+		RecipeType<T> type = new RecipeType<>() {
 			@Override
 			public String toString() {
 				return name;

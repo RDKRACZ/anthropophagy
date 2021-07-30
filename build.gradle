@@ -12,12 +12,16 @@ group = project.maven_group
 
 repositories {
     maven {
-        name = "cloth config"
-        url = "https://maven.shedaniel.me/"
+        name "cardinal components"
+        url "https://ladysnake.jfrog.io/artifactory/mods"
     }
     maven {
-        name = "reach"
-        url = "https://maven.jamieswhiteshirt.com/libs-release"
+        name "reach"
+        url "https://maven.jamieswhiteshirt.com/libs-release"
+    }
+    maven {
+        name "cloth config"
+        url "https://maven.shedaniel.me/"
     }
 }
 
@@ -28,6 +32,11 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${reach_version}"
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_components_version}"
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_components_version}"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
+
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }

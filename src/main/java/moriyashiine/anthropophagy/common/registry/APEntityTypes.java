@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
@@ -25,8 +26,8 @@ public class APEntityTypes {
 	public static void init() {
 		Registry.register(Registry.ENTITY_TYPE, new Identifier(Anthropophagy.MODID, "piglutton"), PIGLUTTON);
 		if (Anthropophagy.config.enablePiglutton) {
-			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(BiomeSelectors.categories(Biome.Category.FOREST)), PIGLUTTON.getSpawnGroup(), PIGLUTTON, 1, 1, 1);
-			SpawnRestrictionAccessor.callRegister(PIGLUTTON, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE, (type, serverWorldAccess, spawnReason, pos, random) -> random.nextFloat() < 1 / 8f);
+			BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.FOREST), PIGLUTTON.getSpawnGroup(), PIGLUTTON, 1, 1, 1);
+			SpawnRestrictionAccessor.callRegister(PIGLUTTON, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE, (type, serverWorldAccess, spawnReason, pos, random) -> MobEntity.canMobSpawn(type, serverWorldAccess, spawnReason, pos, random) && random.nextFloat() < 1 / 8f);
 		}
 	}
 }

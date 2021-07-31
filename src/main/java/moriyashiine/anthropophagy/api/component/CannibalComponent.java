@@ -12,12 +12,12 @@ import net.minecraft.nbt.NbtCompound;
 import java.util.Optional;
 
 public class CannibalComponent implements ComponentV3, ServerTickingComponent {
-	private final PlayerEntity player;
+	private final PlayerEntity obj;
 	private boolean tethered = false;
 	private int cannibalLevel = 0, hungerTimer = 0;
 	
-	public CannibalComponent(PlayerEntity player) {
-		this.player = player;
+	public CannibalComponent(PlayerEntity obj) {
+		this.obj = obj;
 	}
 	
 	public boolean isTethered() {
@@ -61,29 +61,29 @@ public class CannibalComponent implements ComponentV3, ServerTickingComponent {
 	@Override
 	public void serverTick() {
 		if (getCannibalLevel() >= 30) {
-			player.dropStack(player.getEquippedStack(EquipmentSlot.LEGS).split(1));
+			obj.dropStack(obj.getEquippedStack(EquipmentSlot.LEGS).split(1));
 		}
 		if (getCannibalLevel() >= 50) {
-			player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 410, 0, true, false));
-			player.dropStack(player.getEquippedStack(EquipmentSlot.HEAD).split(1));
+			obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 410, 0, true, false));
+			obj.dropStack(obj.getEquippedStack(EquipmentSlot.HEAD).split(1));
 		}
 		if (getCannibalLevel() >= 70) {
-			player.dropStack(player.getEquippedStack(EquipmentSlot.FEET).split(1));
+			obj.dropStack(obj.getEquippedStack(EquipmentSlot.FEET).split(1));
 		}
 		if (getCannibalLevel() >= 90) {
-			player.dropStack(player.getEquippedStack(EquipmentSlot.CHEST).split(1));
+			obj.dropStack(obj.getEquippedStack(EquipmentSlot.CHEST).split(1));
 		}
 		if (getHungerTimer() > 0) {
 			setHungerTimer(getHungerTimer() - 1);
-			player.getHungerManager().setFoodLevel(Math.max(player.getHungerManager().getFoodLevel() - 1, 0));
+			obj.getHungerManager().setFoodLevel(Math.max(obj.getHungerManager().getFoodLevel() - 1, 0));
 		}
 	}
 	
-	public static CannibalComponent get(PlayerEntity player) {
-		return APComponents.CANNIBAL_COMPONENT.get(player);
+	public static CannibalComponent get(PlayerEntity obj) {
+		return APComponents.CANNIBAL_COMPONENT.get(obj);
 	}
 	
-	public static Optional<CannibalComponent> maybeGet(PlayerEntity player) {
-		return APComponents.CANNIBAL_COMPONENT.maybeGet(player);
+	public static Optional<CannibalComponent> maybeGet(PlayerEntity obj) {
+		return APComponents.CANNIBAL_COMPONENT.maybeGet(obj);
 	}
 }

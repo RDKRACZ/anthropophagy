@@ -27,11 +27,6 @@
 	  "moriyashiine.anthropophagy.common.registry.APComponents"
 	]
   },
-  "custom": {
-	"cardinal-components": [
-	  "anthropophagy:cannibal"
-	]
-  },
   "mixins": [
 	"anthropophagy.mixins.json"
   ],
@@ -40,5 +35,10 @@
 	"fabric": "*",
 	"minecraft": "1.17.*",
 	"cloth-config2": "*"
+  },
+  "custom": {
+	"cardinal-components": [
+	  "anthropophagy:cannibal"
+	]
   }
 }

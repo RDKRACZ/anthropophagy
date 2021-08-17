@@ -11,7 +11,8 @@
   ],
   "contact": {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/anthropophagy",
-	"sources": "https://github.com/MoriyaShiine/anthropophagy"
+	"sources": "https://github.com/MoriyaShiine/anthropophagy",
+	"issues": "https://github.com/MoriyaShiine/anthropophagy/issues"
   },
   "license": "CC BY-NC-ND 4.0",
   "icon": "assets/anthropophagy/icon.png",

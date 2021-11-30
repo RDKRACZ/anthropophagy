@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-@SuppressWarnings("ConstantConditions")
 public class FleshItem extends Item {
 	public FleshItem(Settings settings) {
 		super(settings);
@@ -13,13 +12,13 @@ public class FleshItem extends Item {
 	
 	@Override
 	public Text getName(ItemStack stack) {
-		Text fin = super.getName(stack);
-		if (stack.hasTag()) {
-			String name = stack.getTag().getString("OwnerName");
-			if (!name.isEmpty()) {
-				fin = new TranslatableText(getTranslationKey(stack) + "_owned", name);
+		Text name = super.getName(stack);
+		if (stack.hasNbt()) {
+			String ownerName = stack.getNbt().getString("OwnerName");
+			if (!ownerName.isEmpty()) {
+				name = new TranslatableText(getTranslationKey(stack) + "_owned", ownerName);
 			}
 		}
-		return fin;
+		return name;
 	}
 }

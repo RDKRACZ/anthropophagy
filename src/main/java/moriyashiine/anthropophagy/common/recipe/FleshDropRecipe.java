@@ -1,7 +1,7 @@
 package moriyashiine.anthropophagy.common.recipe;
 
 import com.google.gson.JsonObject;
-import moriyashiine.anthropophagy.common.registry.APRecipeTypes;
+import moriyashiine.anthropophagy.common.registry.ModRecipeTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
@@ -55,12 +55,12 @@ public class FleshDropRecipe implements Recipe<Inventory> {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return APRecipeTypes.FLESH_DROP_SERIALIZER;
+		return ModRecipeTypes.FLESH_DROP_SERIALIZER;
 	}
 	
 	@Override
 	public RecipeType<?> getType() {
-		return APRecipeTypes.FLESH_DROP_RECIPE_TYPE;
+		return ModRecipeTypes.FLESH_DROP_RECIPE_TYPE;
 	}
 	
 	public static class Serializer implements RecipeSerializer<FleshDropRecipe> {

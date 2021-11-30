@@ -18,10 +18,19 @@ import net.minecraft.world.World;
 import java.util.UUID;
 
 public class KnifeItem extends SwordItem {
-	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("036c3108-e940-4e06-93f0-8f826c7c4877"), "Weapon modifier", -1, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("036c3108-e940-4e06-93f0-8f826c7c4877"), "Weapon modifier", -0.5, EntityAttributeModifier.Operation.ADDITION);
 	
 	public KnifeItem(ToolMaterial toolMaterial, Settings settings) {
 		super(toolMaterial, 0, -2, settings);
+	}
+	
+	@Override
+	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+		Multimap<EntityAttribute, EntityAttributeModifier> map = LinkedHashMultimap.create(super.getAttributeModifiers(slot));
+		if (!map.isEmpty()) {
+			map.put(ReachEntityAttributes.ATTACK_RANGE, REACH_MODIFIER);
+		}
+		return map;
 	}
 	
 	@Override
@@ -31,14 +40,5 @@ public class KnifeItem extends SwordItem {
 			return new TypedActionResult<>(ActionResult.success(world.isClient), user.getStackInHand(hand));
 		}
 		return super.use(world, user, hand);
-	}
-	
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-		Multimap<EntityAttribute, EntityAttributeModifier> map = LinkedHashMultimap.create(super.getAttributeModifiers(slot));
-		if (slot == EquipmentSlot.MAINHAND) {
-			map.put(ReachEntityAttributes.ATTACK_RANGE, REACH_MODIFIER);
-		}
-		return map;
 	}
 }

@@ -11,7 +11,8 @@
   ],
   "contact": {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/anthropophagy",
-	"sources": "https://github.com/MoriyaShiine/anthropophagy"
+	"sources": "https://github.com/MoriyaShiine/anthropophagy",
+	"issues": "https://github.com/MoriyaShiine/anthropophagy/issues"
   },
   "license": "CC BY-NC-ND 4.0",
   "icon": "assets/anthropophagy/icon.png",
@@ -24,17 +25,18 @@
 	  "moriyashiine.anthropophagy.client.AnthropophagyClient"
 	],
 	"cardinal-components-entity": [
-	  "moriyashiine.anthropophagy.common.registry.APComponents"
+	  "moriyashiine.anthropophagy.common.registry.ModComponents"
 	]
   },
   "mixins": [
 	"anthropophagy.mixins.json"
   ],
   "depends": {
-	"fabricloader": "*",
-	"fabric": "*",
-	"minecraft": "1.17.*",
-	"cloth-config2": "*"
+	"fabricloader": ">=0.12.6",
+	"fabric": ">=0.43.1",
+	"minecraft": "1.18.x",
+	"java": ">=17",
+	"cloth-config2": ">=6.0.42"
   },
   "custom": {
 	"cardinal-components": [

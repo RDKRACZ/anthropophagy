@@ -1,16 +1,16 @@
 package moriyashiine.anthropophagy.common.registry;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
+import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
-import moriyashiine.anthropophagy.api.component.CannibalComponent;
 import moriyashiine.anthropophagy.common.Anthropophagy;
+import moriyashiine.anthropophagy.common.component.entity.CannibalComponent;
 import net.minecraft.util.Identifier;
 
-public class APComponents implements EntityComponentInitializer {
-	public static final ComponentKey<CannibalComponent> CANNIBAL_COMPONENT = ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(Anthropophagy.MODID, "cannibal"), CannibalComponent.class);
+public class ModComponents implements EntityComponentInitializer {
+	public static final ComponentKey<CannibalComponent> CANNIBAL_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Anthropophagy.MOD_ID, "cannibal"), CannibalComponent.class);
 	
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {

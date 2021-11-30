@@ -1,5 +1,5 @@
 {
-  "parent": "recipes/root",
+  "parent": "minecraft:recipes/root",
   "rewards": {
 	"recipes": [
 	  "anthropophagy:cooked_flesh_from_campfire_cooking"
@@ -7,7 +7,7 @@
   },
   "criteria": {
 	"has_item": {
-	  "trigger": "inventory_changed",
+	  "trigger": "minecraft:inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
@@ -19,7 +19,7 @@
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "recipe_unlocked",
+	  "trigger": "minecraft:recipe_unlocked",
 	  "conditions": {
 		"recipe": "anthropophagy:cooked_flesh_from_campfire_cooking"
 	  }

@@ -3,8 +3,8 @@ package moriyashiine.anthropophagy.common;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 
-@Config(name = Anthropophagy.MODID)
-public class APConfig implements ConfigData {
+@Config(name = Anthropophagy.MOD_ID)
+public class ModConfig implements ConfigData {
 	public boolean enablePiglutton = true;
 	
 	public int damageNeededForGuaranteedFleshDrop = 8;

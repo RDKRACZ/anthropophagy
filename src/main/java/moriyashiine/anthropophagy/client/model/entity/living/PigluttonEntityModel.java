@@ -71,11 +71,11 @@ public class PigluttonEntityModel<T extends LivingEntity> extends EntityModel<T>
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		neck.yaw = headYaw * 0.01f;
 		neck.pitch = headPitch * 0.01f - 1.5f;
-		bipedLeftArm.pitch = (MathHelper.cos(limbAngle * 0.6662f) * limbDistance * 0.5f) - 5 / 3f;
-		bipedRightArm.pitch = (MathHelper.cos(limbAngle * 0.6662f + (float) Math.PI) * limbDistance * 0.5f) - 5 / 3f - MathHelper.sin((float) (handSwingProgress * Math.PI));
+		bipedLeftArm.pitch = (MathHelper.cos(limbAngle * 2 / 3f) * limbDistance * 0.5f) - 5 / 3f;
+		bipedRightArm.pitch = (MathHelper.cos(limbAngle * 2 / 3f + (float) Math.PI) * limbDistance * 0.5f) - 5 / 3f - MathHelper.sin((float) (handSwingProgress * Math.PI));
 		bipedRightArm.yaw = MathHelper.sin((float) (handSwingProgress * Math.PI));
 		bipedRightArm.roll = MathHelper.sin((float) (handSwingProgress * Math.PI));
-		bipedLeftLeg.pitch = (MathHelper.cos(limbAngle * 0.6662f + (float) Math.PI) * limbDistance) - 4 / 5f;
-		bipedRightLeg.pitch = (MathHelper.cos(limbAngle * 0.6662f) * limbDistance) - 4 / 5f;
+		bipedLeftLeg.pitch = (MathHelper.cos(limbAngle * 2 / 3f + (float) Math.PI) * limbDistance) - 4 / 5f;
+		bipedRightLeg.pitch = (MathHelper.cos(limbAngle * 2 / 3f) * limbDistance) - 4 / 5f;
 	}
 }

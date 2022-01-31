@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.anthropophagy.client.renderer.entity.living;
 
 import moriyashiine.anthropophagy.client.AnthropophagyClient;

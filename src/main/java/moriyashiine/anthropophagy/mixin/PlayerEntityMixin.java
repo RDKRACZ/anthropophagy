@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.anthropophagy.mixin;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;

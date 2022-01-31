@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class AnthropophagyClient implements ClientModInitializer {
 	public static final EntityModelLayer PIGLUTTON_MODEL_LAYER = new EntityModelLayer(new Identifier(Anthropophagy.MOD_ID, "piglutton"), "main");
-	
+
 	@Override
 	public void onInitializeClient() {
 		EntityModelLayerRegistry.registerModelLayer(PIGLUTTON_MODEL_LAYER, PigluttonEntityModel::getTexturedModelData);

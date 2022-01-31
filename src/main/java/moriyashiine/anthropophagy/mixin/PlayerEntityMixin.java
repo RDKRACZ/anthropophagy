@@ -15,7 +15,6 @@ import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,11 +28,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@Inject(method = "eatFood", at = @At("HEAD"))
-	private void handleCannibalFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
+	private void anthropophagy$handleCannibalFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
 		if (!world.isClient) {
-			ModComponents.CANNIBAL_COMPONENT.maybeGet((PlayerEntity) (Object) this).ifPresent(cannibalComponent -> {
+			ModComponents.CANNIBAL_COMPONENT.maybeGet(this).ifPresent(cannibalComponent -> {
 				if (stack.isFood()) {
 					if (stack.getItem() == ModItems.CORRUPT_FLESH) {
 						addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE, 1, 1));
@@ -50,25 +49,21 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 							float chance = 0;
 							if (cannibalComponent.getCannibalLevel() >= 40) {
 								if (cannibalComponent.getCannibalLevel() >= 70) {
-									chance = 1 / 10f;
-								}
-								else if (cannibalComponent.getCannibalLevel() >= 60) {
-									chance = 1 / 15f;
-								}
-								else if (cannibalComponent.getCannibalLevel() >= 50) {
-									chance = 1 / 20f;
-								}
-								else {
-									chance = 1 / 25f;
+									chance = 1 / 10F;
+								} else if (cannibalComponent.getCannibalLevel() >= 60) {
+									chance = 1 / 15F;
+								} else if (cannibalComponent.getCannibalLevel() >= 50) {
+									chance = 1 / 20F;
+								} else {
+									chance = 1 / 25F;
 								}
 							}
 							if (random.nextFloat() < chance) {
 								PigluttonEntity piglutton = ModEntityTypes.PIGLUTTON.create(world);
 								if (piglutton != null) {
 									boolean valid = false;
-									BlockPos pos = getBlockPos();
 									for (int i = 0; i < 8; i++) {
-										if (piglutton.teleport(pos.getX() + MathHelper.nextInt(random, -16, 16), pos.getY() + MathHelper.nextInt(random, -6, 6), pos.getZ() + MathHelper.nextInt(random, -16, 16), false)) {
+										if (piglutton.teleport(getBlockPos().getX() + MathHelper.nextInt(random, -16, 16), getBlockPos().getY() + MathHelper.nextInt(random, -6, 6), getBlockPos().getZ() + MathHelper.nextInt(random, -16, 16), false)) {
 											valid = true;
 											break;
 										}
@@ -81,8 +76,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 								}
 							}
 						}
-					}
-					else {
+					} else {
 						if (!cannibalComponent.isTethered()) {
 							cannibalComponent.setCannibalLevel(Math.max(cannibalComponent.getCannibalLevel() - 1, 0));
 						}
@@ -93,31 +87,31 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 							}
 						}
 					}
-					cannibalComponent.updateAttributes((PlayerEntity) (Object) this);
+					cannibalComponent.updateAttributes(PlayerEntity.class.cast(this));
 				}
 			});
 		}
 	}
-	
+
 	@Unique
 	private static float getFoodModifier(int level) {
 		if (level >= 70) {
-			return 1.6f;
+			return 1.6F;
 		}
 		if (level >= 60) {
-			return 1.5f;
+			return 1.5F;
 		}
 		if (level >= 50) {
-			return 1.4f;
+			return 1.4F;
 		}
 		if (level >= 40) {
-			return 1.3f;
+			return 1.3F;
 		}
 		if (level >= 30) {
-			return 1.2f;
+			return 1.2F;
 		}
 		if (level >= 20) {
-			return 1.1f;
+			return 1.1F;
 		}
 		return 1;
 	}

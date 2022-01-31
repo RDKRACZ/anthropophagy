@@ -17,8 +17,8 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 
 public class ModEntityTypes {
-	public static final EntityType<PigluttonEntity> PIGLUTTON = FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, PigluttonEntity::new).dimensions(EntityDimensions.fixed(1, 1.75f)).build();
-	
+	public static final EntityType<PigluttonEntity> PIGLUTTON = FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, PigluttonEntity::new).dimensions(EntityDimensions.fixed(1, 1.75F)).build();
+
 	public static void init() {
 		FabricDefaultAttributeRegistry.register(PIGLUTTON, PigluttonEntity.createAttributes());
 		Registry.register(Registry.ENTITY_TYPE, new Identifier(Anthropophagy.MOD_ID, "piglutton"), PIGLUTTON);

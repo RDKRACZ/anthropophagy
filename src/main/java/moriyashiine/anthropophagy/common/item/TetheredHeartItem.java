@@ -14,7 +14,7 @@ public class TetheredHeartItem extends Item {
 	public TetheredHeartItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack stack = user.getStackInHand(hand);
@@ -24,8 +24,7 @@ public class TetheredHeartItem extends Item {
 					cannibalComponent.setTethered(true);
 					stack.decrement(1);
 					user.sendMessage(new TranslatableText(Anthropophagy.MOD_ID + ".message.tether"), true);
-				}
-				else {
+				} else {
 					user.sendMessage(new TranslatableText(Anthropophagy.MOD_ID + ".message.tethered"), true);
 				}
 			});

@@ -3,10 +3,10 @@ package moriyashiine.anthropophagy.mixin;
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
 import moriyashiine.anthropophagy.common.item.FleshItem;
-import moriyashiine.anthropophagy.common.item.KnifeItem;
 import moriyashiine.anthropophagy.common.registry.ModComponents;
 import moriyashiine.anthropophagy.common.registry.ModItems;
 import moriyashiine.anthropophagy.common.registry.ModRecipeTypes;
+import moriyashiine.anthropophagy.common.registry.ModTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -25,11 +25,11 @@ public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Inject(method = "damage", at = @At("RETURN"))
-	private void dropFleshWhenDamaged(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+	private void anthropophagy$dropFleshWhenDamaged(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		if (cir.getReturnValue() && !world.isClient) {
-			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity living && living.getMainHandStack().getItem() instanceof KnifeItem)) {
+			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity living && ModTags.KNIVES.contains(living.getMainHandStack().getItem()))) {
 				world.getRecipeManager().listAllOfType(ModRecipeTypes.FLESH_DROP_RECIPE_TYPE).forEach(recipe -> {
 					if (recipe.entity_type == getType() && world.random.nextFloat() * Anthropophagy.config.damageNeededForGuaranteedFleshDrop < amount) {
 						ItemStack drop = new ItemStack(getFireTicks() > 0 ? recipe.cooked_drop : recipe.raw_drop);
@@ -42,9 +42,9 @@ public abstract class LivingEntityMixin extends Entity {
 			}
 		}
 	}
-	
+
 	@Inject(method = "dropEquipment", at = @At("HEAD"))
-	private void dropTetheredHeart(DamageSource source, int lootingMultiplier, boolean allowDrops, CallbackInfo ci) {
+	private void anthropophagy$dropTetheredHeart(DamageSource source, int lootingMultiplier, boolean allowDrops, CallbackInfo ci) {
 		ModComponents.CANNIBAL_COMPONENT.maybeGet(this).ifPresent(cannibalComponent -> {
 			if (cannibalComponent.isTethered()) {
 				dropStack(new ItemStack(ModItems.PIGLUTTON_HEART));

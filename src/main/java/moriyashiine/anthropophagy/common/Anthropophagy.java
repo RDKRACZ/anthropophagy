@@ -10,9 +10,9 @@ import net.fabricmc.api.ModInitializer;
 
 public class Anthropophagy implements ModInitializer {
 	public static final String MOD_ID = "anthropophagy";
-	
+
 	public static ModConfig config;
-	
+
 	@Override
 	public void onInitialize() {
 		AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);

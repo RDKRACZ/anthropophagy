@@ -15,7 +15,7 @@ public class ModRecipeTypes {
 			return "flesh_drop";
 		}
 	};
-	
+
 	public static void init() {
 		Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(Anthropophagy.MOD_ID, FLESH_DROP_RECIPE_TYPE.toString()), FLESH_DROP_SERIALIZER);
 		Registry.register(Registry.RECIPE_TYPE, new Identifier(Anthropophagy.MOD_ID, FLESH_DROP_RECIPE_TYPE.toString()), FLESH_DROP_RECIPE_TYPE);

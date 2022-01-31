@@ -9,7 +9,7 @@ public class FleshItem extends Item {
 	public FleshItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public Text getName(ItemStack stack) {
 		Text name = super.getName(stack);

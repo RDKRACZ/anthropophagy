@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 
 public class ModComponents implements EntityComponentInitializer {
 	public static final ComponentKey<CannibalComponent> CANNIBAL_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Anthropophagy.MOD_ID, "cannibal"), CannibalComponent.class);
-	
+
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
 		registry.registerForPlayers(CANNIBAL_COMPONENT, CannibalComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);

@@ -7,5 +7,7 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
 public class ModTags {
+	public static final Tag<Item> KNIVES = TagFactory.ITEM.create(new Identifier("fabric", "tools/knives"));
+
 	public static final Tag<Item> FLESH = TagFactory.ITEM.create(new Identifier(Anthropophagy.MOD_ID, "flesh"));
 }

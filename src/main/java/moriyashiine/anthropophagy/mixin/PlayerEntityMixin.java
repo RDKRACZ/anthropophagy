@@ -8,8 +8,8 @@ import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
 import moriyashiine.anthropophagy.common.registry.ModComponents;
 import moriyashiine.anthropophagy.common.registry.ModEntityTypes;
+import moriyashiine.anthropophagy.common.registry.ModItemTags;
 import moriyashiine.anthropophagy.common.registry.ModItems;
-import moriyashiine.anthropophagy.common.registry.ModTags;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -41,7 +41,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 					if (stack.getItem() == ModItems.CORRUPT_FLESH) {
 						addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE, 1, 1));
 					}
-					if (ModTags.FLESH.contains(stack.getItem())) {
+					if (stack.isIn(ModItemTags.FLESH)) {
 						if (!cannibalComponent.isTethered()) {
 							cannibalComponent.setCannibalLevel(Math.min(cannibalComponent.getCannibalLevel() + 2, 300));
 						}

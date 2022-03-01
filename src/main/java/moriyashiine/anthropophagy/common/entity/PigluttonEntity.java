@@ -5,7 +5,7 @@
 package moriyashiine.anthropophagy.common.entity;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
-import moriyashiine.anthropophagy.common.item.FleshItem;
+import moriyashiine.anthropophagy.common.registry.ModItemTags;
 import moriyashiine.anthropophagy.common.registry.ModSoundEvents;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -50,7 +50,7 @@ public class PigluttonEntity extends HostileEntity {
 	public void tick() {
 		super.tick();
 		if (!dead && age % 5 == 0) {
-			List<ItemEntity> drops = world.getEntitiesByType(EntityType.ITEM, getBoundingBox().expand(8, 4, 8), foundEntity -> foundEntity.getStack().getItem() instanceof FleshItem);
+			List<ItemEntity> drops = world.getEntitiesByType(EntityType.ITEM, getBoundingBox().expand(8, 4, 8), foundEntity -> foundEntity.getStack().isIn(ModItemTags.FLESH));
 			if (!drops.isEmpty()) {
 				ItemEntity item = drops.get(0);
 				if (item != null) {

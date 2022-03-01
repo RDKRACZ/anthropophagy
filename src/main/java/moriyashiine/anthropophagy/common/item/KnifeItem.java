@@ -30,7 +30,7 @@ public class KnifeItem extends SwordItem {
 	@Override
 	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
 		Multimap<EntityAttribute, EntityAttributeModifier> map = LinkedHashMultimap.create(super.getAttributeModifiers(slot));
-		if (!map.isEmpty()) {
+		if (slot == EquipmentSlot.MAINHAND) {
 			map.put(ReachEntityAttributes.ATTACK_RANGE, REACH_MODIFIER);
 		}
 		return map;

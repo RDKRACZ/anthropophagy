@@ -8,9 +8,9 @@ import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
 import moriyashiine.anthropophagy.common.item.FleshItem;
 import moriyashiine.anthropophagy.common.registry.ModComponents;
+import moriyashiine.anthropophagy.common.registry.ModItemTags;
 import moriyashiine.anthropophagy.common.registry.ModItems;
 import moriyashiine.anthropophagy.common.registry.ModRecipeTypes;
-import moriyashiine.anthropophagy.common.registry.ModTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -33,7 +33,7 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "damage", at = @At("RETURN"))
 	private void anthropophagy$dropFleshWhenDamaged(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		if (cir.getReturnValue() && !world.isClient) {
-			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity living && ModTags.KNIVES.contains(living.getMainHandStack().getItem()))) {
+			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity living && living.getMainHandStack().isIn(ModItemTags.KNIVES))) {
 				world.getRecipeManager().listAllOfType(ModRecipeTypes.FLESH_DROP_RECIPE_TYPE).forEach(recipe -> {
 					if (recipe.entity_type == getType() && world.random.nextFloat() * Anthropophagy.config.damageNeededForGuaranteedFleshDrop < amount) {
 						ItemStack drop = new ItemStack(getFireTicks() > 0 ? recipe.cooked_drop : recipe.raw_drop);

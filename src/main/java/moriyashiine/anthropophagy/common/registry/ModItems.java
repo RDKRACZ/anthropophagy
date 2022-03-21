@@ -24,9 +24,9 @@ public class ModItems {
 	public static final Item DIAMOND_KNIFE = new KnifeItem(ToolMaterials.DIAMOND, settings());
 	public static final Item NETHERITE_KNIFE = new KnifeItem(ToolMaterials.NETHERITE, settings().fireproof());
 
-	public static final Item FLESH = new FleshItem(settings().food(FoodComponents.BEEF));
-	public static final Item COOKED_FLESH = new FleshItem(settings().food(FoodComponents.COOKED_BEEF));
-	public static final Item CORRUPT_FLESH = new FleshItem(settings().food(FoodComponents.BEEF));
+	public static final Item FLESH = new FleshItem(settings().food(ModFoodComponents.FLESH));
+	public static final Item COOKED_FLESH = new FleshItem(settings().food(ModFoodComponents.COOKED_FLESH));
+	public static final Item CORRUPT_FLESH = new FleshItem(settings().food(ModFoodComponents.CORRUPT_FLESH));
 
 	public static final Item PIGLUTTON_HEART = new FleshItem(settings().food(FoodComponents.COOKED_BEEF));
 	public static final Item TETHERED_HEART = new TetheredHeartItem(settings());

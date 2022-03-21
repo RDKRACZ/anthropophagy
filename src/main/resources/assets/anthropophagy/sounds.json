@@ -31,5 +31,18 @@
 	  "mob/hoglin/death3"
 	],
 	"subtitle": "anthropophagy.subtitles.entity.piglutton.death"
+  },
+  "entity.piglutton.spawn": {
+	"sounds": [
+	  {
+		"name": "mob/hoglin/converted1",
+		"volume": 0.8
+	  },
+	  {
+		"name": "mob/hoglin/converted2",
+		"volume": 0.8
+	  }
+	],
+	"subtitle": "anthropophagy.subtitles.entity.piglutton.spawn"
   }
 }

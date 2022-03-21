@@ -19,6 +19,10 @@
   "anthropophagy.subtitles.entity.piglutton.ambient": "Piglutton growls",
   "anthropophagy.subtitles.entity.piglutton.hurt": "Piglutton hurts",
   "anthropophagy.subtitles.entity.piglutton.death": "Piglutton dies",
+  "anthropophagy.subtitles.entity.piglutton.spawn": "Piglutton spawns",
   "anthropophagy.message.tether": "Your hunger seems to have settled for now",
-  "anthropophagy.message.tethered": "You are already tethered"
+  "anthropophagy.message.tethered": "You are already tethered",
+  "text.autoconfig.anthropophagy.option.enablePiglutton": "Enable Piglutton",
+  "text.autoconfig.anthropophagy.option.strongerPiglutton": "Stronger Piglutton",
+  "text.autoconfig.anthropophagy.option.damageNeededForGuaranteedFleshDrop": "Damage Needed For Guaranteed Flesh Drop"
 }

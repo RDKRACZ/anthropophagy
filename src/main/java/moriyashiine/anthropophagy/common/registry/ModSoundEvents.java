@@ -13,10 +13,12 @@ public class ModSoundEvents {
 	public static final SoundEvent ENTITY_PIGLUTTON_AMBIENT = new SoundEvent(new Identifier(Anthropophagy.MOD_ID, "entity.piglutton.ambient"));
 	public static final SoundEvent ENTITY_PIGLUTTON_HURT = new SoundEvent(new Identifier(Anthropophagy.MOD_ID, "entity.piglutton.hurt"));
 	public static final SoundEvent ENTITY_PIGLUTTON_DEATH = new SoundEvent(new Identifier(Anthropophagy.MOD_ID, "entity.piglutton.death"));
+	public static final SoundEvent ENTITY_PIGLUTTON_SPAWN = new SoundEvent(new Identifier(Anthropophagy.MOD_ID, "entity.piglutton.spawn"));
 
 	public static void init() {
 		Registry.register(Registry.SOUND_EVENT, ENTITY_PIGLUTTON_AMBIENT.getId(), ENTITY_PIGLUTTON_AMBIENT);
 		Registry.register(Registry.SOUND_EVENT, ENTITY_PIGLUTTON_HURT.getId(), ENTITY_PIGLUTTON_HURT);
 		Registry.register(Registry.SOUND_EVENT, ENTITY_PIGLUTTON_DEATH.getId(), ENTITY_PIGLUTTON_DEATH);
+		Registry.register(Registry.SOUND_EVENT, ENTITY_PIGLUTTON_SPAWN.getId(), ENTITY_PIGLUTTON_SPAWN);
 	}
 }

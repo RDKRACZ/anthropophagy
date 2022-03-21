@@ -23,6 +23,10 @@ repositories {
         name "cloth config"
         url "https://maven.shedaniel.me"
     }
+    maven {
+        name "mod menu"
+        url "https://maven.terraformersmc.com"
+    }
 }
 
 dependencies {
@@ -41,6 +45,9 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    modCompileOnly "com.terraformersmc:modmenu:${mod_menu_version}"
+    modRuntimeOnly "com.terraformersmc:modmenu:${mod_menu_version}"
 }
 
 

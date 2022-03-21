@@ -5,6 +5,7 @@
 package moriyashiine.anthropophagy.common.item;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
+import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
 import moriyashiine.anthropophagy.common.registry.ModComponents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -23,15 +24,14 @@ public class TetheredHeartItem extends Item {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack stack = user.getStackInHand(hand);
 		if (!world.isClient) {
-			ModComponents.CANNIBAL_COMPONENT.maybeGet(user).ifPresent(cannibalComponent -> {
-				if (!cannibalComponent.isTethered()) {
-					cannibalComponent.setTethered(true);
-					stack.decrement(1);
-					user.sendMessage(new TranslatableText(Anthropophagy.MOD_ID + ".message.tether"), true);
-				} else {
-					user.sendMessage(new TranslatableText(Anthropophagy.MOD_ID + ".message.tethered"), true);
-				}
-			});
+			TetheredComponent tetheredComponent = ModComponents.TETHERED.get(user);
+			if (!tetheredComponent.isTethered()) {
+				tetheredComponent.setTethered(true);
+				stack.decrement(1);
+				user.sendMessage(new TranslatableText(Anthropophagy.MOD_ID + ".message.tether"), true);
+			} else {
+				user.sendMessage(new TranslatableText(Anthropophagy.MOD_ID + ".message.tethered"), true);
+			}
 		}
 		return TypedActionResult.success(stack);
 	}

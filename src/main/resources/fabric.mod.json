@@ -26,6 +26,9 @@
 	],
 	"cardinal-components-entity": [
 	  "moriyashiine.anthropophagy.common.registry.ModComponents"
+	],
+	"modmenu": [
+	  "moriyashiine.anthropophagy.client.integration.ModMenuIntegration"
 	]
   },
   "mixins": [
@@ -40,7 +43,8 @@
   },
   "custom": {
 	"cardinal-components": [
-	  "anthropophagy:cannibal"
+	  "anthropophagy:cannibal_level",
+	  "anthropophagy:tethered"
 	]
   }
 }

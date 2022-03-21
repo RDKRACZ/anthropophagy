@@ -32,10 +32,10 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "damage", at = @At("RETURN"))
 	private void anthropophagy$dropFleshWhenDamaged(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-		if (cir.getReturnValue() && !world.isClient) {
+		if (cir.getReturnValueZ() && !world.isClient) {
 			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity living && living.getMainHandStack().isIn(ModItemTags.KNIVES))) {
 				world.getRecipeManager().listAllOfType(ModRecipeTypes.FLESH_DROP_RECIPE_TYPE).forEach(recipe -> {
-					if (recipe.entity_type == getType() && world.random.nextFloat() * Anthropophagy.config.damageNeededForGuaranteedFleshDrop < amount) {
+					if (recipe.entity_type == getType() && world.random.nextFloat() * Anthropophagy.getConfig().damageNeededForGuaranteedFleshDrop < amount) {
 						ItemStack drop = new ItemStack(getFireTicks() > 0 ? recipe.cooked_drop : recipe.raw_drop);
 						if (drop.getItem() instanceof FleshItem) {
 							drop.getOrCreateNbt().putString("OwnerName", getDisplayName().getString());
@@ -49,8 +49,8 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "dropEquipment", at = @At("HEAD"))
 	private void anthropophagy$dropTetheredHeart(DamageSource source, int lootingMultiplier, boolean allowDrops, CallbackInfo ci) {
-		ModComponents.CANNIBAL_COMPONENT.maybeGet(this).ifPresent(cannibalComponent -> {
-			if (cannibalComponent.isTethered()) {
+		ModComponents.TETHERED.maybeGet(this).ifPresent(tetheredComponent -> {
+			if (tetheredComponent.isTethered()) {
 				dropStack(new ItemStack(ModItems.PIGLUTTON_HEART));
 			}
 		});

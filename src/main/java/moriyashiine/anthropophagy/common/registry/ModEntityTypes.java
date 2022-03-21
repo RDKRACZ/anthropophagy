@@ -26,7 +26,7 @@ public class ModEntityTypes {
 	public static void init() {
 		FabricDefaultAttributeRegistry.register(PIGLUTTON, PigluttonEntity.createAttributes());
 		Registry.register(Registry.ENTITY_TYPE, new Identifier(Anthropophagy.MOD_ID, "piglutton"), PIGLUTTON);
-		if (Anthropophagy.config.enablePiglutton) {
+		if (Anthropophagy.getConfig().enablePiglutton) {
 			BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.FOREST), PIGLUTTON.getSpawnGroup(), PIGLUTTON, 1, 1, 1);
 			SpawnRestrictionAccessor.callRegister(PIGLUTTON, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE, PigluttonEntity::canSpawn);
 		}

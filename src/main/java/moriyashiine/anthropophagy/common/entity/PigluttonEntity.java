@@ -5,6 +5,7 @@
 package moriyashiine.anthropophagy.common.entity;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
+import moriyashiine.anthropophagy.common.registry.ModEntityTypes;
 import moriyashiine.anthropophagy.common.registry.ModItemTags;
 import moriyashiine.anthropophagy.common.registry.ModSoundEvents;
 import net.minecraft.entity.*;
@@ -20,6 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -39,7 +41,7 @@ public class PigluttonEntity extends HostileEntity {
 	}
 
 	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, Anthropophagy.config.strongerPiglutton ? 200 : 100).add(EntityAttributes.GENERIC_ARMOR, 10).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, Anthropophagy.config.strongerPiglutton ? 16 : 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, Anthropophagy.getConfig().strongerPiglutton ? 200 : 100).add(EntityAttributes.GENERIC_ARMOR, 10).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, Anthropophagy.getConfig().strongerPiglutton ? 16 : 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
 	}
 
 	public static boolean canSpawn(EntityType<PigluttonEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
@@ -121,5 +123,37 @@ public class PigluttonEntity extends HostileEntity {
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false, living -> living instanceof PlayerEntity || living instanceof MerchantEntity || living instanceof IllagerEntity || living instanceof WitchEntity));
+	}
+
+	public static void attemptSpawn(LivingEntity living, int cannibalLevel) {
+		float chance = 0;
+		if (cannibalLevel >= 40) {
+			if (cannibalLevel >= 70) {
+				chance = 1 / 10F;
+			} else if (cannibalLevel >= 60) {
+				chance = 1 / 15F;
+			} else if (cannibalLevel >= 50) {
+				chance = 1 / 20F;
+			} else {
+				chance = 1 / 25F;
+			}
+		}
+		if (living.getRandom().nextFloat() < chance) {
+			PigluttonEntity piglutton = ModEntityTypes.PIGLUTTON.create(living.world);
+			if (piglutton != null) {
+				boolean valid = false;
+				for (int i = 0; i < 8; i++) {
+					if (piglutton.teleport(living.getBlockPos().getX() + MathHelper.nextInt(living.getRandom(), -16, 16), living.getBlockPos().getY() + MathHelper.nextInt(living.getRandom(), -6, 6), living.getBlockPos().getZ() + MathHelper.nextInt(living.getRandom(), -16, 16), false)) {
+						valid = true;
+						break;
+					}
+				}
+				if (valid) {
+					living.world.spawnEntity(piglutton);
+					piglutton.setTarget(living);
+					living.world.playSoundFromEntity(null, piglutton, ModSoundEvents.ENTITY_PIGLUTTON_SPAWN, SoundCategory.HOSTILE, 1, 1);
+				}
+			}
+		}
 	}
 }

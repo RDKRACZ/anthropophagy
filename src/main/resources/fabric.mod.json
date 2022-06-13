@@ -11,9 +11,10 @@
   ],
   "contact": {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/anthropophagy",
-	"sources": "https://github.com/MoriyaShiine/anthropophagy"
+	"sources": "https://github.com/MoriyaShiine/anthropophagy",
+	"issues": "https://github.com/MoriyaShiine/anthropophagy/issues"
   },
-  "license": "CC BY-NC-ND 4.0",
+  "license": "All Rights Reserved",
   "icon": "assets/anthropophagy/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -24,21 +25,22 @@
 	  "moriyashiine.anthropophagy.client.AnthropophagyClient"
 	],
 	"cardinal-components-entity": [
-	  "moriyashiine.anthropophagy.common.registry.APComponents"
+	  "moriyashiine.anthropophagy.common.registry.ModEntityComponents"
 	]
   },
   "mixins": [
 	"anthropophagy.mixins.json"
   ],
   "depends": {
-	"fabricloader": "*",
-	"fabric": "*",
-	"minecraft": "1.17.*",
-	"cloth-config2": "*"
+	"fabricloader": ">=0.14.6",
+	"minecraft": "1.19.x",
+	"java": ">=17",
+	"fabric": ">=0.55.1"
   },
   "custom": {
 	"cardinal-components": [
-	  "anthropophagy:cannibal"
+	  "anthropophagy:cannibal_level",
+	  "anthropophagy:tethered"
 	]
   }
 }

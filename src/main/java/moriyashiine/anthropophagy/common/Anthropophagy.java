@@ -1,39 +1,28 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.anthropophagy.common;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import moriyashiine.anthropophagy.api.component.CannibalComponent;
-import moriyashiine.anthropophagy.common.registry.APEntityTypes;
-import moriyashiine.anthropophagy.common.registry.APItems;
-import moriyashiine.anthropophagy.common.registry.APRecipeTypes;
-import moriyashiine.anthropophagy.common.registry.APSoundEvents;
+import com.google.gson.Gson;
+import eu.midnightdust.lib.config.MidnightConfig;
+import moriyashiine.anthropophagy.common.registry.ModEntityTypes;
+import moriyashiine.anthropophagy.common.registry.ModItems;
+import moriyashiine.anthropophagy.common.registry.ModSoundEvents;
+import moriyashiine.anthropophagy.common.reloadlisteners.FleshDropsReloadListener;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.resource.ResourceType;
 
 public class Anthropophagy implements ModInitializer {
-	public static final String MODID = "anthropophagy";
-	
-	public static APConfig config;
-	
-	public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(new Identifier(Anthropophagy.MODID, Anthropophagy.MODID), () -> new ItemStack(APItems.IRON_KNIFE));
-	
+	public static final String MOD_ID = "anthropophagy";
+
 	@Override
 	public void onInitialize() {
-		AutoConfig.register(APConfig.class, GsonConfigSerializer::new);
-		config = AutoConfig.getConfigHolder(APConfig.class).getConfig();
-		APItems.init();
-		APEntityTypes.init();
-		APRecipeTypes.init();
-		APSoundEvents.init();
-		ServerPlayerEvents.ALLOW_DEATH.register((player, damageSource, damageAmount) -> {
-			if (CannibalComponent.get(player).isTethered()) {
-				player.dropStack(new ItemStack(APItems.PIGLUTTON_HEART));
-			}
-			return true;
-		});
+		MidnightConfig.init(MOD_ID, ModConfig.class);
+		ModItems.init();
+		ModEntityTypes.init();
+		ModSoundEvents.init();
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new FleshDropsReloadListener(new Gson(), MOD_ID + "_flesh_drops"));
 	}
 }

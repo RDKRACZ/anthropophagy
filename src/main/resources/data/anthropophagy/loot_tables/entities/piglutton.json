@@ -1,5 +1,5 @@
 {
-  "type": "entity",
+  "type": "minecraft:entity",
   "pools": [
 	{
 	  "rolls": 1,
@@ -8,7 +8,7 @@
 		  "type": "minecraft:item",
 		  "functions": [
 			{
-			  "function": "set_count",
+			  "function": "minecraft:set_count",
 			  "count": 1
 			}
 		  ],
@@ -23,18 +23,18 @@
 		  "type": "minecraft:item",
 		  "functions": [
 			{
-			  "function": "set_count",
+			  "function": "minecraft:set_count",
 			  "count": {
-				"min": 0.0,
-				"max": 2.0,
-				"type": "uniform"
+				"type": "minecraft:uniform",
+				"min": 0,
+				"max": 2
 			  }
 			},
 			{
-			  "function": "looting_enchant",
+			  "function": "minecraft:looting_enchant",
 			  "count": {
-				"min": 0.0,
-				"max": 1.0
+				"min": 0,
+				"max": 1
 			  }
 			}
 		  ],

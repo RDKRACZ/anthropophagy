@@ -1,6 +1,0 @@
-{
-  "type": "anthropophagy:flesh_drop",
-  "entity_type": "minecraft:zombie_villager",
-  "raw_drop": "minecraft:rotten_flesh",
-  "cooked_drop": "minecraft:rotten_flesh"
-}

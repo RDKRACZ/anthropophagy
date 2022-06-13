@@ -1,23 +1,32 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.anthropophagy.client.model.entity.living;
 
+import moriyashiine.anthropophagy.common.Anthropophagy;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class PigluttonEntityModel<T extends LivingEntity> extends EntityModel<T> {
+	public static final EntityModelLayer MODEL_LAYER = new EntityModelLayer(new Identifier(Anthropophagy.MOD_ID, "piglutton"), "main");
+
 	private final ModelPart body;
 	private final ModelPart neck;
 	private final ModelPart bipedLeftArm;
 	private final ModelPart bipedRightArm;
 	private final ModelPart bipedLeftLeg;
 	private final ModelPart bipedRightLeg;
-	
+
 	public PigluttonEntityModel(ModelPart root) {
 		body = root.getChild("body");
 		neck = body.getChild("chest").getChild("neck");
@@ -26,7 +35,7 @@ public class PigluttonEntityModel<T extends LivingEntity> extends EntityModel<T>
 		bipedLeftLeg = body.getChild("bipedLeftLeg");
 		bipedRightLeg = body.getChild("bipedRightLeg");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
@@ -61,21 +70,21 @@ public class PigluttonEntityModel<T extends LivingEntity> extends EntityModel<T>
 		leftTrotter.addChild("lTrotterClaw02", ModelPartBuilder.create().uv(115, 0).mirrored(true).cuboid(-1.0F, -1.3F, -2.0F, 2.0F, 2.0F, 3.0F), ModelTransform.of(-1.0F, 1.5F, -1.1F, 0.6981F, 0.1047F, 0.0349F));
 		return TexturedModelData.of(data, 128, 64);
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		body.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		neck.yaw = headYaw * 0.01f;
-		neck.pitch = headPitch * 0.01f - 1.5f;
-		bipedLeftArm.pitch = (MathHelper.cos(limbAngle * 0.6662f) * limbDistance * 0.5f) - 5 / 3f;
-		bipedRightArm.pitch = (MathHelper.cos(limbAngle * 0.6662f + (float) Math.PI) * limbDistance * 0.5f) - 5 / 3f - MathHelper.sin((float) (handSwingProgress * Math.PI));
+		neck.yaw = headYaw * 0.01F;
+		neck.pitch = headPitch * 0.01F - 1.5F;
+		bipedLeftArm.pitch = (MathHelper.cos(limbAngle * 2 / 3F) * limbDistance * 0.5F) - 5 / 3F;
+		bipedRightArm.pitch = (MathHelper.cos(limbAngle * 2 / 3F + (float) Math.PI) * limbDistance * 0.5F) - 5 / 3F - MathHelper.sin((float) (handSwingProgress * Math.PI));
 		bipedRightArm.yaw = MathHelper.sin((float) (handSwingProgress * Math.PI));
 		bipedRightArm.roll = MathHelper.sin((float) (handSwingProgress * Math.PI));
-		bipedLeftLeg.pitch = (MathHelper.cos(limbAngle * 0.6662f + (float) Math.PI) * limbDistance) - 4 / 5f;
-		bipedRightLeg.pitch = (MathHelper.cos(limbAngle * 0.6662f) * limbDistance) - 4 / 5f;
+		bipedLeftLeg.pitch = (MathHelper.cos(limbAngle * 2 / 3F + (float) Math.PI) * limbDistance) - 4 / 5F;
+		bipedRightLeg.pitch = (MathHelper.cos(limbAngle * 2 / 3F) * limbDistance) - 4 / 5F;
 	}
 }

@@ -1,6 +1,0 @@
-{
-  "type": "anthropophagy:flesh_drop",
-  "entity_type": "minecraft:villager",
-  "raw_drop": "anthropophagy:flesh",
-  "cooked_drop": "anthropophagy:cooked_flesh"
-}

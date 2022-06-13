@@ -12,6 +12,6 @@ public class ModConfig extends MidnightConfig {
 	@Entry
 	public static boolean strongerPiglutton = false;
 
-	@Entry
+	@Entry(min = 0)
 	public static int damageNeededForGuaranteedFleshDrop = 8;
 }

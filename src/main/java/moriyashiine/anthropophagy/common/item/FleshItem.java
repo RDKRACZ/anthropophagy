@@ -7,7 +7,6 @@ package moriyashiine.anthropophagy.common.item;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 public class FleshItem extends Item {
 	public FleshItem(Settings settings) {
@@ -20,7 +19,7 @@ public class FleshItem extends Item {
 		if (stack.hasNbt()) {
 			String ownerName = stack.getNbt().getString("OwnerName");
 			if (!ownerName.isEmpty()) {
-				name = new TranslatableText(getTranslationKey(stack) + "_owned", ownerName);
+				name = Text.translatable(getTranslationKey(stack) + "_owned", ownerName);
 			}
 		}
 		return name;

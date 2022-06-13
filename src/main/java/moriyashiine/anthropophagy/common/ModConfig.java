@@ -4,16 +4,14 @@
 
 package moriyashiine.anthropophagy.common;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import eu.midnightdust.lib.config.MidnightConfig;
 
-@Config(name = Anthropophagy.MOD_ID)
-public class ModConfig implements ConfigData {
-	@ConfigEntry.Gui.RequiresRestart
-	public boolean enablePiglutton = true;
-	@ConfigEntry.Gui.RequiresRestart
-	public boolean strongerPiglutton = false;
+public class ModConfig extends MidnightConfig {
+	@Entry
+	public static boolean enablePiglutton = true;
+	@Entry
+	public static boolean strongerPiglutton = false;
 
-	public int damageNeededForGuaranteedFleshDrop = 8;
+	@Entry
+	public static int damageNeededForGuaranteedFleshDrop = 8;
 }

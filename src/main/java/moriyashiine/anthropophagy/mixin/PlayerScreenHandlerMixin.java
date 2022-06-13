@@ -4,7 +4,7 @@
 
 package moriyashiine.anthropophagy.mixin;
 
-import moriyashiine.anthropophagy.common.registry.ModComponents;
+import moriyashiine.anthropophagy.common.registry.ModEntityComponents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -23,7 +23,7 @@ public class PlayerScreenHandlerMixin extends Slot {
 
 	@Inject(method = "canInsert(Lnet/minecraft/item/ItemStack;)Z", at = @At("HEAD"), cancellable = true)
 	private void anthropophagy$preventEquipping(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (!ModComponents.CANNIBAL_LEVEL.get(((PlayerInventory) inventory).player).canEquip(LivingEntity.getPreferredEquipmentSlot(stack))) {
+		if (!((PlayerInventory) inventory).player.getComponent(ModEntityComponents.CANNIBAL_LEVEL).canEquip(LivingEntity.getPreferredEquipmentSlot(stack))) {
 			cir.setReturnValue(false);
 		}
 	}

@@ -14,7 +14,7 @@ import moriyashiine.anthropophagy.common.component.entity.CannibalLevelComponent
 import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
 import net.minecraft.util.Identifier;
 
-public class ModComponents implements EntityComponentInitializer {
+public class ModEntityComponents implements EntityComponentInitializer {
 	public static int playerCannibalLevel = -1;
 
 	public static final ComponentKey<CannibalLevelComponent> CANNIBAL_LEVEL = ComponentRegistry.getOrCreate(new Identifier(Anthropophagy.MOD_ID, "cannibal_level"), CannibalLevelComponent.class);

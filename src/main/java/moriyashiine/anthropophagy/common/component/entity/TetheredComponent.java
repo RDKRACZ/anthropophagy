@@ -4,10 +4,10 @@
 
 package moriyashiine.anthropophagy.common.component.entity;
 
-import dev.onyxstudios.cca.api.v3.component.Component;
+import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.nbt.NbtCompound;
 
-public class TetheredComponent implements Component {
+public class TetheredComponent implements AutoSyncedComponent {
 	private boolean tethered = false;
 
 	@Override

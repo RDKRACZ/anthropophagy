@@ -4,7 +4,7 @@
 
 package moriyashiine.anthropophagy.mixin.client;
 
-import moriyashiine.anthropophagy.common.registry.ModComponents;
+import moriyashiine.anthropophagy.common.registry.ModEntityComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -22,9 +22,9 @@ public class LightmapTextureManagerMixin {
 	@Final
 	private MinecraftClient client;
 
-	@ModifyVariable(method = "update", at = @At("STORE"), ordinal = 3)
+	@ModifyVariable(method = "update", at = @At("STORE"), ordinal = 6)
 	private float anthropophagy$cannibalNightVision(float value) {
-		if (client.player != null && ModComponents.CANNIBAL_LEVEL.get(client.player).getCannibalLevel() >= 50) {
+		if (client.player != null && client.player.getComponent(ModEntityComponents.CANNIBAL_LEVEL).getCannibalLevel() >= 50) {
 			return Math.max(1, value);
 		}
 		return value;

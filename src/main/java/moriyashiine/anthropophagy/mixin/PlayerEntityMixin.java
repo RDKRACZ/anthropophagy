@@ -4,12 +4,12 @@
 
 package moriyashiine.anthropophagy.mixin;
 
-import moriyashiine.anthropophagy.common.Anthropophagy;
+import moriyashiine.anthropophagy.common.ModConfig;
 import moriyashiine.anthropophagy.common.component.entity.CannibalLevelComponent;
 import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
-import moriyashiine.anthropophagy.common.registry.ModComponents;
-import moriyashiine.anthropophagy.common.registry.ModItemTags;
+import moriyashiine.anthropophagy.common.registry.ModEntityComponents;
+import moriyashiine.anthropophagy.common.registry.ModTags;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -31,21 +31,22 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void anthropophagy$handleCannibalFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
-		if (!world.isClient && stack.isFood()) {
-			CannibalLevelComponent cannibalLevelComponent = ModComponents.CANNIBAL_LEVEL.get(this);
-			TetheredComponent tetheredComponent = ModComponents.TETHERED.get(this);
-			if (stack.isIn(ModItemTags.FLESH)) {
+		if (stack.isFood()) {
+			CannibalLevelComponent cannibalLevelComponent = getComponent(ModEntityComponents.CANNIBAL_LEVEL);
+			TetheredComponent tetheredComponent = getComponent(ModEntityComponents.TETHERED);
+			if (stack.isIn(ModTags.Items.FLESH)) {
 				if (!tetheredComponent.isTethered()) {
 					if (cannibalLevelComponent.getCannibalLevel() < CannibalLevelComponent.MAX_LEVEL) {
 						cannibalLevelComponent.setCannibalLevel(Math.min(cannibalLevelComponent.getCannibalLevel() + 2, CannibalLevelComponent.MAX_LEVEL));
 						cannibalLevelComponent.updateAttributes();
+						System.out.println(world.isClient + " " + cannibalLevelComponent.getCannibalLevel());
 					}
-					if (cannibalLevelComponent.getCannibalLevel() == 20 || cannibalLevelComponent.getCannibalLevel() == 21) {
+					if (!world.isClient && cannibalLevelComponent.getCannibalLevel() == 20 || cannibalLevelComponent.getCannibalLevel() == 21) {
 						addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
 						addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
 					}
 				}
-				if (Anthropophagy.getConfig().enablePiglutton) {
+				if (!world.isClient && ModConfig.enablePiglutton) {
 					PigluttonEntity.attemptSpawn(this, cannibalLevelComponent.getCannibalLevel());
 				}
 			} else {
@@ -53,8 +54,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 					cannibalLevelComponent.setCannibalLevel(Math.max(cannibalLevelComponent.getCannibalLevel() - 1, 0));
 					cannibalLevelComponent.updateAttributes();
 				}
-				if (cannibalLevelComponent.getCannibalLevel() >= 20) {
-					ModComponents.playerCannibalLevel = cannibalLevelComponent.getCannibalLevel();
+				if (!world.isClient && cannibalLevelComponent.getCannibalLevel() >= 20) {
+					ModEntityComponents.playerCannibalLevel = cannibalLevelComponent.getCannibalLevel();
 				}
 			}
 		}
@@ -62,7 +63,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
 	@Inject(method = "canEquip", at = @At("HEAD"), cancellable = true)
 	private void anthropophagy$preventArmorDispensing(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (!ModComponents.CANNIBAL_LEVEL.get(this).canEquip(MobEntity.getPreferredEquipmentSlot(stack))) {
+		if (!getComponent(ModEntityComponents.CANNIBAL_LEVEL).canEquip(MobEntity.getPreferredEquipmentSlot(stack))) {
 			cir.setReturnValue(false);
 		}
 	}

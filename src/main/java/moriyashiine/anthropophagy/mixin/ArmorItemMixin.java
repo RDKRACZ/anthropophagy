@@ -4,7 +4,7 @@
 
 package moriyashiine.anthropophagy.mixin;
 
-import moriyashiine.anthropophagy.common.registry.ModComponents;
+import moriyashiine.anthropophagy.common.registry.ModEntityComponents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
@@ -23,7 +23,7 @@ public class ArmorItemMixin {
 	@Inject(method = "use", at = @At("HEAD"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
 	private void anthropophagy$preventEquipping(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
 		ItemStack stack = user.getStackInHand(hand);
-		if (!ModComponents.CANNIBAL_LEVEL.get(user).canEquip(LivingEntity.getPreferredEquipmentSlot(stack))) {
+		if (!user.getComponent(ModEntityComponents.CANNIBAL_LEVEL).canEquip(LivingEntity.getPreferredEquipmentSlot(stack))) {
 			cir.setReturnValue(TypedActionResult.fail(stack));
 		}
 	}

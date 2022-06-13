@@ -1,6 +1,4 @@
 {
-  "type": "anthropophagy:flesh_drop",
-  "entity_type": "minecraft:witch",
   "raw_drop": "anthropophagy:corrupt_flesh",
   "cooked_drop": "anthropophagy:corrupt_flesh"
 }

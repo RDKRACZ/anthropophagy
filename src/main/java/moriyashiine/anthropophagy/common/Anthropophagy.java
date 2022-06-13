@@ -4,33 +4,25 @@
 
 package moriyashiine.anthropophagy.common;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.ConfigHolder;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import com.google.gson.Gson;
+import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.anthropophagy.common.registry.ModEntityTypes;
 import moriyashiine.anthropophagy.common.registry.ModItems;
-import moriyashiine.anthropophagy.common.registry.ModRecipeTypes;
 import moriyashiine.anthropophagy.common.registry.ModSoundEvents;
+import moriyashiine.anthropophagy.common.reloadlisteners.FleshDropsReloadListener;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.resource.ResourceType;
 
 public class Anthropophagy implements ModInitializer {
 	public static final String MOD_ID = "anthropophagy";
 
-	public static ConfigHolder<ModConfig> config;
-
 	@Override
 	public void onInitialize() {
+		MidnightConfig.init(MOD_ID, ModConfig.class);
 		ModItems.init();
 		ModEntityTypes.init();
-		ModRecipeTypes.init();
 		ModSoundEvents.init();
-	}
-
-	public static ModConfig getConfig() {
-		if (config == null) {
-			AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
-			config = AutoConfig.getConfigHolder(ModConfig.class);
-		}
-		return config.getConfig();
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new FleshDropsReloadListener(new Gson(), MOD_ID + "_flesh_drops"));
 	}
 }

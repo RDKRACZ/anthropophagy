@@ -4,10 +4,10 @@
 
 package moriyashiine.anthropophagy.common.entity;
 
-import moriyashiine.anthropophagy.common.Anthropophagy;
+import moriyashiine.anthropophagy.common.ModConfig;
 import moriyashiine.anthropophagy.common.registry.ModEntityTypes;
-import moriyashiine.anthropophagy.common.registry.ModItemTags;
 import moriyashiine.anthropophagy.common.registry.ModSoundEvents;
+import moriyashiine.anthropophagy.common.registry.ModTags;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -28,12 +28,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Random;
 
 public class PigluttonEntity extends HostileEntity {
 	public PigluttonEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -41,7 +41,7 @@ public class PigluttonEntity extends HostileEntity {
 	}
 
 	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, Anthropophagy.getConfig().strongerPiglutton ? 200 : 100).add(EntityAttributes.GENERIC_ARMOR, 10).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, Anthropophagy.getConfig().strongerPiglutton ? 16 : 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, ModConfig.strongerPiglutton ? 200 : 100).add(EntityAttributes.GENERIC_ARMOR, 10).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, ModConfig.strongerPiglutton ? 16 : 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
 	}
 
 	public static boolean canSpawn(EntityType<PigluttonEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
@@ -52,7 +52,7 @@ public class PigluttonEntity extends HostileEntity {
 	public void tick() {
 		super.tick();
 		if (!dead && age % 5 == 0) {
-			List<ItemEntity> drops = world.getEntitiesByType(EntityType.ITEM, getBoundingBox().expand(8, 4, 8), foundEntity -> foundEntity.getStack().isIn(ModItemTags.FLESH));
+			List<ItemEntity> drops = world.getEntitiesByType(EntityType.ITEM, getBoundingBox().expand(8, 4, 8), foundEntity -> foundEntity.getStack().isIn(ModTags.Items.FLESH));
 			if (!drops.isEmpty()) {
 				ItemEntity item = drops.get(0);
 				if (item != null) {

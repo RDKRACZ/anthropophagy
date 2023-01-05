@@ -39,7 +39,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 					if (cannibalLevelComponent.getCannibalLevel() < CannibalLevelComponent.MAX_LEVEL) {
 						cannibalLevelComponent.setCannibalLevel(Math.min(cannibalLevelComponent.getCannibalLevel() + 2, CannibalLevelComponent.MAX_LEVEL));
 						cannibalLevelComponent.updateAttributes();
-						System.out.println(world.isClient + " " + cannibalLevelComponent.getCannibalLevel());
 					}
 					if (!world.isClient && cannibalLevelComponent.getCannibalLevel() == 20 || cannibalLevelComponent.getCannibalLevel() == 21) {
 						addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));

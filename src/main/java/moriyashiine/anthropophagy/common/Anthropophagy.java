@@ -13,6 +13,7 @@ import moriyashiine.anthropophagy.common.reloadlisteners.FleshDropsReloadListene
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
+import net.minecraft.util.Identifier;
 
 public class Anthropophagy implements ModInitializer {
 	public static final String MOD_ID = "anthropophagy";
@@ -24,5 +25,9 @@ public class Anthropophagy implements ModInitializer {
 		ModEntityTypes.init();
 		ModSoundEvents.init();
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new FleshDropsReloadListener(new Gson(), MOD_ID + "_flesh_drops"));
+	}
+
+	public static Identifier id(String value) {
+		return new Identifier(MOD_ID, value);
 	}
 }

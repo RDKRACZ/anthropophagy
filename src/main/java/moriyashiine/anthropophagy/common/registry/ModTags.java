@@ -6,14 +6,14 @@ package moriyashiine.anthropophagy.common.registry;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import net.minecraft.item.Item;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class ModTags {
 	public static class Items {
-		public static final TagKey<Item> KNIVES = TagKey.of(Registry.ITEM_KEY, new Identifier("fabric", "tools/knives"));
+		public static final TagKey<Item> KNIVES = TagKey.of(Registries.ITEM.getKey(), new Identifier("fabric", "tools/knives"));
 
-		public static final TagKey<Item> FLESH = TagKey.of(Registry.ITEM_KEY, new Identifier(Anthropophagy.MOD_ID, "flesh"));
+		public static final TagKey<Item> FLESH = TagKey.of(Registries.ITEM.getKey(), Anthropophagy.id("flesh"));
 	}
 }

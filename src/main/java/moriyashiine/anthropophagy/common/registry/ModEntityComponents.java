@@ -12,13 +12,12 @@ import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.component.entity.CannibalLevelComponent;
 import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
-import net.minecraft.util.Identifier;
 
 public class ModEntityComponents implements EntityComponentInitializer {
 	public static int playerCannibalLevel = -1;
 
-	public static final ComponentKey<CannibalLevelComponent> CANNIBAL_LEVEL = ComponentRegistry.getOrCreate(new Identifier(Anthropophagy.MOD_ID, "cannibal_level"), CannibalLevelComponent.class);
-	public static final ComponentKey<TetheredComponent> TETHERED = ComponentRegistry.getOrCreate(new Identifier(Anthropophagy.MOD_ID, "tethered"), TetheredComponent.class);
+	public static final ComponentKey<CannibalLevelComponent> CANNIBAL_LEVEL = ComponentRegistry.getOrCreate(Anthropophagy.id("cannibal_level"), CannibalLevelComponent.class);
+	public static final ComponentKey<TetheredComponent> TETHERED = ComponentRegistry.getOrCreate(Anthropophagy.id("tethered"), TetheredComponent.class);
 
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {

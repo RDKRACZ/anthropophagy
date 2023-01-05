@@ -12,17 +12,17 @@ import moriyashiine.anthropophagy.common.util.FleshDropEntry;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Map;
 
 public class FleshDropsReloadListener extends JsonDataLoader implements IdentifiableResourceReloadListener {
-	private static final Identifier ID = new Identifier(Anthropophagy.MOD_ID, "flesh_drops");
+	private static final Identifier ID = Anthropophagy.id("flesh_drops");
 
 	public FleshDropsReloadListener(Gson gson, String dataType) {
 		super(gson, dataType);
@@ -38,9 +38,9 @@ public class FleshDropsReloadListener extends JsonDataLoader implements Identifi
 		FleshDropEntry.DROP_MAP.clear();
 		prepared.forEach((identifier, jsonElement) -> {
 			JsonObject object = JsonHelper.asObject(jsonElement, identifier.toString());
-			EntityType<?> entity_type = Registry.ENTITY_TYPE.get(identifier);
-			Item raw_drop = Registry.ITEM.get(new Identifier(JsonHelper.getString(object, "raw_drop")));
-			Item cooked_drop = Registry.ITEM.get(new Identifier(JsonHelper.getString(object, "cooked_drop")));
+			EntityType<?> entity_type = Registries.ENTITY_TYPE.get(identifier);
+			Item raw_drop = Registries.ITEM.get(new Identifier(JsonHelper.getString(object, "raw_drop")));
+			Item cooked_drop = Registries.ITEM.get(new Identifier(JsonHelper.getString(object, "cooked_drop")));
 			FleshDropEntry.DROP_MAP.put(entity_type, new FleshDropEntry(raw_drop, cooked_drop));
 		});
 	}

@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class PigluttonEntityRenderer extends MobEntityRenderer<PigluttonEntity, PigluttonEntityModel<PigluttonEntity>> {
-	private static final Identifier TEXTURE = new Identifier(Anthropophagy.MOD_ID, "textures/entity/living/piglutton.png");
+	private static final Identifier TEXTURE = Anthropophagy.id("textures/entity/living/piglutton.png");
 
 	public PigluttonEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new PigluttonEntityModel<>(context.getPart(PigluttonEntityModel.MODEL_LAYER)), 0.5F);

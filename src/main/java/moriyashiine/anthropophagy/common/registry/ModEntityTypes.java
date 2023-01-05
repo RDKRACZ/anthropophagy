@@ -14,16 +14,16 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
-import net.minecraft.tag.BiomeTags;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.world.Heightmap;
 
 public class ModEntityTypes {
 	public static final EntityType<PigluttonEntity> PIGLUTTON = FabricEntityTypeBuilder.createMob().spawnGroup(SpawnGroup.MONSTER).entityFactory(PigluttonEntity::new).defaultAttributes(PigluttonEntity::createAttributes).dimensions(EntityDimensions.fixed(1, 1.75F)).spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE, PigluttonEntity::canSpawn).build();
 
 	public static void init() {
-		Registry.register(Registry.ENTITY_TYPE, new Identifier(Anthropophagy.MOD_ID, "piglutton"), PIGLUTTON);
+		Registry.register(Registries.ENTITY_TYPE, Anthropophagy.id("piglutton"), PIGLUTTON);
 		if (ModConfig.enablePiglutton) {
 			BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_FOREST), PIGLUTTON.getSpawnGroup(), PIGLUTTON, 1, 1, 1);
 		}

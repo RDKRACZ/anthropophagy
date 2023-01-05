@@ -13,12 +13,11 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class PigluttonEntityModel<T extends LivingEntity> extends EntityModel<T> {
-	public static final EntityModelLayer MODEL_LAYER = new EntityModelLayer(new Identifier(Anthropophagy.MOD_ID, "piglutton"), "main");
+	public static final EntityModelLayer MODEL_LAYER = new EntityModelLayer(Anthropophagy.id("piglutton"), "main");
 
 	private final ModelPart body;
 	private final ModelPart neck;

@@ -1,0 +1,39 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "criteria": {
+	"killed_piglutton": {
+	  "conditions": {
+		"entity": [
+		  {
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+			  "type": "anthropophagy:piglutton"
+			}
+		  }
+		]
+	  },
+	  "trigger": "minecraft:player_killed_entity"
+	}
+  },
+  "display": {
+	"announce_to_chat": true,
+	"description": {
+	  "translate": "advancements.anthropophagy.husbandry.kill_piglutton.description"
+	},
+	"frame": "task",
+	"hidden": true,
+	"icon": {
+	  "item": "anthropophagy:piglutton_heart"
+	},
+	"show_toast": true,
+	"title": {
+	  "translate": "advancements.anthropophagy.husbandry.kill_piglutton.title"
+	}
+  },
+  "requirements": [
+	[
+	  "killed_piglutton"
+	]
+  ]
+}

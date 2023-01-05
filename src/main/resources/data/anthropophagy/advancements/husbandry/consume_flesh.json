@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "criteria": {
+	"consume_flesh": {
+	  "conditions": {
+		"item": {
+		  "tag": "anthropophagy:flesh"
+		}
+	  },
+	  "trigger": "minecraft:consume_item"
+	}
+  },
+  "display": {
+	"announce_to_chat": true,
+	"description": {
+	  "translate": "advancements.anthropophagy.husbandry.consume_flesh.description"
+	},
+	"frame": "task",
+	"hidden": true,
+	"icon": {
+	  "item": "anthropophagy:flesh"
+	},
+	"show_toast": true,
+	"title": {
+	  "translate": "advancements.anthropophagy.husbandry.consume_flesh.title"
+	}
+  },
+  "requirements": [
+	[
+	  "consume_flesh"
+	]
+  ]
+}

@@ -50,6 +50,8 @@ public class ModItems {
 
 			entries.add(PIGLUTTON_HEART);
 			entries.add(TETHERED_HEART);
+
+			entries.add(PIGLUTTON_SPAWN_EGG);
 		}).build();
 
 		Registry.register(Registries.ITEM, Anthropophagy.id("wooden_knife"), WOODEN_KNIFE);

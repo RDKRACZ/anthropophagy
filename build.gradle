@@ -15,10 +15,10 @@ repositories {
         name "cardinal components"
         url "https://ladysnake.jfrog.io/artifactory/mods"
     }
-//    maven {
-//        name "reach entity attributes"
-//        url "https://maven.jamieswhiteshirt.com/libs-release"
-//    }
+    maven {
+        name "reach entity attributes"
+        url "https://maven.jamieswhiteshirt.com/libs-release"
+    }
     maven {
         name "mod menu"
         url "https://maven.terraformersmc.com/releases"
@@ -40,10 +40,8 @@ dependencies {
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     modImplementation "maven.modrinth:midnightlib:${midnightlib_version}"
     include "maven.modrinth:midnightlib:${midnightlib_version}"
-//    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
-//    include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
-    modImplementation files("libs/reach-entity-attributes-2.4.0.jar")
-    include files("libs/reach-entity-attributes-2.4.0.jar")
+    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
+    include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 

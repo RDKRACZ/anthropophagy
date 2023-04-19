@@ -23,17 +23,22 @@ import java.util.UUID;
 public class KnifeItem extends SwordItem {
 	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("036c3108-e940-4e06-93f0-8f826c7c4877"), "Weapon modifier", -0.5, EntityAttributeModifier.Operation.ADDITION);
 
+	private Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+
 	public KnifeItem(ToolMaterial toolMaterial, Settings settings) {
 		super(toolMaterial, 0, -2, settings);
 	}
 
 	@Override
 	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-		Multimap<EntityAttribute, EntityAttributeModifier> map = LinkedHashMultimap.create(super.getAttributeModifiers(slot));
 		if (slot == EquipmentSlot.MAINHAND) {
-			map.put(ReachEntityAttributes.ATTACK_RANGE, REACH_MODIFIER);
+			if (attributeModifiers == null) {
+				attributeModifiers = LinkedHashMultimap.create(super.getAttributeModifiers(slot));
+				attributeModifiers.put(ReachEntityAttributes.ATTACK_RANGE, REACH_MODIFIER);
+			}
+			return attributeModifiers;
 		}
-		return map;
+		return super.getAttributeModifiers(slot);
 	}
 
 	@Override

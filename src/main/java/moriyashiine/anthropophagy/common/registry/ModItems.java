@@ -37,7 +37,7 @@ public class ModItems {
 	}
 
 	public static void init() {
-		FabricItemGroup.builder(Anthropophagy.id(Anthropophagy.MOD_ID)).icon(() -> new ItemStack(ModItems.IRON_KNIFE)).entries((enabledFeatures, entries, operatorEnabled) -> {
+		FabricItemGroup.builder(Anthropophagy.id(Anthropophagy.MOD_ID)).icon(() -> new ItemStack(ModItems.IRON_KNIFE)).entries((displayContext, entries) -> {
 			entries.add(WOODEN_KNIFE);
 			entries.add(STONE_KNIFE);
 			entries.add(GOLDEN_KNIFE);

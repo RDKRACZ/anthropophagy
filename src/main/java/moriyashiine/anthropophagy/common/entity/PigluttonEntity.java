@@ -52,13 +52,13 @@ public class PigluttonEntity extends HostileEntity {
 	public void tick() {
 		super.tick();
 		if (!dead && age % 5 == 0) {
-			List<ItemEntity> drops = world.getEntitiesByType(EntityType.ITEM, getBoundingBox().expand(8, 4, 8), foundEntity -> foundEntity.getStack().isIn(ModTags.Items.FLESH));
+			List<ItemEntity> drops = getWorld().getEntitiesByType(EntityType.ITEM, getBoundingBox().expand(8, 4, 8), foundEntity -> foundEntity.getStack().isIn(ModTags.Items.FLESH));
 			if (!drops.isEmpty()) {
 				ItemEntity item = drops.get(0);
 				if (item != null) {
 					getNavigation().startMovingTo(item, 1);
 					if (distanceTo(item) < 1.5) {
-						if (!world.isClient) {
+						if (!getWorld().isClient) {
 							FoodComponent food = item.getStack().getItem().getFoodComponent();
 							if (food != null) {
 								heal(food.getHunger() * 2);
@@ -67,7 +67,7 @@ public class PigluttonEntity extends HostileEntity {
 							playSound(SoundEvents.ENTITY_GENERIC_EAT, 1, 1);
 						} else {
 							for (int i = 0; i < 8; i++) {
-								world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, item.getStack()), item.getX() + MathHelper.nextFloat(random, -0.5F, 0.5F), item.getY() + MathHelper.nextFloat(random, -0.5F, 0.5F), item.getZ() + MathHelper.nextFloat(random, -0.5F, 0.5F), 0, 0, 0);
+								getWorld().addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, item.getStack()), item.getX() + MathHelper.nextFloat(random, -0.5F, 0.5F), item.getY() + MathHelper.nextFloat(random, -0.5F, 0.5F), item.getZ() + MathHelper.nextFloat(random, -0.5F, 0.5F), 0, 0, 0);
 							}
 						}
 					}
@@ -79,12 +79,12 @@ public class PigluttonEntity extends HostileEntity {
 	@Override
 	public void tickMovement() {
 		super.tickMovement();
-		if (!world.isClient && horizontalCollision && world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+		if (!getWorld().isClient && horizontalCollision && getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
 			Box box = getBoundingBox().expand(0.2);
 			for (BlockPos pos : BlockPos.iterate(MathHelper.floor(box.minX), MathHelper.floor(box.minY), MathHelper.floor(box.minZ), MathHelper.floor(box.maxX), MathHelper.floor(box.maxY), MathHelper.floor(box.maxZ))) {
-				float hardness = world.getBlockState(pos).getHardness(world, pos);
+				float hardness = getWorld().getBlockState(pos).getHardness(getWorld(), pos);
 				if (hardness >= 0 && hardness < 0.5F) {
-					world.breakBlock(pos, true);
+					getWorld().breakBlock(pos, true);
 				}
 			}
 		}
@@ -139,7 +139,7 @@ public class PigluttonEntity extends HostileEntity {
 			}
 		}
 		if (living.getRandom().nextFloat() < chance) {
-			PigluttonEntity piglutton = ModEntityTypes.PIGLUTTON.create(living.world);
+			PigluttonEntity piglutton = ModEntityTypes.PIGLUTTON.create(living.getWorld());
 			if (piglutton != null) {
 				boolean valid = false;
 				for (int i = 0; i < 8; i++) {
@@ -149,9 +149,9 @@ public class PigluttonEntity extends HostileEntity {
 					}
 				}
 				if (valid) {
-					living.world.spawnEntity(piglutton);
+					living.getWorld().spawnEntity(piglutton);
 					piglutton.setTarget(living);
-					living.world.playSoundFromEntity(null, piglutton, ModSoundEvents.ENTITY_PIGLUTTON_SPAWN, SoundCategory.HOSTILE, 1, 1);
+					living.getWorld().playSoundFromEntity(null, piglutton, ModSoundEvents.ENTITY_PIGLUTTON_SPAWN, SoundCategory.HOSTILE, 1, 1);
 				}
 			}
 		}

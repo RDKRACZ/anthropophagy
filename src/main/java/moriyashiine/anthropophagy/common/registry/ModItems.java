@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 
 public class ModItems {
 	public static final Item WOODEN_KNIFE = new KnifeItem(ToolMaterials.WOOD, settings());
@@ -37,7 +38,7 @@ public class ModItems {
 	}
 
 	public static void init() {
-		FabricItemGroup.builder(Anthropophagy.id(Anthropophagy.MOD_ID)).icon(() -> new ItemStack(ModItems.IRON_KNIFE)).entries((displayContext, entries) -> {
+		FabricItemGroup.builder().displayName(Text.translatable("itemGroup." + Anthropophagy.MOD_ID)).icon(() -> new ItemStack(ModItems.IRON_KNIFE)).entries((displayContext, entries) -> {
 			entries.add(WOODEN_KNIFE);
 			entries.add(STONE_KNIFE);
 			entries.add(GOLDEN_KNIFE);

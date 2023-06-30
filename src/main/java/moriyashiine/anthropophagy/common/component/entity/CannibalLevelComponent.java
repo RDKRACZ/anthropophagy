@@ -74,7 +74,7 @@ public class CannibalLevelComponent implements AutoSyncedComponent {
 	}
 
 	public void updateAttributes() {
-		if (!obj.world.isClient) {
+		if (!obj.getWorld().isClient) {
 			for (EquipmentSlot slot : EquipmentSlot.values()) {
 				if (!canEquip(slot)) {
 					ItemStack stack = obj.getEquippedStack(slot);

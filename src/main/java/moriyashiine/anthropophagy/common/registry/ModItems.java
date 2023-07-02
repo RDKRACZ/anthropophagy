@@ -17,6 +17,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 
 public class ModItems {
+	public static ItemGroup GROUP;
+
 	public static final Item WOODEN_KNIFE = new KnifeItem(ToolMaterials.WOOD, settings());
 	public static final Item STONE_KNIFE = new KnifeItem(ToolMaterials.STONE, settings());
 	public static final Item GOLDEN_KNIFE = new KnifeItem(ToolMaterials.GOLD, settings());
@@ -38,7 +40,7 @@ public class ModItems {
 	}
 
 	public static void init() {
-		FabricItemGroup.builder().displayName(Text.translatable("itemGroup." + Anthropophagy.MOD_ID)).icon(() -> new ItemStack(ModItems.IRON_KNIFE)).entries((displayContext, entries) -> {
+		GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup." + Anthropophagy.MOD_ID)).icon(() -> new ItemStack(ModItems.IRON_KNIFE)).entries((displayContext, entries) -> {
 			entries.add(WOODEN_KNIFE);
 			entries.add(STONE_KNIFE);
 			entries.add(GOLDEN_KNIFE);
@@ -54,6 +56,7 @@ public class ModItems {
 
 			entries.add(PIGLUTTON_SPAWN_EGG);
 		}).build();
+		Registry.register(Registries.ITEM_GROUP, Anthropophagy.id(Anthropophagy.MOD_ID), GROUP);
 
 		Registry.register(Registries.ITEM, Anthropophagy.id("wooden_knife"), WOODEN_KNIFE);
 		Registry.register(Registries.ITEM, Anthropophagy.id("stone_knife"), STONE_KNIFE);

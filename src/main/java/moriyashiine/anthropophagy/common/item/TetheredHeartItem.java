@@ -6,7 +6,7 @@ package moriyashiine.anthropophagy.common.item;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
-import moriyashiine.anthropophagy.common.registry.ModEntityComponents;
+import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

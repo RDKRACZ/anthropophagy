@@ -25,7 +25,7 @@
 	  "moriyashiine.anthropophagy.client.AnthropophagyClient"
 	],
 	"cardinal-components-entity": [
-	  "moriyashiine.anthropophagy.common.registry.ModEntityComponents"
+	  "moriyashiine.anthropophagy.common.init.ModEntityComponents"
 	]
   },
   "mixins": [

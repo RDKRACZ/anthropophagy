@@ -4,7 +4,7 @@
 
 package moriyashiine.anthropophagy.mixin;
 
-import moriyashiine.anthropophagy.common.registry.ModEntityComponents;
+import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;

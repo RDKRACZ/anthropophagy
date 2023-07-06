@@ -2,7 +2,7 @@
  * All Rights Reserved (c) MoriyaShiine
  */
 
-package moriyashiine.anthropophagy.common.registry;
+package moriyashiine.anthropophagy.common.init;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.ModConfig;

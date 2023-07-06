@@ -5,9 +5,9 @@
 package moriyashiine.anthropophagy.common.entity;
 
 import moriyashiine.anthropophagy.common.ModConfig;
-import moriyashiine.anthropophagy.common.registry.ModEntityTypes;
-import moriyashiine.anthropophagy.common.registry.ModSoundEvents;
-import moriyashiine.anthropophagy.common.registry.ModTags;
+import moriyashiine.anthropophagy.common.init.ModEntityTypes;
+import moriyashiine.anthropophagy.common.init.ModSoundEvents;
+import moriyashiine.anthropophagy.common.init.ModTags;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;

@@ -4,7 +4,7 @@
 
 package moriyashiine.anthropophagy.mixin;
 
-import moriyashiine.anthropophagy.common.registry.ModEntityComponents;
+import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import net.minecraft.entity.player.HungerManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

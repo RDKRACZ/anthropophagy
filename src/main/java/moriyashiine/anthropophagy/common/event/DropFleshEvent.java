@@ -6,8 +6,8 @@ package moriyashiine.anthropophagy.common.event;
 
 import moriyashiine.anthropophagy.common.ModConfig;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
+import moriyashiine.anthropophagy.common.init.ModTags;
 import moriyashiine.anthropophagy.common.item.FleshItem;
-import moriyashiine.anthropophagy.common.registry.ModTags;
 import moriyashiine.anthropophagy.common.util.FleshDropEntry;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.EntityType;

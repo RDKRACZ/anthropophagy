@@ -4,7 +4,7 @@
 
 package moriyashiine.anthropophagy.mixin.client;
 
-import moriyashiine.anthropophagy.common.registry.ModEntityComponents;
+import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

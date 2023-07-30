@@ -21,8 +21,8 @@ public class ModItems {
 
 	public static final Item WOODEN_KNIFE = new KnifeItem(ToolMaterials.WOOD, settings());
 	public static final Item STONE_KNIFE = new KnifeItem(ToolMaterials.STONE, settings());
-	public static final Item GOLDEN_KNIFE = new KnifeItem(ToolMaterials.GOLD, settings());
 	public static final Item IRON_KNIFE = new KnifeItem(ToolMaterials.IRON, settings());
+	public static final Item GOLDEN_KNIFE = new KnifeItem(ToolMaterials.GOLD, settings());
 	public static final Item DIAMOND_KNIFE = new KnifeItem(ToolMaterials.DIAMOND, settings());
 	public static final Item NETHERITE_KNIFE = new KnifeItem(ToolMaterials.NETHERITE, settings().fireproof());
 
@@ -43,6 +43,7 @@ public class ModItems {
 		GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup." + Anthropophagy.MOD_ID)).icon(() -> new ItemStack(ModItems.IRON_KNIFE)).entries((displayContext, entries) -> {
 			entries.add(WOODEN_KNIFE);
 			entries.add(STONE_KNIFE);
+			entries.add(IRON_KNIFE);
 			entries.add(GOLDEN_KNIFE);
 			entries.add(DIAMOND_KNIFE);
 			entries.add(NETHERITE_KNIFE);
@@ -60,8 +61,8 @@ public class ModItems {
 
 		Registry.register(Registries.ITEM, Anthropophagy.id("wooden_knife"), WOODEN_KNIFE);
 		Registry.register(Registries.ITEM, Anthropophagy.id("stone_knife"), STONE_KNIFE);
-		Registry.register(Registries.ITEM, Anthropophagy.id("golden_knife"), GOLDEN_KNIFE);
 		Registry.register(Registries.ITEM, Anthropophagy.id("iron_knife"), IRON_KNIFE);
+		Registry.register(Registries.ITEM, Anthropophagy.id("golden_knife"), GOLDEN_KNIFE);
 		Registry.register(Registries.ITEM, Anthropophagy.id("diamond_knife"), DIAMOND_KNIFE);
 		Registry.register(Registries.ITEM, Anthropophagy.id("netherite_knife"), NETHERITE_KNIFE);
 

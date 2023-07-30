@@ -17,9 +17,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ItemScatterer;
 
 public class DropFleshEvent implements ServerLivingEntityEvents.AllowDamage {
+	public static float attackCooldown = -1;
+
 	@Override
 	public boolean allowDamage(LivingEntity entity, DamageSource source, float amount) {
-		if (!entity.getWorld().isClient && amount >= 2) {
+		if (attackCooldown != -1 && attackCooldown < 0.7F) {
+			return true;
+		}
+		if (!entity.getWorld().isClient) {
 			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity living && living.getMainHandStack().isIn(ModTags.Items.KNIVES))) {
 				for (EntityType<?> entityType : FleshDropEntry.DROP_MAP.keySet()) {
 					if (entity.getType() == entityType && entity.getWorld().random.nextFloat() * ModConfig.damageNeededForGuaranteedFleshDrop < amount) {

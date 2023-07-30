@@ -8,8 +8,10 @@ import moriyashiine.anthropophagy.common.ModConfig;
 import moriyashiine.anthropophagy.common.component.entity.CannibalLevelComponent;
 import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
+import moriyashiine.anthropophagy.common.event.DropFleshEvent;
 import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import moriyashiine.anthropophagy.common.init.ModTags;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -21,12 +23,24 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
+	}
+
+	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetLastAttackedTicks()V"), locals = LocalCapture.CAPTURE_FAILHARD)
+	private void anthropophagy$updateEventCooldown(Entity target, CallbackInfo ci, float attackDamage, float extraDamage, float attackCooldown) {
+		DropFleshEvent.attackCooldown = attackCooldown;
+	}
+
+	@Inject(method = "attack", at = @At("TAIL"))
+	private void anthropophagy$resetEventCooldown(Entity target, CallbackInfo ci) {
+		DropFleshEvent.attackCooldown = -1;
 	}
 
 	@Inject(method = "eatFood", at = @At("HEAD"))

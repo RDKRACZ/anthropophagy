@@ -14,10 +14,8 @@ armor pieces. If too much flesh is consumed, however, the legendary Piglutton ma
 flesh, so much so that it prioritizes dropped flesh over attacking... Perhaps you could stay your hunger by tethering
 its heart?
 
-Knife Recipe (Can be Planks, Cobblestone, Iron Ingot, Gold Ingot, or Diamond):
-
+### Knife Recipe (Can be Planks, Cobblestone, Iron Ingot, Gold Ingot, or Diamond)
 ![Recipe](https://i.imgur.com/FAM9tbi.png)
 
-Tethered Heart Recipe:
-
+### Tethered Heart Recipe
 ![Recipe](https://i.imgur.com/9prQJYL.png)

@@ -16,8 +16,8 @@ its heart?
 
 Knife Recipe (Can be Planks, Cobblestone, Iron Ingot, Gold Ingot, or Diamond):
 
-![Recipe](https://i.imgur.com/Xkdaa6N.png)
+![Recipe](https://i.imgur.com/FAM9tbi.png)
 
 Tethered Heart Recipe:
 
-![Recipe](https://i.imgur.com/oaV0Weg.png)
+![Recipe](https://i.imgur.com/9prQJYL.png)

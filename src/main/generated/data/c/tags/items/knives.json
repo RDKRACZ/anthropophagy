@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+	"anthropophagy:wooden_knife",
+	"anthropophagy:stone_knife",
+	"anthropophagy:iron_knife",
+	"anthropophagy:golden_knife",
+	"anthropophagy:diamond_knife",
+	"anthropophagy:netherite_knife"
+  ]
+}

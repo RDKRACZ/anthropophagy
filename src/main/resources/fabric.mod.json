@@ -18,6 +18,9 @@
   "icon": "assets/anthropophagy/icon.png",
   "environment": "*",
   "entrypoints": {
+	"fabric-datagen": [
+	  "moriyashiine.anthropophagy.data.ModDataGenerator"
+	],
 	"main": [
 	  "moriyashiine.anthropophagy.common.Anthropophagy"
 	],

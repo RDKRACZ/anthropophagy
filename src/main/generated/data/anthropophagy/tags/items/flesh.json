@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+	"anthropophagy:flesh",
+	"anthropophagy:cooked_flesh",
+	"anthropophagy:corrupt_flesh"
+  ]
+}

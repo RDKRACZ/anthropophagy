@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+	"I": {
+	  "tag": "minecraft:stone_tool_materials"
+	},
+	"S": {
+	  "item": "minecraft:stick"
+	}
+  },
+  "pattern": [
+	" I",
+	"S "
+  ],
+  "result": {
+	"item": "anthropophagy:stone_knife"
+  },
+  "show_notification": true
+}

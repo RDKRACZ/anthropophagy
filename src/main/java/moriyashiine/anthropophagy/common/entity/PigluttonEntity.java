@@ -115,6 +115,11 @@ public class PigluttonEntity extends HostileEntity {
 	}
 
 	@Override
+	public boolean cannotDespawn() {
+		return true;
+	}
+
+	@Override
 	public boolean disablesShield() {
 		return true;
 	}

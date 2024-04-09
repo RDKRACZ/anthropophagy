@@ -1,5 +1,10 @@
+/*
+ * All Rights Reserved (c) MoriyaShiine
+ */
+
 package moriyashiine.anthropophagy.data;
 
+import moriyashiine.anthropophagy.data.provider.ModEntityTagProvider;
 import moriyashiine.anthropophagy.data.provider.ModItemTagProvider;
 import moriyashiine.anthropophagy.data.provider.ModModelProvider;
 import moriyashiine.anthropophagy.data.provider.ModRecipeProvider;
@@ -11,6 +16,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModItemTagProvider::new);
+		pack.addProvider(ModEntityTagProvider::new);
 		pack.addProvider(ModRecipeProvider::new);
 		pack.addProvider(ModModelProvider::new);
 	}

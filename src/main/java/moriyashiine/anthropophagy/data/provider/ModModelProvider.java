@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) MoriyaShiine
+ */
+
 package moriyashiine.anthropophagy.data.provider;
 
 import moriyashiine.anthropophagy.common.init.ModItems;

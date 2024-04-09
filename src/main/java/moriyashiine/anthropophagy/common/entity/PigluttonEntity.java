@@ -115,6 +115,11 @@ public class PigluttonEntity extends HostileEntity {
 	}
 
 	@Override
+	public boolean disablesShield() {
+		return true;
+	}
+
+	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));
 		goalSelector.add(1, new MeleeAttackGoal(this, 1, true));

@@ -7,6 +7,9 @@ package moriyashiine.anthropophagy.common.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
+import moriyashiine.anthropophagy.common.init.ModEntityComponents;
+import moriyashiine.anthropophagy.common.init.ModItems;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -45,6 +48,11 @@ public class KnifeItem extends SwordItem {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		if (user.isSneaking()) {
 			user.attack(user);
+			TetheredComponent tetheredComponent = ModEntityComponents.TETHERED.get(user);
+			if (tetheredComponent.isTethered()) {
+				tetheredComponent.setTethered(false);
+				user.dropItem(ModItems.PIGLUTTON_HEART);
+			}
 			return TypedActionResult.success(user.getStackInHand(hand), world.isClient);
 		}
 		return super.use(world, user, hand);

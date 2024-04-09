@@ -4,7 +4,6 @@
 
 package moriyashiine.anthropophagy.common;
 
-import com.google.gson.Gson;
 import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.anthropophagy.common.event.DropFleshEvent;
 import moriyashiine.anthropophagy.common.init.ModEntityTypes;
@@ -16,9 +15,13 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Anthropophagy implements ModInitializer {
 	public static final String MOD_ID = "anthropophagy";
+
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
 	public void onInitialize() {
@@ -26,7 +29,7 @@ public class Anthropophagy implements ModInitializer {
 		ModItems.init();
 		ModEntityTypes.init();
 		ModSoundEvents.init();
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new FleshDropsReloadListener(new Gson(), MOD_ID + "_flesh_drops"));
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new FleshDropsReloadListener());
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register(new DropFleshEvent());
 	}
 

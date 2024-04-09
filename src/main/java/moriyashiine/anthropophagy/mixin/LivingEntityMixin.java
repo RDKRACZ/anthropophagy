@@ -10,7 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,7 +26,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private void anthropophagy$dropTetheredHeart(DamageSource source, int lootingMultiplier, boolean allowDrops, CallbackInfo ci) {
 		ModEntityComponents.TETHERED.maybeGet(this).ifPresent(tetheredComponent -> {
 			if (tetheredComponent.isTethered()) {
-				dropStack(new ItemStack(ModItems.PIGLUTTON_HEART));
+				dropItem(ModItems.PIGLUTTON_HEART);
 			}
 		});
 	}

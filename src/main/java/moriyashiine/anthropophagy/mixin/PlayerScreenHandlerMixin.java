@@ -4,6 +4,7 @@
 
 package moriyashiine.anthropophagy.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,8 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(targets = "net/minecraft/screen/PlayerScreenHandler$1")
 public class PlayerScreenHandlerMixin extends Slot {
@@ -21,10 +20,11 @@ public class PlayerScreenHandlerMixin extends Slot {
 		super(inventory, index, x, y);
 	}
 
-	@Inject(method = "canInsert(Lnet/minecraft/item/ItemStack;)Z", at = @At("HEAD"), cancellable = true)
-	private void anthropophagy$preventEquipping(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (!((PlayerInventory) inventory).player.getComponent(ModEntityComponents.CANNIBAL_LEVEL).canEquip(LivingEntity.getPreferredEquipmentSlot(stack))) {
-			cir.setReturnValue(false);
+	@ModifyReturnValue(method = "canInsert(Lnet/minecraft/item/ItemStack;)Z", at = @At("RETURN"))
+	private boolean anthropophagy$preventEquipping(boolean original, ItemStack stack) {
+		if (original && !ModEntityComponents.CANNIBAL_LEVEL.get(((PlayerInventory) inventory).player).canEquip(LivingEntity.getPreferredEquipmentSlot(stack))) {
+			return false;
 		}
+		return original;
 	}
 }

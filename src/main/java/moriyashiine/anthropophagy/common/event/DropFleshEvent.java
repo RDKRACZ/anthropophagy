@@ -4,6 +4,7 @@
 
 package moriyashiine.anthropophagy.common.event;
 
+import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.ModConfig;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
 import moriyashiine.anthropophagy.common.init.ModTags;
@@ -24,17 +25,15 @@ public class DropFleshEvent implements ServerLivingEntityEvents.AllowDamage {
 		if (attackCooldown != -1 && attackCooldown < 0.7F) {
 			return true;
 		}
-		if (!entity.getWorld().isClient) {
-			if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity living && living.getMainHandStack().isIn(ModTags.Items.KNIVES))) {
-				for (EntityType<?> entityType : FleshDropEntry.DROP_MAP.keySet()) {
-					if (entity.getType() == entityType && entity.getWorld().random.nextFloat() * ModConfig.damageNeededForGuaranteedFleshDrop < amount) {
-						FleshDropEntry entry = FleshDropEntry.DROP_MAP.get(entityType);
-						ItemStack drop = new ItemStack(entity.getFireTicks() > 0 ? entry.cooked_drop() : entry.raw_drop());
-						if (drop.getItem() instanceof FleshItem) {
-							drop.getOrCreateNbt().putString("OwnerName", entity.getDisplayName().getString());
-						}
-						ItemScatterer.spawn(entity.getWorld(), entity.getX(), entity.getY(), entity.getZ(), drop);
+		if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity living && living.getMainHandStack().isIn(ModTags.Items.KNIVES))) {
+			for (EntityType<?> entityType : FleshDropEntry.DROP_MAP.keySet()) {
+				if (entity.getType() == entityType && entity.getWorld().random.nextFloat() * ModConfig.damageNeededForGuaranteedFleshDrop < amount) {
+					FleshDropEntry entry = FleshDropEntry.DROP_MAP.get(entityType);
+					ItemStack drop = new ItemStack(entity.getFireTicks() > 0 ? entry.cooked_drop() : entry.raw_drop());
+					if (drop.getItem() instanceof FleshItem) {
+						drop.getOrCreateSubNbt(Anthropophagy.MOD_ID).putString("OwnerName", entity.getDisplayName().getString());
 					}
+					ItemScatterer.spawn(entity.getWorld(), entity.getX(), entity.getY(), entity.getZ(), drop);
 				}
 			}
 		}

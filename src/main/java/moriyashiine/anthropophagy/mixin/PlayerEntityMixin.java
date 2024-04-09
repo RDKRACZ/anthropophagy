@@ -4,6 +4,7 @@
 
 package moriyashiine.anthropophagy.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import moriyashiine.anthropophagy.common.ModConfig;
 import moriyashiine.anthropophagy.common.component.entity.CannibalLevelComponent;
 import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
@@ -46,12 +47,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void anthropophagy$handleCannibalFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
 		if (stack.isFood()) {
-			CannibalLevelComponent cannibalLevelComponent = getComponent(ModEntityComponents.CANNIBAL_LEVEL);
-			TetheredComponent tetheredComponent = getComponent(ModEntityComponents.TETHERED);
+			CannibalLevelComponent cannibalLevelComponent = ModEntityComponents.CANNIBAL_LEVEL.get(this);
+			TetheredComponent tetheredComponent = ModEntityComponents.TETHERED.get(this);
 			if (stack.isIn(ModTags.Items.FLESH)) {
 				if (!tetheredComponent.isTethered()) {
 					if (cannibalLevelComponent.getCannibalLevel() < CannibalLevelComponent.MAX_LEVEL) {
-						cannibalLevelComponent.setCannibalLevel(Math.min(cannibalLevelComponent.getCannibalLevel() + 2, CannibalLevelComponent.MAX_LEVEL));
+						cannibalLevelComponent.setCannibalLevel(Math.min(CannibalLevelComponent.MAX_LEVEL, cannibalLevelComponent.getCannibalLevel() + 2));
 						cannibalLevelComponent.updateAttributes();
 					}
 					if (!world.isClient && cannibalLevelComponent.getCannibalLevel() == 20 || cannibalLevelComponent.getCannibalLevel() == 21) {
@@ -59,12 +60,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 						addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200));
 					}
 				}
-				if (!world.isClient && ModConfig.enablePiglutton) {
+				if (ModConfig.enablePiglutton) {
 					PigluttonEntity.attemptSpawn(this, cannibalLevelComponent.getCannibalLevel());
 				}
 			} else {
 				if (!tetheredComponent.isTethered() && cannibalLevelComponent.getCannibalLevel() > 0) {
-					cannibalLevelComponent.setCannibalLevel(Math.max(cannibalLevelComponent.getCannibalLevel() - 1, 0));
+					cannibalLevelComponent.setCannibalLevel(Math.max(0, cannibalLevelComponent.getCannibalLevel() - 1));
 					cannibalLevelComponent.updateAttributes();
 				}
 				if (!world.isClient && cannibalLevelComponent.getCannibalLevel() >= 20) {
@@ -74,10 +75,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 		}
 	}
 
-	@Inject(method = "canEquip", at = @At("HEAD"), cancellable = true)
-	private void anthropophagy$preventArmorDispensing(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (!getComponent(ModEntityComponents.CANNIBAL_LEVEL).canEquip(MobEntity.getPreferredEquipmentSlot(stack))) {
-			cir.setReturnValue(false);
+	@ModifyReturnValue(method = "canEquip", at = @At("RETURN"))
+	private boolean anthropophagy$preventArmorDispensing(boolean original, ItemStack stack) {
+		if (original && !ModEntityComponents.CANNIBAL_LEVEL.get(this).canEquip(MobEntity.getPreferredEquipmentSlot(stack))) {
+			return false;
 		}
+		return original;
 	}
 }

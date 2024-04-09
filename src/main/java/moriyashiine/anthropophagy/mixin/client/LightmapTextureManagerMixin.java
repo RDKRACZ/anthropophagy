@@ -24,7 +24,7 @@ public class LightmapTextureManagerMixin {
 
 	@ModifyVariable(method = "update", at = @At("STORE"), ordinal = 6)
 	private float anthropophagy$cannibalNightVision(float value) {
-		if (client.player != null && client.player.getComponent(ModEntityComponents.CANNIBAL_LEVEL).getCannibalLevel() >= 50) {
+		if (client.player != null && ModEntityComponents.CANNIBAL_LEVEL.get(client.player).getCannibalLevel() >= 50) {
 			return Math.max(1, value);
 		}
 		return value;

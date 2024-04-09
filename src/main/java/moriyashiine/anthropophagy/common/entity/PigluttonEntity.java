@@ -126,6 +126,9 @@ public class PigluttonEntity extends HostileEntity {
 	}
 
 	public static void attemptSpawn(LivingEntity living, int cannibalLevel) {
+		if (living.getWorld().isClient) {
+			return;
+		}
 		float chance = 0;
 		if (cannibalLevel >= 40) {
 			if (cannibalLevel >= 70) {
@@ -141,17 +144,13 @@ public class PigluttonEntity extends HostileEntity {
 		if (living.getRandom().nextFloat() < chance) {
 			PigluttonEntity piglutton = ModEntityTypes.PIGLUTTON.create(living.getWorld());
 			if (piglutton != null) {
-				boolean valid = false;
 				for (int i = 0; i < 8; i++) {
 					if (piglutton.teleport(living.getBlockPos().getX() + MathHelper.nextInt(living.getRandom(), -16, 16), living.getBlockPos().getY() + MathHelper.nextInt(living.getRandom(), -6, 6), living.getBlockPos().getZ() + MathHelper.nextInt(living.getRandom(), -16, 16), false)) {
-						valid = true;
-						break;
+						living.getWorld().spawnEntity(piglutton);
+						piglutton.setTarget(living);
+						living.getWorld().playSoundFromEntity(null, piglutton, ModSoundEvents.ENTITY_PIGLUTTON_SPAWN, SoundCategory.HOSTILE, 1, 1);
+						return;
 					}
-				}
-				if (valid) {
-					living.getWorld().spawnEntity(piglutton);
-					piglutton.setTarget(living);
-					living.getWorld().playSoundFromEntity(null, piglutton, ModSoundEvents.ENTITY_PIGLUTTON_SPAWN, SoundCategory.HOSTILE, 1, 1);
 				}
 			}
 		}

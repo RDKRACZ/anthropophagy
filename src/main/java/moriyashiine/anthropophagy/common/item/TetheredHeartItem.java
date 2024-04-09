@@ -24,7 +24,7 @@ public class TetheredHeartItem extends Item {
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack stack = user.getStackInHand(hand);
-		TetheredComponent tetheredComponent = user.getComponent(ModEntityComponents.TETHERED);
+		TetheredComponent tetheredComponent = ModEntityComponents.TETHERED.get(user);
 		if (!tetheredComponent.isTethered()) {
 			tetheredComponent.setTethered(true);
 			user.incrementStat(Stats.USED.getOrCreateStat(this));

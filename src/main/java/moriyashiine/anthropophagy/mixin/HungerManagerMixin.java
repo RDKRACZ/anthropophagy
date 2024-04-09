@@ -9,26 +9,26 @@ import net.minecraft.entity.player.HungerManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(HungerManager.class)
 public class HungerManagerMixin {
-	@ModifyArg(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
-	private int anthropophagy$reduceHungerGained(int food) {
+	@ModifyVariable(method = "add", at = @At("HEAD"), argsOnly = true)
+	private int anthropophagy$reduceHungerGained(int value) {
 		if (ModEntityComponents.playerCannibalLevel != -1) {
-			food = Math.round(food * getFoodModifier(ModEntityComponents.playerCannibalLevel));
+			value = Math.round(value * getFoodModifier(ModEntityComponents.playerCannibalLevel));
 			ModEntityComponents.playerCannibalLevel = -1;
 		}
-		return food;
+		return value;
 	}
 
-	@ModifyArg(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
-	private float anthropophagy$reduceSaturationGained(float saturation) {
+	@ModifyVariable(method = "add", at = @At("HEAD"), argsOnly = true)
+	private float anthropophagy$reduceSaturationGained(float value) {
 		if (ModEntityComponents.playerCannibalLevel != -1) {
-			saturation *= getFoodModifier(ModEntityComponents.playerCannibalLevel);
+			value *= getFoodModifier(ModEntityComponents.playerCannibalLevel);
 			ModEntityComponents.playerCannibalLevel = -1;
 		}
-		return saturation;
+		return value;
 	}
 
 	@Unique

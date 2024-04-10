@@ -5,22 +5,22 @@
 package moriyashiine.anthropophagy.common.entity;
 
 import moriyashiine.anthropophagy.common.ModConfig;
+import moriyashiine.anthropophagy.common.entity.ai.EatFleshGoal;
 import moriyashiine.anthropophagy.common.init.ModEntityTypes;
 import moriyashiine.anthropophagy.common.init.ModSoundEvents;
 import moriyashiine.anthropophagy.common.init.ModTags;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -30,47 +30,18 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
-import java.util.List;
-
 public class PigluttonEntity extends HostileEntity {
 	public PigluttonEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
+		setStepHeight(1);
 	}
 
 	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, ModConfig.strongerPiglutton ? 200 : 100).add(EntityAttributes.GENERIC_ARMOR, 10).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, ModConfig.strongerPiglutton ? 16 : 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
+		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 120 * (ModConfig.strongerPiglutton ? 2 : 1)).add(EntityAttributes.GENERIC_ARMOR, 14).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10 * (ModConfig.strongerPiglutton ? 2 : 1)).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
 	}
 
 	public static boolean canSpawn(EntityType<PigluttonEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
 		return random.nextInt(8) == 0 && HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random);
-	}
-
-	@Override
-	public void tick() {
-		super.tick();
-		if (!dead && age % 5 == 0) {
-			List<ItemEntity> drops = getWorld().getEntitiesByType(EntityType.ITEM, getBoundingBox().expand(8, 4, 8), foundEntity -> foundEntity.getStack().isIn(ModTags.Items.FLESH));
-			if (!drops.isEmpty()) {
-				ItemEntity item = drops.get(0);
-				if (item != null) {
-					getNavigation().startMovingTo(item, 1);
-					if (distanceTo(item) < 1.5) {
-						if (!getWorld().isClient) {
-							FoodComponent food = item.getStack().getItem().getFoodComponent();
-							if (food != null) {
-								heal(food.getHunger() * 2);
-							}
-							item.getStack().decrement(1);
-							playSound(SoundEvents.ENTITY_GENERIC_EAT, 1, 1);
-						} else {
-							for (int i = 0; i < 8; i++) {
-								getWorld().addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, item.getStack()), item.getX() + MathHelper.nextFloat(random, -0.5F, 0.5F), item.getY() + MathHelper.nextFloat(random, -0.5F, 0.5F), item.getZ() + MathHelper.nextFloat(random, -0.5F, 0.5F), 0, 0, 0);
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 
 	@Override
@@ -124,10 +95,11 @@ public class PigluttonEntity extends HostileEntity {
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));
-		goalSelector.add(1, new MeleeAttackGoal(this, 1, true));
-		goalSelector.add(2, new WanderAroundFarGoal(this, 1));
-		goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
-		goalSelector.add(3, new LookAroundGoal(this));
+		goalSelector.add(1, new EatFleshGoal(this));
+		goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
+		goalSelector.add(3, new WanderAroundFarGoal(this, 1));
+		goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 8));
+		goalSelector.add(4, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false, living -> living.getType().isIn(ModTags.EntityTypes.PIGLUTTON_TARGETS)));
 	}

@@ -108,23 +108,16 @@ public class PigluttonEntity extends HostileEntity {
 		if (living.getWorld().isClient) {
 			return;
 		}
-		float chance = 0;
-		if (cannibalLevel >= 40) {
-			if (cannibalLevel >= 70) {
-				chance = 1 / 10F;
-			} else if (cannibalLevel >= 60) {
-				chance = 1 / 15F;
-			} else if (cannibalLevel >= 50) {
-				chance = 1 / 20F;
-			} else {
-				chance = 1 / 25F;
-			}
-		}
+		float chance = (Math.min(90, cannibalLevel) - 40) / 800F;
 		if (living.getRandom().nextFloat() < chance) {
 			PigluttonEntity piglutton = ModEntityTypes.PIGLUTTON.create(living.getWorld());
 			if (piglutton != null) {
+				final int minH = 8, maxH = 16;
 				for (int i = 0; i < 8; i++) {
-					if (piglutton.teleport(living.getBlockPos().getX() + MathHelper.nextInt(living.getRandom(), -16, 16), living.getBlockPos().getY() + MathHelper.nextInt(living.getRandom(), -6, 6), living.getBlockPos().getZ() + MathHelper.nextInt(living.getRandom(), -16, 16), false)) {
+					int dX = living.getRandom().nextBetween(minH, maxH) * (living.getRandom().nextBoolean() ? 1 : -1);
+					int dY = living.getRandom().nextBetween(-6, 6);
+					int dZ = living.getRandom().nextBetween(minH, maxH) * (living.getRandom().nextBoolean() ? 1 : -1);
+					if (piglutton.teleport(living.getX() + dX, living.getY() + dY, living.getZ() + dZ, false)) {
 						living.getWorld().spawnEntity(piglutton);
 						piglutton.setTarget(living);
 						living.getWorld().playSoundFromEntity(null, piglutton, ModSoundEvents.ENTITY_PIGLUTTON_SPAWN, SoundCategory.HOSTILE, 1, 1);

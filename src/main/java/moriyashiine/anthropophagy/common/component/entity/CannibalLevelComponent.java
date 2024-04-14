@@ -25,7 +25,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public class CannibalLevelComponent implements AutoSyncedComponent {
-	public static final int MAX_LEVEL = 300;
+	public static final int MAX_LEVEL = 120;
 
 	private static final Map<Predicate<PlayerEntity>, Set<Pair<EntityAttribute, EntityAttributeModifier>>> ATTRIBUTE_MAP;
 

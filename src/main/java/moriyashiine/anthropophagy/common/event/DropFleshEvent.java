@@ -15,7 +15,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ItemScatterer;
 
 public class DropFleshEvent implements ServerLivingEntityEvents.AllowDamage {
 	public static float attackCooldown = -1;
@@ -33,7 +32,7 @@ public class DropFleshEvent implements ServerLivingEntityEvents.AllowDamage {
 					if (drop.getItem() instanceof FleshItem) {
 						drop.getOrCreateSubNbt(Anthropophagy.MOD_ID).putString("OwnerName", entity.getDisplayName().getString());
 					}
-					ItemScatterer.spawn(entity.getWorld(), entity.getX(), entity.getY(), entity.getZ(), drop);
+					entity.dropStack(drop).setPickupDelay(40);
 				}
 			}
 		}

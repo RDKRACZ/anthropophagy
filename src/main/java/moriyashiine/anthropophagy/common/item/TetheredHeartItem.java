@@ -7,6 +7,7 @@ package moriyashiine.anthropophagy.common.item;
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
 import moriyashiine.anthropophagy.common.init.ModEntityComponents;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,19 +23,33 @@ public class TetheredHeartItem extends Item {
 	}
 
 	@Override
-	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		ItemStack stack = user.getStackInHand(hand);
-		TetheredComponent tetheredComponent = ModEntityComponents.TETHERED.get(user);
-		if (!tetheredComponent.isTethered()) {
-			tetheredComponent.setTethered(true);
-			user.incrementStat(Stats.USED.getOrCreateStat(this));
-			if (!user.isCreative()) {
-				stack.decrement(1);
+	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+		if (user instanceof PlayerEntity player) {
+			TetheredComponent tetheredComponent = ModEntityComponents.TETHERED.get(player);
+			if (!tetheredComponent.isTethered()) {
+				tetheredComponent.setTethered(true);
+				player.incrementStat(Stats.USED.getOrCreateStat(this));
+				if (!player.isCreative()) {
+					stack.decrement(1);
+				}
+				player.sendMessage(Text.translatable(Anthropophagy.MOD_ID + ".message.tether"), true);
 			}
-			user.sendMessage(Text.translatable(Anthropophagy.MOD_ID + ".message.tether"), true);
-		} else {
-			user.sendMessage(Text.translatable(Anthropophagy.MOD_ID + ".message.tethered"), true);
 		}
-		return TypedActionResult.success(stack);
+		return super.finishUsing(stack, world, user);
+	}
+
+	@Override
+	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+		if (remainingUseTicks == getMaxUseTime(stack) / 2 && user instanceof PlayerEntity player && ModEntityComponents.TETHERED.get(player).isTethered()) {
+			player.sendMessage(Text.translatable(Anthropophagy.MOD_ID + ".message.tethered"), true);
+			player.stopUsingItem();
+		}
+		super.usageTick(world, user, stack, remainingUseTicks);
+	}
+
+	@Override
+	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+
+		return super.use(world, user, hand);
 	}
 }

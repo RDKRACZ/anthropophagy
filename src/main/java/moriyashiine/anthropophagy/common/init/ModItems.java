@@ -30,8 +30,8 @@ public class ModItems {
 	public static final Item COOKED_FLESH = new FleshItem(settings().food(ModFoodComponents.COOKED_FLESH));
 	public static final Item CORRUPT_FLESH = new FleshItem(settings().food(ModFoodComponents.CORRUPT_FLESH));
 
-	public static final Item PIGLUTTON_HEART = new FleshItem(settings().food(FoodComponents.COOKED_BEEF));
-	public static final Item TETHERED_HEART = new TetheredHeartItem(settings());
+	public static final Item PIGLUTTON_HEART = new FleshItem(settings().food(ModFoodComponents.COOKED_FLESH));
+	public static final Item TETHERED_HEART = new TetheredHeartItem(settings().food(ModFoodComponents.TETHERED_HEART));
 
 	public static final Item PIGLUTTON_SPAWN_EGG = new SpawnEggItem(ModEntityTypes.PIGLUTTON, 0x7F3D00, 0xC4C4C4, settings());
 

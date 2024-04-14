@@ -80,6 +80,10 @@ public class CannibalLevelComponent implements AutoSyncedComponent {
 		tag.putInt("CannibalLevel", cannibalLevel);
 	}
 
+	public void sync() {
+		ModEntityComponents.CANNIBAL_LEVEL.sync(obj);
+	}
+
 	public int getCannibalLevel() {
 		return cannibalLevel;
 	}

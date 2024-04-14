@@ -17,7 +17,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -77,7 +76,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
 	@ModifyReturnValue(method = "canEquip", at = @At("RETURN"))
 	private boolean anthropophagy$preventArmorDispensing(boolean original, ItemStack stack) {
-		if (original && !ModEntityComponents.CANNIBAL_LEVEL.get(this).canEquip(MobEntity.getPreferredEquipmentSlot(stack))) {
+		if (original && !ModEntityComponents.CANNIBAL_LEVEL.get(this).canEquip(stack)) {
 			return false;
 		}
 		return original;

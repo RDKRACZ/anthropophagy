@@ -7,10 +7,14 @@ package moriyashiine.anthropophagy.common.component.entity;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ElytraItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Pair;
 
@@ -92,21 +96,25 @@ public class CannibalLevelComponent implements AutoSyncedComponent {
 		this.cannibalLevel = cannibalLevel;
 	}
 
-	public boolean canEquip(EquipmentSlot slot) {
-		if (cannibalLevel >= 30 && slot == EquipmentSlot.LEGS) {
-			return false;
-		} else if (cannibalLevel >= 50 && slot == EquipmentSlot.HEAD) {
-			return false;
-		} else if (cannibalLevel >= 70 && slot == EquipmentSlot.FEET) {
-			return false;
-		} else return cannibalLevel < 90 || slot != EquipmentSlot.CHEST;
+	public boolean canEquip(ItemStack stack) {
+		if ((stack.getItem() instanceof ArmorItem armorItem && armorItem.getProtection() > 0) || stack.getItem() instanceof ElytraItem) {
+			EquipmentSlot slot = LivingEntity.getPreferredEquipmentSlot(stack);
+			if (cannibalLevel >= 30 && slot == EquipmentSlot.LEGS) {
+				return false;
+			} else if (cannibalLevel >= 50 && slot == EquipmentSlot.HEAD) {
+				return false;
+			} else if (cannibalLevel >= 70 && slot == EquipmentSlot.FEET) {
+				return false;
+			} else return cannibalLevel < 90 || slot != EquipmentSlot.CHEST;
+		}
+		return true;
 	}
 
 	public void updateAttributes() {
 		if (!obj.getWorld().isClient) {
-			for (EquipmentSlot slot : EquipmentSlot.values()) {
-				if (!canEquip(slot)) {
-					obj.dropStack(obj.getEquippedStack(slot).copyAndEmpty());
+			for (ItemStack stack : obj.getItemsEquipped()) {
+				if (!canEquip(stack)) {
+					obj.dropStack(stack.copyAndEmpty());
 				}
 			}
 			for (Predicate<PlayerEntity> predicate : ATTRIBUTE_MAP.keySet()) {

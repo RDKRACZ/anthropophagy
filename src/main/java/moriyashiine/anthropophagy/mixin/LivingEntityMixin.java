@@ -4,6 +4,7 @@
 
 package moriyashiine.anthropophagy.mixin;
 
+import moriyashiine.anthropophagy.common.component.entity.CannibalLevelComponent;
 import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import moriyashiine.anthropophagy.common.init.ModItems;
 import net.minecraft.entity.Entity;
@@ -14,6 +15,8 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
@@ -29,5 +32,25 @@ public abstract class LivingEntityMixin extends Entity {
 				dropItem(ModItems.PIGLUTTON_HEART);
 			}
 		});
+	}
+
+	@ModifyVariable(method = "handleFallDamage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+	private float anthropophagy$cannibalFallReduction(float value) {
+		CannibalLevelComponent cannibalLevelComponent = ModEntityComponents.CANNIBAL_LEVEL.getNullable(this);
+		if (cannibalLevelComponent != null) {
+			return Math.min(0, value - cannibalLevelComponent.getFallReduction());
+		}
+		return value;
+	}
+
+	@ModifyArg(method = "jump", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V"), index = 1)
+	private double anthropophagy$cannibalJumpBoost(double value) {
+		if (isSneaking()) {
+			CannibalLevelComponent cannibalLevelComponent = ModEntityComponents.CANNIBAL_LEVEL.getNullable(this);
+			if (cannibalLevelComponent != null) {
+				return value + cannibalLevelComponent.getJumpBoost();
+			}
+		}
+		return value;
 	}
 }

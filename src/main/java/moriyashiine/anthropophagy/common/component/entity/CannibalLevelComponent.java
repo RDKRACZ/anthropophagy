@@ -133,6 +133,32 @@ public class CannibalLevelComponent implements AutoSyncedComponent {
 		}
 	}
 
+	public int getFallReduction() {
+		if (compareLevel(obj, 90, MAX_LEVEL + 1)) {
+			return 4;
+		} else if (compareLevel(obj, 70, 90)) {
+			return 3;
+		} else if (compareLevel(obj, 50, 70)) {
+			return 2;
+		} else if (compareLevel(obj, 30, 50)) {
+			return 1;
+		}
+		return 0;
+	}
+
+	public float getJumpBoost() {
+		if (compareLevel(obj, 90, MAX_LEVEL + 1)) {
+			return 0.3F;
+		} else if (compareLevel(obj, 70, 90)) {
+			return 0.23F;
+		} else if (compareLevel(obj, 50, 70)) {
+			return 0.16F;
+		} else if (compareLevel(obj, 30, 50)) {
+			return 0.09F;
+		}
+		return 0;
+	}
+
 	private static boolean compareLevel(PlayerEntity player, int minInc, int maxExc) {
 		int level = ModEntityComponents.CANNIBAL_LEVEL.get(player).getCannibalLevel();
 		return level >= minInc && level < maxExc;

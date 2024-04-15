@@ -34,6 +34,7 @@ public class PigluttonEntity extends HostileEntity {
 	public PigluttonEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		setStepHeight(1);
+		experiencePoints = 30;
 	}
 
 	public static DefaultAttributeContainer.Builder createAttributes() {

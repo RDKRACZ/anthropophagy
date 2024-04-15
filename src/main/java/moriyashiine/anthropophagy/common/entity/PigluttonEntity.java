@@ -105,11 +105,14 @@ public class PigluttonEntity extends HostileEntity {
 		targetSelector.add(1, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false, living -> living.getType().isIn(ModTags.EntityTypes.PIGLUTTON_TARGETS)));
 	}
 
-	public static void attemptSpawn(LivingEntity living, int cannibalLevel) {
+	public static void attemptSpawn(LivingEntity living, int cannibalLevel, boolean ownFlesh) {
 		if (living.getWorld().isClient) {
 			return;
 		}
 		float chance = (Math.min(90, cannibalLevel) - 40) / 800F;
+		if (ownFlesh) {
+			chance *= 3;
+		}
 		if (living.getRandom().nextFloat() < chance) {
 			PigluttonEntity piglutton = ModEntityTypes.PIGLUTTON.create(living.getWorld());
 			if (piglutton != null) {

@@ -5,6 +5,8 @@
 package moriyashiine.anthropophagy.common.item;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -17,14 +19,39 @@ public class FleshItem extends Item {
 
 	@Override
 	public Text getName(ItemStack stack) {
-		Text name = super.getName(stack);
+		String ownerName = getOwnerName(stack);
+		if (!ownerName.isEmpty()) {
+			return Text.translatable(getTranslationKey(stack) + "_owned", ownerName);
+		}
+		return super.getName(stack);
+	}
+
+	public static String getOwnerName(ItemStack stack) {
 		NbtCompound nbt = stack.getSubNbt(Anthropophagy.MOD_ID);
 		if (nbt != null) {
-			String ownerName = nbt.getString("OwnerName");
-			if (!ownerName.isEmpty()) {
-				return Text.translatable(getTranslationKey(stack) + "_owned", ownerName);
-			}
+			return nbt.getString("OwnerName");
 		}
-		return name;
+		return "";
+	}
+
+	public static boolean isOwnerPlayer(ItemStack stack) {
+		NbtCompound nbt = stack.getSubNbt(Anthropophagy.MOD_ID);
+		if (nbt != null) {
+			return nbt.getBoolean("FromPlayer");
+		}
+		return false;
+	}
+
+	public static void setOwner(ItemStack stack, String ownerName, boolean fromPlayer) {
+		if (ownerName.isEmpty()) {
+			return;
+		}
+		NbtCompound nbt = stack.getOrCreateSubNbt(Anthropophagy.MOD_ID);
+		nbt.putString("OwnerName", ownerName);
+		nbt.putBoolean("FromPlayer", fromPlayer);
+	}
+
+	public static void setOwner(ItemStack stack, Entity entity) {
+		setOwner(stack, entity.getName().getString(), entity instanceof PlayerEntity);
 	}
 }

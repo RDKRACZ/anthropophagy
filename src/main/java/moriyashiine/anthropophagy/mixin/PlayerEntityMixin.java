@@ -12,6 +12,7 @@ import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
 import moriyashiine.anthropophagy.common.event.DropFleshEvent;
 import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import moriyashiine.anthropophagy.common.init.ModTags;
+import moriyashiine.anthropophagy.common.item.FleshItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -60,7 +61,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 					}
 				}
 				if (ModConfig.enablePiglutton) {
-					PigluttonEntity.attemptSpawn(this, cannibalLevelComponent.getCannibalLevel());
+					PigluttonEntity.attemptSpawn(this, cannibalLevelComponent.getCannibalLevel(), FleshItem.isOwnerPlayer(stack) && getName().getString().equals(FleshItem.getOwnerName(stack)));
 				}
 			} else {
 				if (!tetheredComponent.isTethered() && cannibalLevelComponent.getCannibalLevel() > 0) {

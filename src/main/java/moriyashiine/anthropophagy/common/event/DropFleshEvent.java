@@ -4,7 +4,6 @@
 
 package moriyashiine.anthropophagy.common.event;
 
-import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.ModConfig;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
 import moriyashiine.anthropophagy.common.init.ModTags;
@@ -30,7 +29,7 @@ public class DropFleshEvent implements ServerLivingEntityEvents.AllowDamage {
 					FleshDropEntry entry = FleshDropEntry.DROP_MAP.get(entityType);
 					ItemStack drop = new ItemStack(entity.getFireTicks() > 0 ? entry.cooked_drop() : entry.raw_drop());
 					if (drop.getItem() instanceof FleshItem) {
-						drop.getOrCreateSubNbt(Anthropophagy.MOD_ID).putString("OwnerName", entity.getDisplayName().getString());
+						FleshItem.setOwner(drop, entity);
 					}
 					entity.dropStack(drop).setPickupDelay(40);
 				}

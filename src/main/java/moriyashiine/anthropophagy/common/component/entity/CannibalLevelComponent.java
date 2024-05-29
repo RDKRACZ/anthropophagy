@@ -17,56 +17,24 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Pair;
+import net.minecraft.util.math.MathHelper;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 public class CannibalLevelComponent implements AutoSyncedComponent {
 	public static final int MAX_LEVEL = 120;
+	private static final int MIN_FUNCTIONAL_LEVEL = 30;
+	private static final float MAX_FUNCTIONAL_LEVEL = MAX_LEVEL - MIN_FUNCTIONAL_LEVEL;
 
-	private static final Map<Predicate<PlayerEntity>, Set<Pair<RegistryEntry<EntityAttribute>, EntityAttributeModifier>>> ATTRIBUTE_MAP;
-
-	static {
-		ATTRIBUTE_MAP = new HashMap<>();
-		ATTRIBUTE_MAP.put(player -> compareLevel(player, 90, MAX_LEVEL + 1),
-				Set.of(new Pair<>(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(UUID.fromString("cce7af90-8887-4b43-a3b0-3265ab5a1b27"), "Cannibal modifier", 6, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(UUID.fromString("b7657ce5-e362-4cac-baba-9661ca780047"), "Cannibal modifier", 1, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(UUID.fromString("4fd0fcf3-a827-4ad0-8318-07fafaf3126e"), "Cannibal modifier", 14, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(UUID.fromString("006731ce-988c-4d8d-921a-0e812ff6e52a"), "Cannibal modifier", 1 / 20F, EntityAttributeModifier.Operation.ADD_VALUE))));
-		ATTRIBUTE_MAP.put(player -> compareLevel(player, 80, 90),
-				Set.of(new Pair<>(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(UUID.fromString("500d09c9-efbe-4ac4-95f0-0535a087e4b6"), "Cannibal modifier", 5, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(UUID.fromString("b15887df-6a68-4446-9b0e-c6b45744255c"), "Cannibal modifier", 0.8, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(UUID.fromString("29e088db-9aa8-4c8a-88b6-f519ef822326"), "Cannibal modifier", 12, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(UUID.fromString("7c2d047f-f666-43a1-882b-ad751e7d5800"), "Cannibal modifier", 1 / 25F, EntityAttributeModifier.Operation.ADD_VALUE))));
-		ATTRIBUTE_MAP.put(player -> compareLevel(player, 70, 80),
-				Set.of(new Pair<>(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(UUID.fromString("519e0e77-b8a8-4b76-980b-4f407b5afca7"), "Cannibal modifier", 4, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(UUID.fromString("6fa06abe-f5df-4542-8ed5-d478a3b268d7"), "Cannibal modifier", 0.6, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(UUID.fromString("301ccf45-24c8-4a79-9506-28bf6da92046"), "Cannibal modifier", 10, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(UUID.fromString("e4be7101-30a6-417c-917b-4a54ccc53f33"), "Cannibal modifier", 1 / 30F, EntityAttributeModifier.Operation.ADD_VALUE))));
-		ATTRIBUTE_MAP.put(player -> compareLevel(player, 60, 70),
-				Set.of(new Pair<>(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(UUID.fromString("31187db9-4b70-4f79-98c8-2aec225dcae1"), "Cannibal modifier", 3, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(UUID.fromString("2ba3906b-5d20-4729-a3df-aa59cef97667"), "Cannibal modifier", 0.4, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(UUID.fromString("b58654a4-9229-4f05-aa89-02d7fa5f98d5"), "Cannibal modifier", 8, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(UUID.fromString("26f4947b-9cd6-42c2-ac0d-a35f53f00c8a"), "Cannibal modifier", 1 / 40F, EntityAttributeModifier.Operation.ADD_VALUE))));
-		ATTRIBUTE_MAP.put(player -> compareLevel(player, 50, 60),
-				Set.of(new Pair<>(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(UUID.fromString("26f4947b-9cd6-42c2-ac0d-a35f53f00c8a"), "Cannibal modifier", 2, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(UUID.fromString("34c73848-3a6b-405a-b0b3-eabfd7d93dbd"), "Cannibal modifier", 0.2, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(UUID.fromString("144088ca-bfaa-4f80-8de4-abbf5bd7bfec"), "Cannibal modifier", 6, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(UUID.fromString("d8534bfb-ed44-4317-8c91-f5228f8487ed"), "Cannibal modifier", 1 / 50F, EntityAttributeModifier.Operation.ADD_VALUE))));
-		ATTRIBUTE_MAP.put(player -> compareLevel(player, 40, 50),
-				Set.of(new Pair<>(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(UUID.fromString("95258be5-d00d-4687-b130-80824b67536f"), "Cannibal modifier", 1, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(UUID.fromString("0922bf38-ba6f-4b8c-af14-c49f436c234e"), "Cannibal modifier", 4, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(UUID.fromString("329b23b3-4c34-4478-8dd2-1ac2d83abd0b"), "Cannibal modifier", 1 / 60F, EntityAttributeModifier.Operation.ADD_VALUE))));
-		ATTRIBUTE_MAP.put(player -> compareLevel(player, 30, 40),
-				Set.of(new Pair<>(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(UUID.fromString("80788884-36e7-46c2-bdc6-9c901c8368b3"), "Cannibal modifier", 2, EntityAttributeModifier.Operation.ADD_VALUE)),
-						new Pair<>(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(UUID.fromString("44806f98-91fb-41df-9554-662930ef838e"), "Cannibal modifier", 1 / 70F, EntityAttributeModifier.Operation.ADD_VALUE))));
-		ATTRIBUTE_MAP.put(player -> compareLevel(player, 20, 30),
-				Set.of(new Pair<>(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(UUID.fromString("92118505-869f-437e-981f-fc238ed8633c"), "Cannibal modifier", 1 / 80F, EntityAttributeModifier.Operation.ADD_VALUE))));
-	}
+	private static final UUID ATTACK_DAMAGE_UUID = UUID.fromString("93e0b453-db2e-47ed-af22-c9d61f7199b9");
+	private static final UUID ARMOR_UUID = UUID.fromString("5f263444-8723-45f1-bdb7-509d7c135a3c");
+	private static final UUID KNOCKBACK_RESISTANCE_UUID = UUID.fromString("3372742b-db21-4824-b810-3815d738ce6b");
+	private static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("317f8550-84d3-405b-a1c7-34d83c3bae1c");
+	private static final UUID SAFE_FALL_DISTANCE_UUID = UUID.fromString("d6842570-7e0a-4c81-83ef-9952173f6af4");
+	private static final UUID STEP_HEIGHT_UUID = UUID.fromString("f96eca30-12ef-4089-a5c8-def0d38d83d0");
 
 	private final PlayerEntity obj;
 	private int cannibalLevel = 0;
@@ -118,33 +86,14 @@ public class CannibalLevelComponent implements AutoSyncedComponent {
 					obj.dropStack(stack.copyAndEmpty());
 				}
 			}
-			for (Predicate<PlayerEntity> predicate : ATTRIBUTE_MAP.keySet()) {
-				for (Pair<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifierPair : ATTRIBUTE_MAP.get(predicate)) {
-					if (predicate.test(obj)) {
-						if (!obj.getAttributeInstance(modifierPair.getLeft()).hasModifier(modifierPair.getRight())) {
-							obj.getAttributeInstance(modifierPair.getLeft()).addPersistentModifier(modifierPair.getRight());
-						}
-					} else {
-						if (obj.getAttributeInstance(modifierPair.getLeft()).hasModifier(modifierPair.getRight())) {
-							obj.getAttributeInstance(modifierPair.getLeft()).removeModifier(modifierPair.getRight());
-						}
-					}
-				}
-			}
+			obj.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).tryRemoveModifier(ATTACK_DAMAGE_UUID);
+			obj.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).tryRemoveModifier(ARMOR_UUID);
+			obj.getAttributeInstance(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE).tryRemoveModifier(KNOCKBACK_RESISTANCE_UUID);
+			obj.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).tryRemoveModifier(MOVEMENT_SPEED_UUID);
+			obj.getAttributeInstance(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE).tryRemoveModifier(SAFE_FALL_DISTANCE_UUID);
+			obj.getAttributeInstance(EntityAttributes.GENERIC_STEP_HEIGHT).tryRemoveModifier(STEP_HEIGHT_UUID);
+			getModifiersForLevel(cannibalLevel).attributes().forEach(pair -> obj.getAttributeInstance(pair.getLeft()).addPersistentModifier(pair.getRight()));
 		}
-	}
-
-	public int getFallReduction() {
-		if (compareLevel(obj, 90, MAX_LEVEL + 1)) {
-			return 4;
-		} else if (compareLevel(obj, 70, 90)) {
-			return 3;
-		} else if (compareLevel(obj, 50, 70)) {
-			return 2;
-		} else if (compareLevel(obj, 30, 50)) {
-			return 1;
-		}
-		return 0;
 	}
 
 	public float getJumpBoost() {
@@ -160,8 +109,63 @@ public class CannibalLevelComponent implements AutoSyncedComponent {
 		return 0;
 	}
 
+	private static AttributeModifierSet getModifiersForLevel(int level) {
+		AttributeModifierSet attributes = new AttributeModifierSet(new ArrayList<>());
+		if (level > MIN_FUNCTIONAL_LEVEL) {
+			attributes.addModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE,
+					new EntityAttributeModifier(ATTACK_DAMAGE_UUID,
+							"Cannibal modifier",
+							lerp(level, 6),
+							EntityAttributeModifier.Operation.ADD_VALUE));
+			attributes.addModifier(EntityAttributes.GENERIC_ARMOR,
+					new EntityAttributeModifier(ARMOR_UUID,
+							"Cannibal modifier",
+							lerp(level, 14),
+							EntityAttributeModifier.Operation.ADD_VALUE));
+			attributes.addModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
+					new EntityAttributeModifier(KNOCKBACK_RESISTANCE_UUID,
+							"Cannibal modifier",
+							lerp(level, 0.2F),
+							EntityAttributeModifier.Operation.ADD_VALUE));
+			attributes.addModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,
+					new EntityAttributeModifier(MOVEMENT_SPEED_UUID,
+							"Cannibal modifier",
+							lerp(level, 0.5F),
+							EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+			attributes.addModifier(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE,
+					new EntityAttributeModifier(SAFE_FALL_DISTANCE_UUID,
+							"Cannibal modifier",
+							lerp(level, 4),
+							EntityAttributeModifier.Operation.ADD_VALUE));
+			if (level >= 60) {
+				attributes.addModifier(EntityAttributes.GENERIC_STEP_HEIGHT,
+						new EntityAttributeModifier(STEP_HEIGHT_UUID,
+								"Cannibal modifier",
+								1,
+								EntityAttributeModifier.Operation.ADD_VALUE));
+			}
+		}
+		attributes.attributes().removeIf(pair -> pair.getRight().value() == 0);
+		return attributes;
+	}
+
+	private static float lerp(int level, float end) {
+		return MathHelper.lerp(Math.min(1, (level - MIN_FUNCTIONAL_LEVEL) / (MAX_FUNCTIONAL_LEVEL - MIN_FUNCTIONAL_LEVEL)), 0, end);
+	}
+
+	private static int lerp(int level, int end) {
+		return MathHelper.lerp(Math.min(1, (level - MIN_FUNCTIONAL_LEVEL) / (MAX_FUNCTIONAL_LEVEL - MIN_FUNCTIONAL_LEVEL)), 0, end);
+	}
+
 	private static boolean compareLevel(PlayerEntity player, int minInc, int maxExc) {
 		int level = ModEntityComponents.CANNIBAL_LEVEL.get(player).getCannibalLevel();
 		return level >= minInc && level < maxExc;
+	}
+
+	private record AttributeModifierSet(
+			List<Pair<RegistryEntry<EntityAttribute>, EntityAttributeModifier>> attributes) {
+		void addModifier(RegistryEntry<EntityAttribute> attribute, EntityAttributeModifier modifier) {
+			attributes().add(new Pair<>(attribute, modifier));
+		}
 	}
 }

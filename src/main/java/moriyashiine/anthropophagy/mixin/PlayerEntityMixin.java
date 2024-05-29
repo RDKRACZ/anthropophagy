@@ -1,7 +1,6 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -11,8 +10,9 @@ import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
 import moriyashiine.anthropophagy.common.event.DropFleshEvent;
 import moriyashiine.anthropophagy.common.init.ModEntityComponents;
-import moriyashiine.anthropophagy.common.init.ModTags;
 import moriyashiine.anthropophagy.common.item.FleshItem;
+import moriyashiine.anthropophagy.common.tag.ModItemTags;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -46,10 +46,10 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void anthropophagy$handleCannibalFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
-		if (stack.isFood()) {
+		if (stack.contains(DataComponentTypes.FOOD)) {
 			CannibalLevelComponent cannibalLevelComponent = ModEntityComponents.CANNIBAL_LEVEL.get(this);
 			TetheredComponent tetheredComponent = ModEntityComponents.TETHERED.get(this);
-			if (stack.isIn(ModTags.Items.FLESH)) {
+			if (stack.isIn(ModItemTags.FLESH)) {
 				if (!tetheredComponent.isTethered()) {
 					if (cannibalLevelComponent.getCannibalLevel() < CannibalLevelComponent.MAX_LEVEL) {
 						cannibalLevelComponent.setCannibalLevel(Math.min(CannibalLevelComponent.MAX_LEVEL, cannibalLevelComponent.getCannibalLevel() + 2));

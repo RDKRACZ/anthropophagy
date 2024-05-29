@@ -1,15 +1,14 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.common.entity.ai;
 
-import moriyashiine.anthropophagy.common.init.ModTags;
+import moriyashiine.anthropophagy.common.tag.ModItemTags;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.item.FoodComponent;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
@@ -28,9 +27,9 @@ public class EatFleshGoal extends Goal {
 
 	@Override
 	public boolean canStart() {
-		List<ItemEntity> drops = mob.getWorld().getEntitiesByType(EntityType.ITEM, mob.getBoundingBox().expand(8, 4, 8), foundEntity -> foundEntity.getStack().isIn(ModTags.Items.FLESH));
+		List<ItemEntity> drops = mob.getWorld().getEntitiesByType(EntityType.ITEM, mob.getBoundingBox().expand(8, 4, 8), foundEntity -> foundEntity.getStack().isIn(ModItemTags.FLESH));
 		if (!drops.isEmpty()) {
-			closestFleshItem = drops.get(0);
+			closestFleshItem = drops.getFirst();
 			return true;
 		}
 		closestFleshItem = null;
@@ -43,9 +42,8 @@ public class EatFleshGoal extends Goal {
 			mob.getNavigation().startMovingTo(closestFleshItem, 1);
 			if (mob.distanceTo(closestFleshItem) < 1.5) {
 				if (!mob.getWorld().isClient) {
-					FoodComponent food = closestFleshItem.getStack().getItem().getFoodComponent();
-					if (food != null) {
-						mob.heal(food.getHunger() * 2);
+					if (closestFleshItem.getStack().contains(DataComponentTypes.FOOD)) {
+						mob.heal(closestFleshItem.getStack().get(DataComponentTypes.FOOD).nutrition() * 2);
 					}
 					closestFleshItem.getStack().decrement(1);
 					mob.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1, 1);

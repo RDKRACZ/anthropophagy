@@ -1,14 +1,13 @@
 {
-  "replace": false,
   "values": [
-	"minecraft:player",
-	"minecraft:evoker",
-	"minecraft:illusioner",
+	{
+	  "id": "#minecraft:illager",
+	  "required": false
+	},
 	"minecraft:piglin",
 	"minecraft:piglin_brute",
-	"minecraft:pillager",
+	"minecraft:player",
 	"minecraft:villager",
-	"minecraft:vindicator",
 	"minecraft:wandering_trader",
 	"minecraft:witch"
   ]

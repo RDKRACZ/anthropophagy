@@ -1,15 +1,13 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.common.item;
 
-import moriyashiine.anthropophagy.common.Anthropophagy;
+import moriyashiine.anthropophagy.common.init.ModDataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 
 public class FleshItem extends Item {
@@ -27,28 +25,19 @@ public class FleshItem extends Item {
 	}
 
 	public static String getOwnerName(ItemStack stack) {
-		NbtCompound nbt = stack.getSubNbt(Anthropophagy.MOD_ID);
-		if (nbt != null) {
-			return nbt.getString("OwnerName");
-		}
-		return "";
+		return stack.getOrDefault(ModDataComponentTypes.OWNER_NAME, "");
 	}
 
 	public static boolean isOwnerPlayer(ItemStack stack) {
-		NbtCompound nbt = stack.getSubNbt(Anthropophagy.MOD_ID);
-		if (nbt != null) {
-			return nbt.getBoolean("FromPlayer");
-		}
-		return false;
+		return stack.getOrDefault(ModDataComponentTypes.FROM_PLAYER, false);
 	}
 
 	public static void setOwner(ItemStack stack, String ownerName, boolean fromPlayer) {
 		if (ownerName.isEmpty()) {
 			return;
 		}
-		NbtCompound nbt = stack.getOrCreateSubNbt(Anthropophagy.MOD_ID);
-		nbt.putString("OwnerName", ownerName);
-		nbt.putBoolean("FromPlayer", fromPlayer);
+		stack.set(ModDataComponentTypes.OWNER_NAME, ownerName);
+		stack.set(ModDataComponentTypes.FROM_PLAYER, fromPlayer);
 	}
 
 	public static void setOwner(ItemStack stack, Entity entity) {

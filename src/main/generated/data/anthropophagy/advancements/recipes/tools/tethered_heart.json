@@ -5,9 +5,7 @@
 	  "conditions": {
 		"items": [
 		  {
-			"items": [
-			  "anthropophagy:piglutton_heart"
-			]
+			"items": "anthropophagy:piglutton_heart"
 		  }
 		]
 	  },
@@ -22,14 +20,13 @@
   },
   "requirements": [
 	[
-	  "has_piglutton_heart",
-	  "has_the_recipe"
+	  "has_the_recipe",
+	  "has_piglutton_heart"
 	]
   ],
   "rewards": {
 	"recipes": [
 	  "anthropophagy:tethered_heart"
 	]
-  },
-  "sends_telemetry_event": false
+  }
 }

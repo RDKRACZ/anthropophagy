@@ -1,22 +1,22 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.common.component.entity;
 
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 public class TetheredComponent implements AutoSyncedComponent {
 	private boolean tethered = false;
 
 	@Override
-	public void readFromNbt(NbtCompound tag) {
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 		tethered = tag.getBoolean("Tethered");
 	}
 
 	@Override
-	public void writeToNbt(NbtCompound tag) {
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 		tag.putBoolean("Tethered", tethered);
 	}
 

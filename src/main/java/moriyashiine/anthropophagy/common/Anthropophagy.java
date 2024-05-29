@@ -1,13 +1,13 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.common;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.anthropophagy.common.event.CannibalSleepEvent;
 import moriyashiine.anthropophagy.common.event.CopyCannibalLevelEvent;
 import moriyashiine.anthropophagy.common.event.DropFleshEvent;
+import moriyashiine.anthropophagy.common.init.ModDataComponentTypes;
 import moriyashiine.anthropophagy.common.init.ModEntityTypes;
 import moriyashiine.anthropophagy.common.init.ModItems;
 import moriyashiine.anthropophagy.common.init.ModSoundEvents;
@@ -30,8 +30,9 @@ public class Anthropophagy implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		MidnightConfig.init(MOD_ID, ModConfig.class);
-		ModItems.init();
+		ModDataComponentTypes.init();
 		ModEntityTypes.init();
+		ModItems.init();
 		ModSoundEvents.init();
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new FleshDropsReloadListener());
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register(new DropFleshEvent());

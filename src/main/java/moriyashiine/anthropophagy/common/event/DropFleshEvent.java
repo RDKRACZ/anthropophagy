@@ -1,13 +1,12 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.common.event;
 
 import moriyashiine.anthropophagy.common.ModConfig;
 import moriyashiine.anthropophagy.common.entity.PigluttonEntity;
-import moriyashiine.anthropophagy.common.init.ModTags;
 import moriyashiine.anthropophagy.common.item.FleshItem;
+import moriyashiine.anthropophagy.common.tag.ModItemTags;
 import moriyashiine.anthropophagy.common.util.FleshDropEntry;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.EntityType;
@@ -23,7 +22,7 @@ public class DropFleshEvent implements ServerLivingEntityEvents.AllowDamage {
 		if (attackCooldown != -1 && attackCooldown < 0.7F) {
 			return true;
 		}
-		if (source.getAttacker() instanceof PigluttonEntity || (source.getAttacker() instanceof LivingEntity living && living.getMainHandStack().isIn(ModTags.Items.KNIVES))) {
+		if (source.getAttacker() instanceof PigluttonEntity || (source.getSource() instanceof LivingEntity living && living.getMainHandStack().isIn(ModItemTags.KNIVES))) {
 			for (EntityType<?> entityType : FleshDropEntry.DROP_MAP.keySet()) {
 				if (entity.getType() == entityType && entity.getWorld().random.nextFloat() * ModConfig.damageNeededForGuaranteedFleshDrop < amount) {
 					FleshDropEntry entry = FleshDropEntry.DROP_MAP.get(entityType);

@@ -10,7 +10,7 @@
 	"sorazodia"
   ],
   "contact": {
-	"homepage": "https://www.curseforge.com/minecraft/mc-mods/anthropophagy",
+	"homepage": "https://modrinth.com/mod/anthropophagy",
 	"sources": "https://github.com/MoriyaShiine/anthropophagy",
 	"issues": "https://github.com/MoriyaShiine/anthropophagy/issues"
   },
@@ -36,8 +36,8 @@
   ],
   "depends": {
 	"fabricloader": "*",
-	"minecraft": "~1.20.1",
-	"java": ">=17",
+	"minecraft": "~1.20.6",
+	"java": ">=21",
 	"fabric-api": "*"
   },
   "custom": {

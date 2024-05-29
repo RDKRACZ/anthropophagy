@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:husbandry/root",
   "criteria": {
-	"knife": {
+	"has_knife": {
 	  "conditions": {
 		"items": [
 		  {
-			"tag": "fabric:tools/knives"
+			"items": "#c:knives"
 		  }
 		]
 	  },
@@ -13,23 +13,21 @@
 	}
   },
   "display": {
-	"announce_to_chat": true,
 	"description": {
 	  "translate": "advancements.anthropophagy.husbandry.obtain_knife.description"
 	},
-	"frame": "task",
-	"hidden": false,
 	"icon": {
-	  "item": "anthropophagy:iron_knife"
+	  "count": 1,
+	  "id": "anthropophagy:iron_knife"
 	},
-	"show_toast": true,
 	"title": {
 	  "translate": "advancements.anthropophagy.husbandry.obtain_knife.title"
 	}
   },
   "requirements": [
 	[
-	  "knife"
+	  "has_knife"
 	]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

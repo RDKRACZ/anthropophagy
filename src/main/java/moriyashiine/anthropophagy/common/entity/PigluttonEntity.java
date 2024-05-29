@@ -1,14 +1,13 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.common.entity;
 
 import moriyashiine.anthropophagy.common.ModConfig;
 import moriyashiine.anthropophagy.common.entity.ai.EatFleshGoal;
 import moriyashiine.anthropophagy.common.init.ModEntityTypes;
 import moriyashiine.anthropophagy.common.init.ModSoundEvents;
-import moriyashiine.anthropophagy.common.init.ModTags;
+import moriyashiine.anthropophagy.common.tag.ModEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -33,12 +32,18 @@ import net.minecraft.world.World;
 public class PigluttonEntity extends HostileEntity {
 	public PigluttonEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
-		setStepHeight(1);
 		experiencePoints = 30;
 	}
 
-	public static DefaultAttributeContainer.Builder createAttributes() {
-		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 120 * (ModConfig.strongerPiglutton ? 2 : 1)).add(EntityAttributes.GENERIC_ARMOR, 14).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10 * (ModConfig.strongerPiglutton ? 2 : 1)).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48);
+	public static DefaultAttributeContainer.Builder addAttributes() {
+		return HostileEntity.createHostileAttributes()
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, 120 * (ModConfig.strongerPiglutton ? 2 : 1))
+				.add(EntityAttributes.GENERIC_ARMOR, 14)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10 * (ModConfig.strongerPiglutton ? 2 : 1))
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
+				.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5)
+				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48)
+				.add(EntityAttributes.GENERIC_STEP_HEIGHT, 1);
 	}
 
 	public static boolean canSpawn(EntityType<PigluttonEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
@@ -102,7 +107,7 @@ public class PigluttonEntity extends HostileEntity {
 		goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(4, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false, living -> living.getType().isIn(ModTags.EntityTypes.PIGLUTTON_TARGETS)));
+		targetSelector.add(1, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false, living -> living.getType().isIn(ModEntityTypeTags.PIGLUTTON_TARGETS)));
 	}
 
 	public static void attemptSpawn(LivingEntity living, int cannibalLevel, boolean ownFlesh) {

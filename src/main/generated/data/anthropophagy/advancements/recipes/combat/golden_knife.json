@@ -5,7 +5,7 @@
 	  "conditions": {
 		"items": [
 		  {
-			"tag": "c:gold_ingots"
+			"items": "#c:ingots/gold"
 		  }
 		]
 	  },
@@ -20,14 +20,13 @@
   },
   "requirements": [
 	[
-	  "has_gold_ingot",
-	  "has_the_recipe"
+	  "has_the_recipe",
+	  "has_gold_ingot"
 	]
   ],
   "rewards": {
 	"recipes": [
 	  "anthropophagy:golden_knife"
 	]
-  },
-  "sends_telemetry_event": false
+  }
 }

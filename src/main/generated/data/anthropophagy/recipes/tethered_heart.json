@@ -9,7 +9,7 @@
 	  "item": "anthropophagy:piglutton_heart"
 	},
 	"I": {
-	  "tag": "c:iron_ingots"
+	  "tag": "c:ingots/iron"
 	}
   },
   "pattern": [
@@ -18,7 +18,7 @@
 	"EIE"
   ],
   "result": {
-	"item": "anthropophagy:tethered_heart"
-  },
-  "show_notification": true
+	"count": 1,
+	"id": "anthropophagy:tethered_heart"
+  }
 }

@@ -1,7 +1,6 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.client;
 
 import moriyashiine.anthropophagy.client.model.entity.living.PigluttonEntityModel;

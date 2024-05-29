@@ -1,7 +1,6 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.mixin;
 
 import moriyashiine.anthropophagy.common.init.ModEntityComponents;
@@ -13,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(HungerManager.class)
 public class HungerManagerMixin {
-	@ModifyVariable(method = "add", at = @At("HEAD"), argsOnly = true)
+	@ModifyVariable(method = "addInternal", at = @At("HEAD"), argsOnly = true)
 	private int anthropophagy$reduceHungerGained(int value) {
 		if (ModEntityComponents.playerCannibalLevel != -1) {
 			value = Math.round(value * getFoodModifier(ModEntityComponents.playerCannibalLevel));
@@ -22,7 +21,7 @@ public class HungerManagerMixin {
 		return value;
 	}
 
-	@ModifyVariable(method = "add", at = @At("HEAD"), argsOnly = true)
+	@ModifyVariable(method = "addInternal", at = @At("HEAD"), argsOnly = true)
 	private float anthropophagy$reduceSaturationGained(float value) {
 		if (ModEntityComponents.playerCannibalLevel != -1) {
 			value *= getFoodModifier(ModEntityComponents.playerCannibalLevel);

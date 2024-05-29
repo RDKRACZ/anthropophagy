@@ -17,16 +17,14 @@
 	}
   },
   "display": {
-	"announce_to_chat": true,
 	"description": {
 	  "translate": "advancements.anthropophagy.husbandry.kill_piglutton.description"
 	},
-	"frame": "task",
 	"hidden": true,
 	"icon": {
-	  "item": "anthropophagy:piglutton_heart"
+	  "count": 1,
+	  "id": "anthropophagy:piglutton_heart"
 	},
-	"show_toast": true,
 	"title": {
 	  "translate": "advancements.anthropophagy.husbandry.kill_piglutton.title"
 	}
@@ -35,5 +33,6 @@
 	[
 	  "killed_piglutton"
 	]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

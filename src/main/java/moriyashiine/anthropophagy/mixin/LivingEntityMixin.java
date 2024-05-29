@@ -1,7 +1,6 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.mixin;
 
 import moriyashiine.anthropophagy.common.component.entity.CannibalLevelComponent;

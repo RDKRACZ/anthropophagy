@@ -1,6 +1,6 @@
 plugins {
     id 'fabric-loom' version '1.6-SNAPSHOT'
-    id 'maven-publish'
+    id 'io.github.ladysnake.chenille' version '0.13.1'
 }
 
 version = project.mod_version
@@ -10,23 +10,35 @@ base {
     archivesName = project.archives_base_name
 }
 
+chenille {
+    customLicense = rootProject.file("LICENSE")
+    github = new URL("https://github.com/MoriyaShiine/anthropophagy")
+    javaVersion = 21
+    configurePublishing {
+        withLadysnakeMaven()
+        withGithubRelease()
+        withModrinthRelease()
+        withCurseforgeRelease()
+    }
+}
+
+modrinth {
+    dependencies {
+        required.project "fabric-api"
+        embedded.project "cardinal-components-api"
+        embedded.project "midnightlib"
+    }
+    syncBodyFrom = rootProject.file("README.md").text
+}
+
+fabricApi {
+    configureDataGeneration()
+}
+
 repositories {
-    maven {
-        name "cardinal components"
-        url "https://maven.ladysnake.org/releases"
-    }
-    maven {
-        name "reach entity attributes"
-        url "https://maven.jamieswhiteshirt.com/libs-release"
-    }
-    maven {
-        name "mod menu"
-        url "https://maven.terraformersmc.com/releases"
-    }
-    maven {
-        name "modrinth"
-        url "https://api.modrinth.com/maven"
-    }
+    chenille.repositories.ladysnake()
+    chenille.repositories.terraformers()
+    chenille.repositories.modrinth()
 }
 
 dependencies {
@@ -34,10 +46,9 @@ dependencies {
     mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${loader_version}"
 
-    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}")
-    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}")
-    modImplementation include("maven.modrinth:midnightlib:${midnightlib_version}")
-    modImplementation include("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}")
+    modIncludeApi "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+    modIncludeApi "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+    modIncludeApi "maven.modrinth:midnightlib:${midnightlib_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
@@ -53,42 +64,18 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 17
+    it.options.release = 21
 }
 
 java {
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
-    }
-}
-
-loom {
-    runs {
-        datagenClient {
-            inherit client
-            name "Data Generation"
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-            vmArg "-Dfabric-api.datagen.modid=${archivesBaseName}"
-
-            runDir "build/datagen"
-        }
-    }
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDirs += [
-                    'src/main/generated'
-            ]
-        }
+        rename { "${it}_${project.base.archivesName.get()}" }
     }
 }

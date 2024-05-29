@@ -1,14 +1,12 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.common.init;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import moriyashiine.anthropophagy.common.item.FleshItem;
 import moriyashiine.anthropophagy.common.item.KnifeItem;
 import moriyashiine.anthropophagy.common.item.TetheredHeartItem;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.*;
@@ -19,12 +17,12 @@ import net.minecraft.text.Text;
 public class ModItems {
 	public static ItemGroup GROUP;
 
-	public static final Item WOODEN_KNIFE = new KnifeItem(ToolMaterials.WOOD, settings());
-	public static final Item STONE_KNIFE = new KnifeItem(ToolMaterials.STONE, settings());
-	public static final Item IRON_KNIFE = new KnifeItem(ToolMaterials.IRON, settings());
-	public static final Item GOLDEN_KNIFE = new KnifeItem(ToolMaterials.GOLD, settings());
-	public static final Item DIAMOND_KNIFE = new KnifeItem(ToolMaterials.DIAMOND, settings());
-	public static final Item NETHERITE_KNIFE = new KnifeItem(ToolMaterials.NETHERITE, settings().fireproof());
+	public static final Item WOODEN_KNIFE = new KnifeItem(ToolMaterials.WOOD, settings().attributeModifiers(KnifeItem.createAttributeModifiers(ToolMaterials.WOOD, 0, -2)));
+	public static final Item STONE_KNIFE = new KnifeItem(ToolMaterials.STONE, settings().attributeModifiers(KnifeItem.createAttributeModifiers(ToolMaterials.STONE, 0, -2)));
+	public static final Item IRON_KNIFE = new KnifeItem(ToolMaterials.IRON, settings().attributeModifiers(KnifeItem.createAttributeModifiers(ToolMaterials.IRON, 0, -2)));
+	public static final Item GOLDEN_KNIFE = new KnifeItem(ToolMaterials.GOLD, settings().attributeModifiers(KnifeItem.createAttributeModifiers(ToolMaterials.GOLD, 0, -2)));
+	public static final Item DIAMOND_KNIFE = new KnifeItem(ToolMaterials.DIAMOND, settings().attributeModifiers(KnifeItem.createAttributeModifiers(ToolMaterials.DIAMOND, 0, -2)));
+	public static final Item NETHERITE_KNIFE = new KnifeItem(ToolMaterials.NETHERITE, settings().attributeModifiers(KnifeItem.createAttributeModifiers(ToolMaterials.NETHERITE, 0, -2)).fireproof());
 
 	public static final Item FLESH = new FleshItem(settings().food(ModFoodComponents.FLESH));
 	public static final Item COOKED_FLESH = new FleshItem(settings().food(ModFoodComponents.COOKED_FLESH));
@@ -36,7 +34,7 @@ public class ModItems {
 	public static final Item PIGLUTTON_SPAWN_EGG = new SpawnEggItem(ModEntityTypes.PIGLUTTON, 0x7F3D00, 0xC4C4C4, settings());
 
 	private static Item.Settings settings() {
-		return new FabricItemSettings();
+		return new Item.Settings();
 	}
 
 	public static void init() {

@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
 	"I": {
-	  "tag": "c:gold_ingots"
+	  "tag": "c:ingots/gold"
 	},
 	"S": {
 	  "item": "minecraft:stick"
@@ -14,7 +14,7 @@
 	"S "
   ],
   "result": {
-	"item": "anthropophagy:golden_knife"
-  },
-  "show_notification": true
+	"count": 1,
+	"id": "anthropophagy:golden_knife"
+  }
 }

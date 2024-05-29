@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
 	"I": {
-	  "tag": "c:diamonds"
+	  "tag": "c:gems/diamond"
 	},
 	"S": {
 	  "item": "minecraft:stick"
@@ -14,7 +14,7 @@
 	"S "
   ],
   "result": {
-	"item": "anthropophagy:diamond_knife"
-  },
-  "show_notification": true
+	"count": 1,
+	"id": "anthropophagy:diamond_knife"
+  }
 }

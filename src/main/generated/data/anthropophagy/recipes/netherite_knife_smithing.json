@@ -7,7 +7,8 @@
 	"item": "anthropophagy:diamond_knife"
   },
   "result": {
-	"item": "anthropophagy:netherite_knife"
+	"count": 1,
+	"id": "anthropophagy:netherite_knife"
   },
   "template": {
 	"item": "minecraft:netherite_upgrade_smithing_template"

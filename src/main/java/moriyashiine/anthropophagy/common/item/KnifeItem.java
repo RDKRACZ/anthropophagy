@@ -1,18 +1,15 @@
 /*
- * All Rights Reserved (c) MoriyaShiine
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-
 package moriyashiine.anthropophagy.common.item;
 
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import moriyashiine.anthropophagy.common.component.entity.TetheredComponent;
 import moriyashiine.anthropophagy.common.init.ModEntityComponents;
 import moriyashiine.anthropophagy.common.init.ModItems;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -24,24 +21,18 @@ import net.minecraft.world.World;
 import java.util.UUID;
 
 public class KnifeItem extends SwordItem {
-	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("036c3108-e940-4e06-93f0-8f826c7c4877"), "Weapon modifier", -0.5, EntityAttributeModifier.Operation.ADDITION);
-
-	private Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("036c3108-e940-4e06-93f0-8f826c7c4877"), "Weapon modifier", -0.5, EntityAttributeModifier.Operation.ADD_VALUE);
 
 	public KnifeItem(ToolMaterial toolMaterial, Settings settings) {
-		super(toolMaterial, 0, -2, settings);
+		super(toolMaterial, settings);
 	}
 
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-		if (slot == EquipmentSlot.MAINHAND) {
-			if (attributeModifiers == null) {
-				attributeModifiers = LinkedHashMultimap.create(super.getAttributeModifiers(slot));
-				attributeModifiers.put(ReachEntityAttributes.ATTACK_RANGE, REACH_MODIFIER);
-			}
-			return attributeModifiers;
-		}
-		return super.getAttributeModifiers(slot);
+	public static AttributeModifiersComponent createAttributeModifiers(ToolMaterial material, int baseAttackDamage, float attackSpeed) {
+		AttributeModifiersComponent sword = SwordItem.createAttributeModifiers(material, baseAttackDamage, attackSpeed);
+		AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+		sword.modifiers().forEach(entry -> builder.add(entry.attribute(), entry.modifier(), entry.slot()));
+		builder.add(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, REACH_MODIFIER, AttributeModifierSlot.MAINHAND);
+		return builder.build();
 	}
 
 	@Override

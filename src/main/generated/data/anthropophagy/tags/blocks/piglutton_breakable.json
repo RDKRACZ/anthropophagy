@@ -1,0 +1,20 @@
+{
+  "values": [
+	{
+	  "id": "#minecraft:fence_gates",
+	  "required": false
+	},
+	{
+	  "id": "#minecraft:logs",
+	  "required": false
+	},
+	{
+	  "id": "#minecraft:planks",
+	  "required": false
+	},
+	{
+	  "id": "#minecraft:wooden_fences",
+	  "required": false
+	}
+  ]
+}

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-package moriyashiine.anthropophagy.client.model.entity.living;
+package moriyashiine.anthropophagy.client.render.entity.model;
 
 import moriyashiine.anthropophagy.common.Anthropophagy;
 import net.fabricmc.api.EnvType;

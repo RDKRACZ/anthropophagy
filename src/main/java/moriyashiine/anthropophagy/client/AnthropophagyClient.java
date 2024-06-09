@@ -3,8 +3,8 @@
  */
 package moriyashiine.anthropophagy.client;
 
-import moriyashiine.anthropophagy.client.model.entity.living.PigluttonEntityModel;
-import moriyashiine.anthropophagy.client.renderer.entity.living.PigluttonEntityRenderer;
+import moriyashiine.anthropophagy.client.render.entity.PigluttonEntityRenderer;
+import moriyashiine.anthropophagy.client.render.entity.model.PigluttonEntityModel;
 import moriyashiine.anthropophagy.common.init.ModEntityTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;

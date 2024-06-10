@@ -3,10 +3,12 @@
   "id": "anthropophagy",
   "version": "${version}",
   "name": "Anthropophagy",
-  "description": "A remake of the original Cannibalism mod",
+  "description": "Adds a (dubious) alternate source of food",
   "authors": [
 	"MoriyaShiine",
-	"cybercat5555",
+	"cybercat5555"
+  ],
+  "contributors": [
 	"sorazodia"
   ],
   "contact": {

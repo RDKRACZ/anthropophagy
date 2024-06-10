@@ -1,6 +1,6 @@
 # Anthropophagy
 
-[A remake of the old Cannibalism mod.](https://www.curseforge.com/minecraft/mc-mods/cannibalism)
+[Inspired by the old Cannibalism mod.](https://www.curseforge.com/minecraft/mc-mods/cannibalism)
 
 This mod adds a new way of obtaining food: people!
 

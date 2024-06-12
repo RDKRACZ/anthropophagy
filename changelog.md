@@ -1,0 +1,24 @@
+------------------------------------------------------
+Version 1.20.6-r1
+------------------------------------------------------
+- update to 1.20.6
+- massive code cleanup
+- pigluttons now stalk targets for a while before rushing towards them
+- pigluttons now flee for a bit if fed flesh (that isn't yours) or take enough damage, and will despawn if fed enough
+- pigluttons are now larger (upscaled for now, will receive a new model and animations later)
+- pigluttons now break wooden blocks
+- pigluttons now disable shields
+- pigluttons can no longer despawn
+- pigluttons can no longer spawn on top of you
+- pigluttons now drop more experience
+- piglutton attributes have been adjusted
+- cannibals can now still equip items if it isn't armor
+- eating your own flesh now increases piglutton spawn chance
+- higher cannibal levels now give jump boost and fall reduction
+- cannibal buffs have been rebalanced and are now gradually applied
+- high level cannibals are now considered monsters for the purpose of sleeping
+- cannibal level now persists on death if tethered
+- using a knife on yourself while tethered now untethers you
+- tethered heart is now a food item
+- dropped flesh now has a pickup delay
+- cooking flesh now keeps the name
